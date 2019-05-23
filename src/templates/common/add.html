@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block content %}
+<!-- Main Container -->
+<main id="main-container">
+    <!-- Hero -->
+    {% include 'common/page_navigation_head.html' %}
+    <!-- END Hero -->
+    <!-- Page Content -->
+    <div class="content">
+        <!-- Your Block -->
+        <div class="block">
+            <div class="block-header">
+                <h3 class="block-title">
+                    {{ page_subtitle }}
+                </h3>
+                <div class="block-options"></div>
+            </div>
+            <div class="block-content">
+
+                <div class="block-content block-content-full">
+                    <div class="row push">
+                        <div class="col-lg-2">
+                            <p class="font-size-sm text-muted"></p>
+                        </div>
+                        <div class="col-lg-6 border-left border-primary">
+                            {% crispy form %}
+                        </div>
+                        <div class="col-lg-4">
+                            <p class="font-size-sm text-muted"></p>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <!-- END Your Block -->
+    </div>
+    <!-- END Page Content -->
+</main>
+{% endblock content %}

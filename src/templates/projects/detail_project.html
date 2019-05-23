@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load is_programmed %}
+{% load has_pendencies %}
+{% load has_permission %}
+{% load has_coverage_study %}
+{% block scripts %}        
+<script>
+    function passDataToModal(url) {
+        document.getElementById('modal-submit-button').href = url;
+    }
+    function passDataToStudyModal(value, arg) {
+        if (arg == 'coverage_studies') {
+            document.getElementById('finishes_study_id').value = value;
+        }
+        else if (arg == 'feeder_studies') {
+            document.getElementById('finishes_feeder_study_id').value = value;
+        }
+    }
+</script>
+{% endblock scripts %}
+{% block content %}
+<main id="main-container">
+    {% include 'common/page_navigation_head.html' %}
+    <div class="content">
+        <div class="row">
+            <div class="col-md-5 col-xl-3">
+                <div id="one-inbox-side-nav" class="d-block push">
+                    {% include 'projects/detail_project_side.html' %}
+                </div>
+            </div>
+            <div class="col-md-7 col-xl-9">
+                <div class="block mb-0">
+                    {% include 'projects/detail_project_history.html' %}
+                    <div class="block-header block-header-default border-top">
+                        <div class="block-options ml-auto">
+                            {% if not object.get_progress_status_display == 'Concluído' and request.user.get_profile_display|has_permission:object.get_progress_status_display %}
+                                <a 
+                                    class="btn btn-outline-success"
+                                    data-toggle="modal"
+                                    {% if object|has_pendencies %}
+                                        data-target="#modal-move-status-popout-error-has-pendencies"
+                                    {% elif object|is_programmed %}
+                                        data-target="#modal-move-status-popout"
+                                    {% else %}
+                                        data-target="#modal-move-status-popout-error-programmed-date"
+                                    {% endif %}
+                                    href="#">
+                                    <i class="si si-control-forward"></i>
+                                    Avançar Projeto
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- include modal for confirmation on fowarding projects -->
+{% include 'projects/modals/move_status_modal.html' %}
+
+{% include 'projects/modals/programmed_date_modal.html' %}
+
+{% include 'projects/modals/electric_point_modal.html' %}
+
+{% include 'projects/modals/feeder_modal.html' %}
+
+{% include 'projects/modals/pendencies_modal.html' %}
+
+{% include 'projects/modals/coverage_studies_modal.html' %}
+
+{% include 'projects/modals/finishes_coverage_studies_modal.html' %}
+
+{% include 'projects/modals/supply_delivery_modal.html' %}
+
+{% include 'projects/modals/feeder_study_modal.html' %}
+
+{% include 'projects/modals/finishes_feeder_studies_modal.html' %}
+
+{% include 'common/delete_studies_modal.html' %}
+
+{% include 'projects/modals/has_coverage_study_modal.html' %}
+
+{% endblock content %}

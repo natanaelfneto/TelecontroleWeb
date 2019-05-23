@@ -1,0 +1,25 @@
+<div class="bg-body-light">
+    <div class="content content-full py-2">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill h3 my-2">
+                {{ page_group }} <span class="text-secondary">|</span>
+                <small class="d-block d-sm-inline-block mt-2 mt-sm-0 font-size-base font-w400 text-muted">
+                    {{ page_subtitle}}
+                </small>
+            </h1>
+            <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-alt">
+                    <li class="breadcrumb-item" aria-current="page">
+                        <a href="">{{ page_group }}</a>
+                    </li>
+                    <li class="breadcrumb-item" aria-current="page">
+                        <a href="">{{ page_title }}</a>
+                    </li>
+                    <li class="breadcrumb-item" aria-current="page">
+                        <a href="">{{ page_subtitle }}</a>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>

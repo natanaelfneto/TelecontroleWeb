@@ -1,0 +1,173 @@
+{% extends 'projects/steps/base.html' %}
+{% load staticfiles %}
+{% load mathfilters %}
+{% load i18n %}
+{% load get_electric_point_name %}
+
+{% block progress_status_icon %}
+<i class="si si-pointer text-primary font-w600"></i>
+{% endblock progress_status_icon %}
+
+{% block progress_status %}
+Localização
+{% endblock progress_status %}
+
+{% block progress_status_programmed_date_title %}
+Atualização em
+{% endblock progress_status_programmed_date_title %}
+
+{% block progress_status_programmed_date %}
+    {% language 'pt' %}
+        {{ location.created_at|date:"D, d \d\e F \d\e Y" }}
+    {% endlanguage %}
+{% endblock progress_status_programmed_date %}
+
+{% block progress_status_actual_date_title %}
+Ponto Elétrico Obsoleto
+{% endblock progress_status_actual_date_title %}
+
+{% block progress_status_actual_date %}
+    {{ location.related_electric_point_name|get_electric_point_name }}
+{% endblock progress_status_actual_date %}
+
+<!-- table block 5 -->
+{% block table_block_5_head %}
+Atuallizada por
+{% endblock table_block_5_head %}
+
+{% block table_block_5_body %}
+    {{ location.created_by.get_full_name }} ({{ location.created_by.username }})
+{% endblock table_block_5_body %}
+
+{% block delay %}
+<del>
+    {% if location.latitude < 0 %}
+        {{ location.latitude|abs }} <b>S</b>
+    {% else %}
+        {{ location.latitude|abs }} <b>N</b>
+    {% endif %}
+</del>  
+<del>
+    {% if location.longitude < 0 %}
+        {{ location.longitude|abs }} <b>W</b>
+    {% else %}
+        {{ location.longitude|abs }} <b>E</b>
+    {% endif %}
+</del>
+{% endblock delay %}
+
+{% block progress_status_action %}
+<span 
+    class="btn btn-outline-info border-0"    
+    data-toggle="modal" 
+    data-target="#modal-history-detail-popout_{{ location.id }}">
+    <i class="fa fa-eye mr-1"></i>
+</span>
+{% endblock progress_status_action %}
+
+{% block progress_status_modal %}
+<div 
+    class="modal fade show" 
+    id="modal-history-detail-popout_{{ location.id }}" 
+    tabindex="-1" 
+    role="dialog" 
+    aria-labelledby="modal-block-popout" 
+    style="display: none; padding-right: 17px;" 
+    aria-modal="true">
+    <div class="modal-dialog modal-dialog-popout" role="document">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent mb-0">
+                <div class="block-header bg-primary-dark">
+                    <h3 class="block-title">Detalhes do item</h3>
+                    <div class="block-options">
+                        <button 
+                            type="button" 
+                            class="btn-block-option" 
+                            data-dismiss="modal" 
+                            aria-label="Close">
+                            <i class="fa fa-fw fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="block-content font-size-sm">
+                    <div id="modal-content">
+                        <div class="my-2 mx-2 row">
+                            <span class="col-5 px-0 my-auto">
+                                <i class="si si-calendar mr-3 font-w600"></i>
+                                <span class="font-w300">Alteração registrada em:</span>
+                            </span>
+                            <span class="col-7 font-w400">
+                                {% language 'pt' %}
+                                {{ location.created_at|date:"D, d \d\e F \d\e Y" }}
+                                {% endlanguage %}
+                            </span>
+                        </div>
+                        <div class="my-2 mx-2 row">
+                            <span class="col-5 px-0 my-auto">
+                                <i class="si si-user mr-3 font-w600"></i>
+                                <span class="font-w300">Alteração registrada por:</span>
+                            </span>
+                            <span class="col-7 font-w400">
+                                {{ location.created_by.get_full_name }}
+                                ({{ location.created_by.username }})
+                                <div>
+                                    <span class="font-w600">Perfil:</span>
+                                    <span>{{ location.created_by.get_profile_display }}</span>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="my-2 mx-2 row">
+                            <span class="col-5 px-0 my-auto">
+                                <i class="si si-energy mr-3 font-w600"></i>
+                                <span class="font-w300">Ponto Elétrico Obsoleto:</span>
+                            </span>
+                            <span class="col-7 font-w400">
+                                {{ location.related_electric_point_name|get_electric_point_name }}
+                            </span>
+                        </div>
+                        <div class="my-2 mx-2 row">
+                            <span class="col-5 px-0 my-auto">
+                                <i class="si si-directions mr-3 font-w600"></i>
+                                <span class="font-w300">Localização obsoleta:</span>
+                            </span>
+                            <span class="col-7 font-w400">
+                                <span >
+                                    {{ location.get_city_display }},
+                                </span>
+                                <span>
+                                    {{ location.get_state_display }}
+                                    ({{ location.state }})
+                                </span>
+                            </span>
+                        </div>
+                        <div class="my-2 mx-2 row">
+                            <span class="col-5 px-0 my-auto">
+                                <i class="si si-pointer mr-3 font-w600"></i>
+                                <span class="font-w300">Coordenadas obsoletas:</span>
+                            </span>
+                            <span class="col-7 font-w400">
+                                <div>
+                                    <span class="mr-2">Latitude</span>
+                                    {{ location.latitude }}
+                                </div>
+                                <div>
+                                    <span class="mr-2">Longitude</span>
+                                    {{ location.longitude }}
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="block-content block-content-full text-right border-top">
+                    <button 
+                        type="button" 
+                        class="btn btn-sm btn-outline-info" 
+                        data-dismiss="modal">
+                        Fechar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock progress_status_modal %}

@@ -1,0 +1,138 @@
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+<div 
+    class="modal fade show" 
+    id="modal-move-status-popout-error-has-coverage-studies" 
+    tabindex="-1" 
+    role="dialog" 
+    aria-labelledby="modal-move-status-popout" 
+    style="display: none; padding-right: 17px;" 
+    aria-modal="true">
+    <div class="modal-dialog modal-dialog-popout" role="document">
+        <div class="modal-content">
+            <form 
+                id="update_progress_status_form"
+                method="POST" 
+                action="{% url 'projects:updateProgressStatus' object.id %}">
+                {% csrf_token %}
+                <div class="block block-themed block-transparent mb-0">
+                    <div class="block-header bg-primary-dark">
+                        <h3 class="block-title">Movimentar Projeto</h3>
+                        <div class="block-options">
+                            <button 
+                                type="button" 
+                                class="btn-block-option" 
+                                data-dismiss="modal" 
+                                aria-label="Close">
+                                <i class="fa fa-fw fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="block-content font-size-sm">
+                        <div id="modal-content_for_update_progress_status">
+                            {% crispy forms.project_real_date %}
+                        </div>
+                    </div>
+                    <div class="block-content block-content-full text-right border-top">
+                        <button
+                            type="submit"
+                            id="update_progress_status_button"
+                            name="update_progress_status_button"
+                            class="btn btn-sm btn-success">
+                            <i class="si si-control-forward mr-1"></i>
+                            Registrar momvimentação
+                        </button>
+                        <button 
+                            type="button" 
+                            class="btn btn-sm btn-outline-secondary" 
+                            data-dismiss="modal">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div 
+    class="modal fade show" 
+    id="modal-move-status-popout-error-has-pendencies" 
+    tabindex="-1" 
+    role="dialog" 
+    aria-labelledby="modal-move-status-popout-error" 
+    style="display: none; padding-right: 17px;" 
+    aria-modal="true">
+    <div class="modal-dialog modal-dialog-popout" role="document">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent mb-0">
+                <div class="block-header bg-primary-dark">
+                    <h3 class="block-title">Movimentar Projeto</h3>
+                    <div class="block-options">
+                        <button 
+                            type="button" 
+                            class="btn-block-option" 
+                            data-dismiss="modal" 
+                            aria-label="Close">
+                            <i class="fa fa-fw fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="block-content font-size-sm">
+                    <div id="modal-content_for_update_progress_status_error">
+                        <p>Para movimentar o projeto é necessário que a todas as pendências estejam solucionadas.</p>
+                    </div>
+                </div>
+                <div class="block-content block-content-full text-right border-top">
+                    <button 
+                        type="button" 
+                        class="btn btn-sm btn-outline-info" 
+                        data-dismiss="modal">
+                        Fechar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div 
+    class="modal fade show" 
+    id="modal-move-status-popout-error-programmed-date" 
+    tabindex="-1" 
+    role="dialog" 
+    aria-labelledby="modal-move-status-popout-error" 
+    style="display: none; padding-right: 17px;" 
+    aria-modal="true">
+    <div class="modal-dialog modal-dialog-popout" role="document">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent mb-0">
+                <div class="block-header bg-primary-dark">
+                    <h3 class="block-title">Movimentar Projeto</h3>
+                    <div class="block-options">
+                        <button 
+                            type="button" 
+                            class="btn-block-option" 
+                            data-dismiss="modal" 
+                            aria-label="Close">
+                            <i class="fa fa-fw fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="block-content font-size-sm">
+                    <div id="modal-content_for_update_progress_status_error">
+                        <p>Para movimentar o projeto é necessário que a data programada para esta estapa seja informada.</p>
+                    </div>
+                </div>
+                <div class="block-content block-content-full text-right border-top">
+                    <button 
+                        type="button" 
+                        class="btn btn-sm btn-outline-info" 
+                        data-dismiss="modal">
+                        Fechar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

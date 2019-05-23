@@ -1,0 +1,190 @@
+{% extends 'projects/steps/base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+<!-- left icon -->
+{% block progress_status_icon %}
+<i class="si si-energy text-warning font-w600"></i>
+{% endblock progress_status_icon %}
+
+<!-- progress status -->
+{% block progress_status %}
+Energização
+{% endblock progress_status %}
+
+<!-- programmed status -->
+{% block progress_status_programmed_date_title %}
+Programação
+{% endblock progress_status_programmed_date_title %}
+
+<!-- programmed status date -->
+{% block progress_status_programmed_date %}
+    {% if object.energizing.programmed_date %}
+        {% language 'pt' %}
+            {{ object.energizing.programmed_date|date:"D, d \d\e F \d\e Y" }}
+        {% endlanguage %}
+    {% else %}
+        <em>Sem programação</em>
+    {% endif %}
+{% endblock progress_status_programmed_date %}
+
+<!-- real date status -->
+{% block progress_status_actual_date_title %}
+Realização
+{% endblock progress_status_actual_date_title %}
+
+<!-- real date value -->
+{% block progress_status_actual_date %}
+    {% if object.energizing.real_date %}
+        {% language 'pt' %}
+            {{ object.energizing.real_date|date:"D, d \d\e F \d\e Y" }}
+        {% endlanguage %}
+    {% else %}
+        <em>Ainda não foi energizado</em>
+    {% endif %}
+{% endblock progress_status_actual_date %}
+
+<!-- table block 5 -->
+{% block table_block_5_head %}
+Avanço realizado por
+{% endblock table_block_5_head %}
+
+{% block table_block_5_body %}
+    {% if object.commissioning %}
+        {{ object.commissioning.created_by.get_full_name }}
+        ({{ object.commissioning.created_by.username }})
+    {% else %}
+    <span>Avanço a ser realizado</span>
+    {% endif %}
+{% endblock table_block_5_body %}
+
+<!-- date delay -->
+{% block delay %}
+    {% if object.energizing.get_step_delay is not null %}
+        {{ object.energizing.get_step_delay }}
+    {% else %}
+        0 dias
+    {% endif %}
+    (corridos)
+{% endblock delay %}
+
+<!-- progress status action button -->
+{% block progress_status_action %}
+    {% if ask_for_programmed_date.energizing %}
+    <span 
+        class="btn btn-outline-info border-0"    
+        data-toggle="modal" 
+        data-target="#modal-programmed-date-popout">
+        <i class="fa fa-pen mr-1"></i>
+    </span>
+    {% else %}
+    <span 
+        class="btn btn-outline-info border-0"    
+        data-toggle="modal" 
+        data-target="#modal-history-detail-popout_energized">
+        <i class="fa fa-eye mr-1"></i>
+    </span>
+    {% endif %}
+{% endblock progress_status_action %}
+
+<!-- progress status action button confirmation/information modal -->
+{% block progress_status_modal %}
+<div 
+    class="modal fade show" 
+    id="modal-history-detail-popout_energized" 
+    tabindex="-1" 
+    role="dialog" 
+    aria-labelledby="modal-block-popout" 
+    style="display: none; padding-right: 17px;" 
+    aria-modal="true">
+    <div class="modal-dialog modal-dialog-popout" role="document">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent mb-0">
+                <div class="block-header bg-primary-dark">
+                    <h3 class="block-title">Detalhes do item</h3>
+                    <div class="block-options">
+                        <button 
+                            type="button" 
+                            class="btn-block-option" 
+                            data-dismiss="modal" 
+                            aria-label="Close">
+                            <i class="fa fa-fw fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="block-content font-size-sm">
+                    <div id="modal-content">
+                        <div class="my-2 mx-2 row">
+                            <span class="col-5 px-0 my-auto">
+                                <i class="si si-calendar mr-3 font-w600"></i>
+                                <span class="font-w300">Data programada:</span>
+                            </span>
+                            <span class="col-5 font-w400"> 
+                                {% if object.energizing.programmed_date %}
+                                    {% language 'pt' %}
+                                        {{ object.energizing.programmed_date|date:"D, d \d\e F \d\e Y" }}
+                                    {% endlanguage %}
+                                {% else %}
+                                    <em>Sem programação</em>
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="my-2 mx-2 row">
+                            <span class="col-5 px-0 my-auto">
+                                <i class="si si-calendar mr-3 font-w600"></i>
+                                <span class="font-w300">Data da realização:</span>
+                            </span>
+                            <span class="col-5 font-w400">
+                                {% if object.energizing.real_date %}
+                                    {% language 'pt' %}
+                                        {{ object.energizing.real_date|date:"D, d \d\e F \d\e Y" }}
+                                    {% endlanguage %}
+                                {% else %}
+                                    <em>Ainda não foi instalado</em>
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="my-2 mx-2 row">
+                            <span class="col-5 px-0 my-auto">
+                                <i class="si si-user mr-3 font-w600"></i>
+                                <span class="font-w300">Avanço realizado por:</span>
+                            </span>
+                            <span class="col-5 font-w400">
+                                {% if object.commissioning %}
+                                    {{ object.commissioning.created_by.get_full_name }}
+                                    ({{ object.commissioning.created_by.username }})
+                                {% else %}
+                                <span>Avanço a ser realizado</span>
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="my-2 mx-2 row">
+                            <span class="col-5 px-0 my-auto">
+                                <i class="si si-clock mr-3 font-w600"></i>
+                                <span class="font-w300">Atraso:</span>
+                            </span>
+                            <span class="col-5 font-w400">
+                                {% if object.energizing.get_step_delay is not null %}
+                                    <em>{{ object.energizing.get_step_delay }}</em>
+                                {% else %}
+                                    <em>0 dias</em>
+                                {% endif %}
+                                    <span>(corridos)</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="block-content block-content-full text-right border-top">
+                    <button 
+                        type="button" 
+                        class="btn btn-sm btn-outline-info" 
+                        data-dismiss="modal">
+                        Fechar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock progress_status_modal %}

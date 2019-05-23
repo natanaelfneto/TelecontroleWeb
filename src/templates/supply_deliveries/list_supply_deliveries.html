@@ -1,0 +1,120 @@
+{% extends 'common/list.html' %}
+{% load staticfiles %}
+{% load i18n %}
+{% load display_coverage_studies_type %}
+{% load has_project %}
+
+{% block scripts %}        
+<script>
+    function passDataToModal(url) {
+        document.getElementById('modal-submit-button').href = url;
+    }
+</script>
+{% endblock scripts %}
+
+{% block list_add_new %}
+{% comment %} {% if request.user.is_admin or request.user.is_telecom %}
+<div>
+    <a
+        href="{% url 'electric_points:addCoverageStudy' %}"
+        class="btn btn-outline-primary" 
+        data-toggle="block-option">
+        <i class="si si-plus"></i>
+        <span>Adicionar {{ page_title }}</span>
+    </a>
+</div>
+{% endif %} {% endcomment %}
+{% endblock list_add_new %}
+
+{% block list_head %}
+<thead>
+    <tr class="text-uppercase">
+        <!-- <th class="font-w700">ID</th> -->
+        <th class="font-w700 align-middle">Ponto Elétrico</th>
+        <th class="font-w700 align-middle">Tipo de Comunicação</th>
+        <th class="font-w700 align-middle">Tipo de Equipamento</th>
+        <th class="font-w700 align-middle">Código do Equipamento</th>
+        <th class="font-w700 align-middle">Número de Série</th>
+        <th class="font-w700 align-middle">Cadastrado em</th>
+        <th class="font-w700 align-middle">Cadastrado por</th>
+        <th class="font-w700 text-center" style="width: 40px;"></th>
+    </tr>
+</thead>
+{% endblock list_head %}
+
+{% block list_body %}
+<tbody>
+    {% for supply in object_list %}
+    <tr>
+        <!-- <td><span class="font-w600">{{ electric_point.id }}</span></td> -->
+        <td class="d-none d-sm-table-cell">
+            <span class="font-size-sm text-muted">
+                {{ supply.electric_point.name }}
+            </span>
+        </td>
+        <td class="d-none d-sm-table-cell">
+            <span class="font-size-sm text-muted">
+                {{ supply|display_coverage_studies_type:'type' }}
+            </span>
+        </td>
+        <td class="d-none d-sm-table-cell">
+            <span class="font-size-sm text-muted">
+                {{ supply.equipment_type }}
+            </span>
+        </td>
+        <td class="d-none d-sm-table-cell">
+            <span class="font-size-sm text-muted">
+                {{ supply.code }}
+            </span>
+        </td>
+        <td class="d-none d-sm-table-cell">
+            <span class="font-size-sm text-muted">
+                {{ supply.serial }}
+            </span>
+        </td>
+        <td class="d-none d-sm-table-cell">
+            <span class="font-size-sm text-muted">
+                {% language 'pt' %}
+                {{ supply.created_at|date:"D, d \d\e F \d\e Y" }}
+                {% endlanguage %}
+            </span>
+        </td>
+        <td class="d-none d-sm-table-cell">
+            <a
+                class="link-fx" 
+                {% comment %} href="{% url 'accounts:detailUser' electric_point.created_by.id %}">{% endcomment %}
+                <span class="font-size-sm text-muted">
+                    {{ supply.created_by.get_full_name }}
+                    ({{ supply.created_by.username }})
+                </span>
+            </a>
+        </td>
+        {% comment %} <td class="text-center">
+            <a
+                href="#"
+                target="{% url 'electric_points:deleteCoverageStudy' study.id %}"
+                onclick="passDataToModal(this.getAttribute('target'))"
+                data-toggle="modal" 
+                data-target="#modal-delete-popout">
+                <i class="si si-close text-danger"></i>
+            </a>
+        </td> {% endcomment %}
+        {% if supply.electric_point|has_project %}
+        <td class="text-center">
+            <a href="{% url 'electric_points:findSupplyDeliveryProject' supply.id %}">
+                <i class="si si-info text-info"></i>
+            </a>
+        </td>
+        {% else %}
+        <td class="text-center">
+            <a href="#"
+                data-toggle="modal" 
+                data-target="#modal-no-project-popout">
+                <i class="si si-info text-warning"></i>
+            </a>
+        </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</tbody>
+{% endblock list_body %}

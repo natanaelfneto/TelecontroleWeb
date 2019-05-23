@@ -1,0 +1,193 @@
+{% load staticfiles %}
+<nav id="sidebar" aria-label="Main Navigation">
+    <!-- Side Header -->
+    <div class="content-header bg-white-5">
+        <!-- Logo -->
+        <a class="font-w600 text-dual" href="/">
+            <img class="mb-1" width="24" src="{% static 'img/enel/favicon.ico' %}"/>
+            <span class="smini-hide">
+                <span class="font-w700 font-size-h5 ml-2">Telecontrole</span>
+            </span>
+        </a>
+        <!-- END Logo -->
+    </div>
+    <!-- END Side Header -->
+
+    <!-- Side Navigation -->
+    <div class="content-side content-side-full">
+        <ul class="nav-main">
+
+            <li class="nav-main-item">
+                <a class="nav-main-link active" href="{% url 'index' %}">
+                    <i class="nav-main-link-icon si si-speedometer"></i>
+                    <span class="nav-main-link-name">Visão Geral</span>
+                </a>
+            </li>
+
+            <!-- side menu for administrators -->
+            {% if request.user.is_admin %}
+            <li class="nav-main-heading">Administrativo</li>
+            <li class="nav-main-item">
+                <a 
+                    class="nav-main-link nav-main-link-submenu" 
+                    data-toggle="submenu" 
+                    aria-haspopup="true" 
+                    aria-expanded="false" 
+                    href="#">
+                    <i class="nav-main-link-icon si si-user"></i>
+                    <span class="nav-main-link-name">Usuários</span>
+                </a>
+                <ul class="nav-main-submenu">
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="{% url 'accounts:addUser' %}">
+                            <i class="nav-main-link-icon si si-user-follow"></i>
+                            <span class="nav-main-link-name">Cadastrar Usuário</span>
+                        </a>
+                    </li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="{% url 'accounts:listUsers' %}">
+                            <i class="nav-main-link-icon si si-list"></i>
+                            <span class="nav-main-link-name">Listar Usuários</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-main-item">
+                <a 
+                    class="nav-main-link nav-main-link-submenu" 
+                    data-toggle="submenu" 
+                    aria-haspopup="true" 
+                    aria-expanded="false" 
+                    href="#">
+                    <i class="nav-main-link-icon si si-share-alt"></i>
+                    <span class="nav-main-link-name">Alimentadores</span>
+                </a>
+                <ul class="nav-main-submenu">
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="{% url 'electric_points:addFeeder' %}">
+                            <i class="nav-main-link-icon si si-plus"></i>
+                            <span class="nav-main-link-name">Cadastrar Alimentador</span>
+                        </a>
+                    </li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="{% url 'electric_points:listFeeders' %}">
+                            <i class="nav-main-link-icon si si-list"></i>
+                            <span class="nav-main-link-name">Listar Alimentadores</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            {% endif %}
+            
+            <!-- side menu for planing -->
+            <li class="nav-main-heading">Planejamento</li>
+            <li class="nav-main-item">
+                <a 
+                    class="nav-main-link nav-main-link-submenu" 
+                    data-toggle="submenu" 
+                    aria-haspopup="true" 
+                    aria-expanded="false" 
+                    href="#">
+                    <i class="nav-main-link-icon si si-energy"></i>
+                    <span class="nav-main-link-name">Pontos Elétricos</span>
+                </a>
+                <ul class="nav-main-submenu">
+                    {% if request.user.is_admin or request.user.is_planner %}
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="{% url 'electric_points:addElectricPoint' %}">
+                            <i class="nav-main-link-icon si si-plus"></i>
+                            <span class="nav-main-link-name">Cadastrar Ponto Elétrico</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="{% url 'electric_points:listElectricPoints' %}">
+                            <i class="nav-main-link-icon si si-list"></i>
+                            <span class="nav-main-link-name">Listar Pontos Elétricos</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- side menu for executing -->
+            <li class="nav-main-heading">Execução</li>
+            <li class="nav-main-item">
+                <a 
+                    class="nav-main-link nav-main-link-submenu" 
+                    data-toggle="submenu" 
+                    aria-haspopup="true" 
+                    aria-expanded="false" 
+                    href="#">
+                    <i class="nav-main-link-icon si si-puzzle"></i>
+                    <span class="nav-main-link-name">Projetos</span>
+                </a>
+                <ul class="nav-main-submenu">
+                    {% comment %} {% if request.user.is_admin or request.user.is_designer %}
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="{% url 'projects:addProject' %}">
+                            <i class="nav-main-link-icon si si-plus"></i>
+                            <span class="nav-main-link-name">Novo Projeto</span>
+                        </a>
+                    </li>
+                    {% endif %} {% endcomment %}
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="{% url 'projects:listProjects' %}">
+                            <i class="nav-main-link-icon si si-list"></i>
+                            <span class="nav-main-link-name">Listar Projetos</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- side menu for telecom -->
+            <li class="nav-main-heading">Telecom e Proteção</li>
+            <li class="nav-main-item">
+                <a 
+                    class="nav-main-link nav-main-link-submenu" 
+                    data-toggle="submenu" 
+                    aria-haspopup="true" 
+                    aria-expanded="false" 
+                    href="#">
+                    <i class="nav-main-link-icon fa fa-satellite-dish"></i>
+                    <span class="nav-main-link-name">Telecom</span>
+                </a>
+                <ul class="nav-main-submenu">
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="{% url 'electric_points:listCoverageStudies' %}">
+                            <i class="nav-main-link-icon si si-list"></i>
+                            <span class="nav-main-link-name">Listar Estudos Teóricos de Cobertura</span>
+                        </a>
+                    </li>
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="{% url 'electric_points:listSupplyDeliveries' %}">
+                            <i class="nav-main-link-icon si si-list"></i>
+                            <span class="nav-main-link-name">Listar Liberações de Material de Telecom</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-main-item">
+                <a 
+                    class="nav-main-link nav-main-link-submenu" 
+                    data-toggle="submenu" 
+                    aria-haspopup="true" 
+                    aria-expanded="false" 
+                    href="#">
+                    <i class="nav-main-link-icon fab fa-product-hunt"></i>
+                    <span class="nav-main-link-name">Proteção</span>
+                </a>
+                <ul class="nav-main-submenu">
+                    <li class="nav-main-item">
+                        <a class="nav-main-link" href="{% url 'electric_points:listCoverageStudies' %}">
+                            <i class="nav-main-link-icon si si-list"></i>
+                            <span class="nav-main-link-name">Listar Estudos Teóricos de Cobertura</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+    </div>
+    <!-- END Side Navigation -->
+</nav>
+<!-- END Sidebar -->

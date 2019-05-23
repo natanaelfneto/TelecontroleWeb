@@ -1,0 +1,102 @@
+{% extends 'projects/steps/base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load display_pendency_type %}
+{% load display_coverage_studies_type %}
+
+{% block progress_status_icon %}
+    <i class="fa fa-dolly text-secondary font-w600"></i>
+{% endblock progress_status_icon %}
+
+{% block progress_status %}
+Liberação de Materiais de Telecom
+{% endblock progress_status %}
+
+{% block progress_status_programmed_date_title %}
+Registrado em
+{% endblock progress_status_programmed_date_title %}
+ 
+{% block progress_status_programmed_date %}
+    {% language 'pt' %}
+        {{ supply.created_at|date:"D, d \d\e F \d\e Y" }}
+    {% endlanguage %}
+{% endblock progress_status_programmed_date %}
+
+{% block progress_status_actual_date_title %}
+Responsável pela liberação
+{% endblock progress_status_actual_date_title %}
+
+{% block progress_status_actual_date %}
+<span>{{ supply.created_by.get_full_name }} ({{ supply.created_by.username }})</span>    
+{% endblock progress_status_actual_date %}
+
+{% block table_block_5_head %}
+<span class="btn btn-sm btn-block disabled pb-0">Liberação tipo</span>
+{% endblock table_block_5_head %}
+
+{% block table_block_5_body %}
+    <span 
+        class="btn btn-sm btn-block btn-outline-dark border-0 disabled pt-0"
+        style="color: black !important;">
+        {{ supply|display_coverage_studies_type:'type' }}
+    </span>
+{% endblock table_block_5_body %}
+
+{% block delay %}
+    {% comment %} {% if supply|display_coverage_studies_type:'type' == 'Rede móvel 3G' or supply|display_coverage_studies_type:'type' == 'Rede móvel 3G com antena'%}
+        {% if study.mobile_signal is not null %}
+            {% if study.get_company_name_display == 'Claro' %}
+                <span class="btn btn-sm btn-block btn-danger">
+            {% elif study.get_company_name_display == 'Oi' %}
+                <span class="btn btn-sm btn-block btn-warning">
+            {% elif study.get_company_name_display == 'Tim' %}
+                <span class="btn btn-sm btn-block btn-info">
+            {% elif study.get_company_name_display == 'Vivo' %}
+                <span class="btn btn-sm btn-block btn-primary">
+            {% endif %}
+            {{ study.get_company_name_display }}</span>
+            <span class="btn btn-sm btn-block btn-secondary">
+                {{ study.mobile_signal }} dB
+            </span>
+        {% else %}
+        <span class="font-w600">Estudo não finalizado</span>
+        {% endif %}
+    {% endif %} {% endcomment %}
+{% endblock delay %}
+
+{% block progress_status_action %}
+    {% comment %} {% if stsupplyudy|display_coverage_studies_type:'type' == 'Rede móvel 3G' or supply|display_coverage_studies_type:'type' == 'Rede móvel 3G com antena' %}
+        {% if study.mobile_signal is null %}
+        <span 
+            class="btn btn-outline-success"    
+            data-toggle="modal"
+            target="{{ study.id }}"
+            onclick="passDataToStudyModal(this.getAttribute('target'))"
+            data-target="#modal-finished-coverage-study-popout">
+            <i class="fa fa-check mr-1"></i>
+        </span>
+        {% else %}
+        <span 
+            class="btn text-danger"
+            data-toggle="modal"
+            target="{% url 'electric_points:deleteCoverageStudy' study.id %}"
+            onclick="passDataToModal(this.getAttribute('target'))"
+            data-target="#modal-delete-popout">
+            <i class="si si-close mr-1"></i>
+        </span>
+        {% endif %}
+    {% else %} {% endcomment %}
+    <span 
+        class="btn text-danger"
+        data-toggle="modal"
+        target=""
+        onclick="passDataToModal(this.getAttribute('target'))"
+        data-target="#modal-delete-popout">
+        <i class="si si-close mr-1"></i>
+    </span>
+    {% comment %} {% endif %} {% endcomment %}
+{% endblock progress_status_action %}
+
+{% block progress_status_modal %}
+{% endblock progress_status_modal %}

@@ -1,0 +1,205 @@
+{% load staticfiles %}
+{% load i18n %}
+{% load has_permission %}
+{% load get_studies %}
+{% load get_supplies %}
+<div class="block-header-default row mx-0">
+    <ul 
+        class="nav nav-tabs nav-tabs-alt block-header block-header-default justify-content-start border-bottom-0 pb-0 pl-0" 
+        data-toggle="tabs" 
+        role="tablist">
+        <li class="nav-item">
+            <a class="nav-link mr-4 active" href="#btabs-alt-static-home">
+                Histórico de eventos do projeto
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link mr-4" href="#btabs-alt-static-studies">
+                Parêmetros de Telecom e Proteção
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="block-content tab-content p-0">
+    <div class="tab-pane active" id="btabs-alt-static-home" role="tabpanel">
+        <div class="pull-x">
+            <table class="js-table-checkable table table-vcenter font-size-sm mb-0">
+                {% if request.user.get_profile_display|has_permission:object.get_progress_status_display %}
+                    {% if not object.get_progress_status_display == 'A projetar' %}
+                    {% if not object.get_progress_status_display == 'Concluído' %}
+                    <a
+                        href="#"
+                        class="btn btn-outline-danger float-right m-2"
+                        data-toggle="modal" 
+                        data-target="#modal-pendency-popout">
+                        <i class="si si-close"></i>
+                        <span>Registrar pendência</span>
+                    </a>
+                    {% endif %}
+                    {% endif %}
+                {% endif %}
+                <tbody>
+                    <!-- check if project is finished -->
+                    {% if object.operation.real_date %}
+                        <!-- include finished status -->
+                        {% include 'projects/steps/finished.html' %}
+                    {% endif %}
+                    
+                    <!-- check if project is operational -->
+                    {% if object.commissioning.real_date %}
+                        <!-- include commissioned status -->
+                        {% include 'projects/steps/operated.html' %}
+                    {% endif %}
+
+                    <!-- check if project is available to be commissioned -->
+                    {% if object.energizing.real_date %}
+                        <!-- include pendencies for commission status -->
+                        {% for pendency in object.pendencies.all %}
+                            <!-- this check if pendencies COME FROM operation -->
+                            {% if pendency.get_progress_status_display == 'A operar' %}
+                                {% include 'projects/steps/pendencies.html' %}
+                            {% endif %}
+                        {% endfor %}
+                        <!-- include commissioned status -->
+                        {% include 'projects/steps/commissioned.html' %}
+                    {% endif %}
+
+                    <!-- check if project is available to be energized -->
+                    {% if object.installation.real_date %}
+                        <!-- include pendencies for energized status-->
+                        {% for pendency in object.pendencies.all %}
+                            <!-- this check if pendencies COME FROM commissioning -->
+                            {% if pendency.get_progress_status_display == 'A comissionar' %}
+                                {% include 'projects/steps/pendencies.html' %}
+                            {% endif %}
+                        {% endfor %}
+                        <!-- include location changes for electric point in install status -->
+                        {% for location in object.electric_point.locations.all %}
+                            {% if location.obsolete and location.get_progress_status_display == 'A energizar' %}
+                                {% include 'projects/steps/locations.html' %}
+                            {% endif %}
+                        {% endfor %}
+                        <!-- include energized status -->
+                        {% include 'projects/steps/energized.html' %}
+                    {% endif %}
+
+                    <!-- check if project is available to be installed -->
+                    {% if object.designing.real_date %}
+                        <!-- include pendencies for energized status-->
+                        {% for pendency in object.pendencies.all %}
+                            <!-- this check if pendencies COME FROM energizing -->
+                            {% if pendency.get_progress_status_display == 'A energizar' %}
+                                {% include 'projects/steps/pendencies.html' %}
+                            {% endif %}
+                        {% endfor %}
+
+                        <!-- include location changes for electric point in install status -->
+                        {% for location in object.electric_point.locations.all %}
+                            {% if location.obsolete and location.get_progress_status_display == 'A instalar' %}
+                                {% include 'projects/steps/locations.html' %}
+                            {% endif %}
+                        {% endfor %}
+
+                        <!-- include installed status -->
+                        {% include 'projects/steps/installed.html' %}
+                    {% endif %}
+
+                    <!-- include pendencies for designing status -->
+                    {% for pendency in object.pendencies.all %}
+                        <!-- this check if pendencies COME FROM installation -->
+                        {% if pendency.get_progress_status_display == 'A instalar' %}
+                            {% include 'projects/steps/pendencies.html' %}
+                        {% endif %}
+                    {% endfor %}
+
+                    <!-- include location changes for electric point in design status -->
+                    {% for location in object.electric_point.locations.all %}
+                        {% if location.obsolete and location.get_progress_status_display == 'A projetar' %}
+                            {% include 'projects/steps/locations.html' %}
+                        {% endif %}
+                    {% endfor %}
+
+                    <!-- include installed status -->
+                    {% include 'projects/steps/designed.html' %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="tab-pane" id="btabs-alt-static-studies" role="tabpanel">
+        <table class="js-table-checkable table table-vcenter font-size-sm mb-0">
+            {% if request.user.is_admin or request.user.is_telecom or request.user.is_protection %}
+            <div class="dropdown float-right m-2">
+                <button 
+                    type="button" 
+                    class="btn btn-outline-info dropdown-toggle" 
+                    id="dropdown-default-outline-info" 
+                    data-toggle="dropdown" 
+                    aria-haspopup="true" 
+                    aria-expanded="false">
+                    Iniciar nova atividade
+                </button>
+                <div 
+                    class="dropdown-menu dropdown-menu-right font-size-sm" 
+                    aria-labelledby="dropdown-default-outline-info" 
+                    x-placement="bottom-start">
+                    {% if request.user.is_admin or request.user.is_telecom %}
+                    <a
+                        href="#"
+                        class="dropdown-item"
+                        data-toggle="modal" 
+                        data-target="#modal-coverage-study-popout">
+                        <i class="si si-notebook mr-2"></i>
+                        <span>Iniciar Estudo teórico de cobertura</span>
+                    </a>
+                    <a
+                        href="#"
+                        class="dropdown-item"
+                        data-toggle="modal" 
+                        data-target="#modal-supply-delivery-popout">
+                        <i class="si si-notebook mr-2"></i>
+                        <span>Iniciar Liberação de materiais de Telecom</span>
+                    </a>
+                    {% endif %}
+
+                    {% if request.user.is_admin %}
+                    <div class="dropdown-divider"></div>
+                    {% endif %}
+
+                    {% if request.user.is_admin or request.user.is_protection %}
+                    <a
+                        href="#"
+                        class="dropdown-item"
+                        data-toggle="modal" 
+                        data-target="#modal-feeder-study-popout">
+                        <i class="si si-notebook mr-2"></i>
+                        <span>Iniciar Estudo de Alimentador</span>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+            <tbody>
+                {% for study in object.electric_point|get_studies:'feeder_studies' %}
+                    {% include 'projects/steps/feeder_studies.html' %}
+                {% endfor %}
+                {% for supply in object.electric_point|get_supplies %}
+                    {% include 'projects/steps/supply_deliveries.html' %}
+                {% endfor %}
+                {% for study in object.electric_point|get_studies:'coverage_studies' %}
+                    {% include 'projects/steps/coverage_studies.html' %}
+                {% endfor %}
+
+                {% if object.electric_point|get_studies:'feeder_studies'|length == 0 %}
+                {% if object.electric_point|get_supplies|length == 0 %}
+                {% if object.electric_point|get_studies:'coverage_studies'|length == 0 %}
+                    <div class="p-4">
+                        Não foi encontrado nenhum cadastro de 
+                        <b>Parâmetros de Telecom e Proteção</b>.
+                    </div>
+                {% endif %}
+                {% endif %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>

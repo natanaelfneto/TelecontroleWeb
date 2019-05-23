@@ -1,0 +1,47 @@
+{% load crispy_forms_tags %}
+<div 
+    class="modal fade show" 
+    id="modal-cannot-create-project-popout" 
+    tabindex="-1" 
+    role="dialog" 
+    aria-labelledby="modal-feeder-popout" 
+    style="display: none; padding-right: 17px;" 
+    aria-modal="true">
+    <div class="modal-dialog modal-dialog-popout" role="document">
+        <div class="modal-content">
+                <div class="block block-themed block-transparent mb-0">
+                    <div class="block-header bg-primary-dark">
+                        <h3 class="block-title">Mensagem de aviso</h3>
+                        <div class="block-options">
+                            <button 
+                                type="button" 
+                                class="btn-block-option" 
+                                data-dismiss="modal" 
+                                aria-label="Close">
+                                <i class="fa fa-fw fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="block-content font-size-sm">
+                        <div id="modal_content_for_feeder">
+                            <p>Não é possível vincular um <b>Projeto</b> a este
+                                <b>Ponto Elétrico</b> pois apenas usuários com
+                                perfil de <b>Projeto</b> tem esta permissão.
+                                O perfil do usuário atualmente autenticado é
+                                <b>{{ request.user.get_profile_display }}</b>.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="block-content block-content-full text-right border-top">
+                        <button 
+                            type="button" 
+                            class="btn btn-sm btn-outline-info" 
+                            data-dismiss="modal">
+                            Fechar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,201 @@
+{% load staticfiles %}
+{% load i18n %}
+{% load get_active_location %}
+<div class="block">
+    <div class="block-header block-header-default">
+        <h3 class="block-title">Projeto</h3>
+        <div class="block-options">
+            {% if object.get_progress_status_display == 'A projetar' %}
+                {% if request.user.is_admin or request.user.is_designer %}
+                <a
+                    href="{% url 'projects:updateProject' object.id %}"
+                    class="btn btn-sm btn-outline-info">
+                    <i class="fa fa-pencil-alt mr-1"></i>
+                    Editar Projeto
+                </a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="block-content">
+        <div class="options-container fx-item-rotate-l">                                
+            <div class="options-overlay bg-black-75">
+                <div class="options-overlay-content"></div>
+            </div>
+        </div>
+        <ul class="nav nav-pills flex-column font-size-sm push pb-3">
+            <li>
+                <a 
+                    class="btn btn-block btn-dark btn-square borderless"
+                    href="">
+                    <span class="text-uppercase">
+                        {{ object.get_progress_status_display }}
+                    </span>
+                </a>
+            </li>
+            <li class="my-0">
+                <div class="btn btn-block btn-outline-light btn-square borderless">
+                    <div class="row m-auto">
+                        <span class="col-2 m-auto pl-0 text-muted">
+                            <i class="fa fa-fw fa-user mr-1"></i>
+                        </span>
+                        <span class="col-7 px-0">
+                            <span class="row mx-1 pt-1 font-w300">
+                                <small class="text-muted">Ponto Elétrico</small>
+                            </span>
+                            <span class="row mx-1 pb-1 text-left text-muted font-w400">
+                                {{ object.electric_point.id|get_active_location:'related_electric_point_name' }}
+                            </span>
+                        </span>
+                        {% if object.get_progress_status_display == 'A projetar' or object.get_progress_status_display == 'A instalar' %}
+                            {% if request.user.is_admin or request.user.is_designer or request.user.is_constructor %}
+                            <a 
+                                class="col-3 m-auto p-0 text-muted"
+                                data-toggle="modal" 
+                                data-target="#modal-electric-point-popout"
+                                href="">
+                                <span class="btn btn-outline-info">
+                                    <i class="fa fa-fw fa-exchange-alt mr-1"></i>
+                                </span>
+                            </a>
+                            {% else %}
+                            <a class="col-3 m-auto p-0 text-muted" href=""></a>    
+                            {% endif %}
+                        {% else %}
+                        <a class="col-3 m-auto p-0 text-muted" href=""></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </li>
+            <li class="mt-0">
+                <a class="btn btn-block btn-outline-light btn-square borderless" href="">
+                    <div class="row m-auto">
+                        <span class="col-2 m-auto pl-0 text-muted">
+                            <i class="fa fa-fw fa-map-marked-alt mr-1"></i>
+                        </span>
+                        <span class="col-10 px-0">
+                            <span class="row mx-1 pt-1 font-w300">
+                                <small class="text-muted">Coordenadas geográficas</small>
+                            </span>
+                            <span class="row mx-1 text-left text-muted font-w400">
+                                <span class="font-w400"><small>Latitude:</small></span>
+                                <span class="ml-auto mr-4">
+                                    {{ object.electric_point.locations|get_active_location:'latitude' }}
+                                </span>
+                            </span>
+                            <span class="row mx-1 text-left text-muted font-w400">
+                                <span class="font-w400"><small>Longitude:</small></span>
+                                <span class="ml-auto mr-4">
+                                    {{ object.electric_point.locations|get_active_location:'longitude' }}
+                                </span>
+                            </span>
+                        </span>
+                    </div>
+                </a>
+            </li>
+            <li class="mt-0">
+                <a class="btn btn-block btn-outline-light btn-square borderless" href="">
+                    <div class="row m-auto">
+                        <span class="col-2 m-auto pl-0 text-muted">
+                            <i class="fa fa-fw fa-map-signs mr-1"></i>
+                        </span>
+                        <span class="col-10 px-0">
+                            <span class="row mx-1 pt-1 font-w300">
+                                <small class="text-muted">Localização</small>
+                            </span>
+                            <span class="row mx-1 text-left text-muted font-w400">
+                                <span><small>
+                                    {{ object.electric_point.locations|get_active_location:'get_city_display' }},
+                                    {{ object.electric_point.locations|get_active_location:'get_state_display' }}
+                                    ({{ object.electric_point.locations|get_active_location:'state' }})
+                                </small></span>
+                            </span>
+                        </span>
+                    </div>
+                </a>
+            </li> 
+            <li class="my-0">
+                <div class="btn btn-block btn-outline-light btn-square borderless">
+                    <div class="row m-auto">
+                        <span class="col-2 m-auto pl-0 text-muted">
+                            <i class="fa fa-fw fa-share-square mr-1"></i>
+                        </span>
+                        <span class="col-7 px-0">
+                            <span class="row mx-1 pt-1 font-w300">
+                                <small class="text-muted">alimentador</small>
+                            </span>
+                            <span class="row mx-1 pb-1 text-left text-muted font-w400">
+                                {{ object.electric_point.feeder.name }}
+                            </span>
+                        </span>
+                        <a 
+                            class="col-3 m-auto p-0 text-muted"
+                            data-toggle="modal" 
+                            data-target="#modal-feeder-popout"
+                            href="">
+                            <span class="btn btn-outline-info">
+                                <i class="fa fa-fw fa-eye mr-1"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li class="my-0">
+                <a class="btn btn-block btn-outline-light btn-square borderless" href="">
+                    <div class="row m-auto">
+                        <span class="col-2 m-auto pl-0 text-muted">
+                            <i class="fa fa-fw fa-file-alt mr-1"></i>
+                        </span>
+                        <span class="col-10 px-0">
+                            <span class="row mx-1 pt-1 font-w300">
+                                <small class="text-muted">SOB</small>
+                            </span>
+                            <span class="row mx-1 pb-1 text-left text-muted font-w400">
+                                {{ object.sob }}
+                            </span>
+                        </span>
+                    </div>
+                </a>
+            </li>
+            <li class="my-0">
+                <a class="btn btn-block btn-outline-light btn-square borderless" href="">
+                    <div class="row m-auto">
+                        <span class="col-2 m-auto pl-0 text-muted">
+                            <i class="fa fa-fw fa-calendar-alt mr-1"></i>
+                        </span>
+                        <span class="col-10 px-0">
+                            <span class="row mx-1 pt-1 font-w300">
+                                <small class="text-muted">Cadastrado em</small>
+                            </span>
+                            <span class="row mx-1 pb-1 text-left text-muted font-w400">
+                                {% language 'pt' %}
+                                {{ object.created_at|date:"D, d \d\e F \d\e Y" }}
+                                {% endlanguage %}
+                            </span>
+                        </span>
+                    </div>
+                </a>
+            </li>
+            <li class="my-0">
+                <a class="btn btn-block btn-outline-light btn-square borderless" href="">
+                    <div class="row m-auto">
+                        <span class="col-2 m-auto pl-0 text-muted">
+                            <i class="fa fa-fw fa-clone mr-1"></i>
+                        </span>
+                        <span class="col-10 px-0">
+                            <span class="row mx-1 pt-1 font-w300">
+                                <small class="text-muted">Cadastrado por</small>
+                            </span>
+                            <span class="row mx-1 text-left text-muted font-w400">
+                                {{ object.created_by.get_full_name }}
+                            </span>
+                            <span class="row mx-1 text-left text-muted font-w400">
+                                ({{ object.created_by.username }})
+                            </span>
+                        </span>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

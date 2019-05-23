@@ -1,0 +1,121 @@
+{% extends 'common/list.html' %}
+{% load staticfiles %}
+
+{% block scripts %}        
+<script>
+    function passDataToModal(url) {
+        document.getElementById('modal-submit-button').href = url;
+    }
+</script>
+{% endblock scripts %}
+
+{% block list_add_new %}
+<div>
+    <a
+        href="{% url 'accounts:addUser' %}"
+        class="btn btn-outline-primary" 
+        data-toggle="block-option">
+        <i class="si si-plus"></i>
+        <span>Adicionar {{ page_title }}</span>
+    </a>
+</div>  
+{% endblock list_add_new %}
+ 
+{% block list_head %}
+<thead>
+    <tr class="text-uppercase">
+        <!-- <th class="font-w700">ID</th> -->
+        <th class="d-none d-sm-table-cell font-w700 align-middle">Nome completo</th>
+        <th class="font-w700 align-middle">Usuário Enel</th>
+        <th class="font-w700 align-middle">Email</th>
+        <th class="font-w700 align-middle">Perfil</th>
+        <th class="font-w700 align-middle">Cadastrado por</th>
+        <th class="font-w700 text-center"></th>
+        <th class="font-w700 text-center" style="width: 40px;"></th>
+        <th class="font-w700 text-center" style="width: 40px;"></th>
+        <th class="font-w700 text-center" style="width: 40px;"></th>
+        <th class="font-w700 text-center" style="width: 40px;"></th>
+    </tr>
+</thead>
+{% endblock list_head %}
+
+{% block list_body %}
+<tbody>
+    {% for user in object_list %}
+    <tr>
+        <!-- <td><span class="font-w600">{{ user.id }}</span></td> -->
+        <td class="d-none d-sm-table-cell">
+            <a class="link-fx" href="{% url 'accounts:detailUser' user.id %}">
+                <span class="font-size-sm text-muted">
+                    {{ user.get_full_name }}
+                </span>
+            </a>
+        </td>
+        <td class="d-none d-sm-table-cell">
+            <a class="link-fx" href="{% url 'accounts:detailUser' user.id %}">
+                <span class="font-size-sm text-muted">
+                    {{ user.username }}
+                </span>
+            </a>
+        </td>
+        <td class="d-none d-sm-table-cell">
+            <a class="link-fx" href="{% url 'accounts:detailUser' user.id %}">
+                <span class="font-size-sm text-muted">
+                    {{ user.email }}
+                </span>
+            </a>
+        </td>
+        <td class="d-none d-sm-table-cell">
+            <span class="font-size-sm text-muted">
+                {{ user.get_profile_display }}
+            </span>
+        </td>
+        <td class="d-none d-sm-table-cell">
+            <a class="link-fx" href="{% url 'accounts:detailUser' user.created_by.id %}">
+                <span class="font-size-sm text-muted">
+                    {{ user.created_by.get_full_name }} ({{ user.created_by.username }})
+                </span>
+            </a>
+        </td>
+        <td>
+            <a href="{% url 'accounts:toggleActivation' user.id %}">
+            {% if user.active %}
+                <span class="font-w600 badge badge-success">Habilitado</span>                                
+            {% else %}
+                <span class="font-w600 badge badge-danger">Desabilitado</span>
+            {% endif %}
+            </a>
+        </td>
+        <td>
+            <a href="{% url 'accounts:toggleSuperUser' user.id %}">
+            {% if user.is_staff %}
+                <i class="si si-star text-warning"></i>
+            {% else %}
+                <i class="si si-user text-secondary"></i>
+            {% endif %}
+            </a>
+        </td>
+        <td class="text-center">
+            <a href="{% url 'accounts:updateUser' user.id %}">
+                <i class="si si-note text-secondary"></i>
+            </a>
+        </td>
+        <td class="text-center">
+            <a
+                href="#"
+                target="{% url 'accounts:deleteUser' user.id %}"
+                onclick="passDataToModal(this.getAttribute('target'))"
+                data-toggle="modal" 
+                data-target="#modal-delete-popout">
+                <i class="si si-close text-danger"></i>
+            </a>
+        </td>
+        <td class="text-center">
+            <a href="{% url 'accounts:detailUser' user.id %}">
+                <i class="si si-info text-info"></i>
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+{% endblock list_body %}

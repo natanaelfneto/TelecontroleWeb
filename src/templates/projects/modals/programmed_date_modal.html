@@ -1,0 +1,56 @@
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+<div 
+    class="modal fade show" 
+    id="modal-programmed-date-popout" 
+    tabindex="-1" 
+    role="dialog" 
+    aria-labelledby="modal-block-popout" 
+    style="display: none; padding-right: 17px;" 
+    aria-modal="true">
+    <div class="modal-dialog modal-dialog-popout" role="document">
+        <div class="modal-content">
+            <form 
+                id="update_programmed_date_form"
+                method="POST" 
+                action="{% url 'projects:updateProgrammedDate' object.id %}">
+                {% csrf_token %}
+                <div class="block block-themed block-transparent mb-0">
+                    <div class="block-header bg-primary-dark">
+                        <h3 class="block-title">Movimentar Projeto</h3>
+                        <div class="block-options">
+                            <button 
+                                type="button" 
+                                class="btn-block-option" 
+                                data-dismiss="modal" 
+                                aria-label="Close">
+                                <i class="fa fa-fw fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="block-content font-size-sm">
+                        <div id="modal-content_for_programmed_date">
+                            {% crispy forms.project_programmed_date %}
+                        </div>
+                    </div>
+                    <div class="block-content block-content-full text-right border-top">
+                        <button
+                            type="submit"
+                            id="update_pprogrammed_date_button"
+                            name="update_programmed_date_button"
+                            class="btn btn-sm btn-info">
+                            <i class="fa fa-pen mr-1"></i>
+                            Registrar programação
+                        </button>
+                        <button 
+                            type="button" 
+                            class="btn btn-sm btn-outline-secondary" 
+                            data-dismiss="modal">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

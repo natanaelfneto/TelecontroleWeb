@@ -1,0 +1,89 @@
+{% extends 'common/list.html' %}
+{% load staticfiles %}
+
+{% block scripts %}        
+<script>
+    function passDataToModal(url) {
+        document.getElementById('modal-submit-button').href = url;
+    }
+</script>
+{% endblock scripts %}
+
+{% block list_add_new %}
+{% if request.user.is_admin %}
+<div>
+    <a
+        href="{% url 'electric_points:addFeeder' %}"
+        class="btn btn-outline-primary" 
+        data-toggle="block-option">
+        <i class="si si-plus"></i>
+        <span>Adicionar {{ page_title }}</span>
+    </a>
+</div>  
+{% endif %}
+{% endblock list_add_new %}
+
+{% block list_head %} 
+<thead>
+    <tr class="text-uppercase">
+        <!-- <th class="font-w700">ID</th> -->
+        <th class="d-none d-sm-table-cell font-w700 align-middle">Alimentador</th>
+        <th class="font-w700 align-middle">Conjunto</th>
+        <th class="font-w700 align-middle">Região elétrica</th>
+        <th class="font-w700 align-middle text-center">Qtd. de chaves</th>
+        <th class="font-w700 align-middle text-center">Qtd. de religadores</th>
+        <th class="font-w700 text-center" style="width: 40px;"></th>
+        <th class="font-w700 text-center" style="width: 40px;"></th>                            
+    </tr>
+</thead>
+{% endblock list_head %}
+
+{% block list_body %}
+<tbody>
+    {% for feeder in object_list %}
+    <tr>
+        <!-- <td><span class="font-w600">{{ feeder.id }}</span></td> -->
+        <td class="d-none d-sm-table-cell">
+            <span class="font-size-sm text-muted">
+                {{ feeder.name }}
+            </span>
+        </td>
+        <td class="d-none d-sm-table-cell">
+            <span class="font-size-sm text-muted">
+                {{ feeder.set_name }}
+            </span>
+        </td>
+        <td class="d-none d-sm-table-cell">
+            <span class="font-size-sm text-muted">
+                {{ feeder.electric_region }}
+            </span>
+        </td>
+        <td class="d-none d-sm-table-cell text-center">
+            <span class="font-size-sm text-muted">
+                {{ feeder.key_amount }}
+            </span>
+        </td>
+        <td class="d-none d-sm-table-cell text-center">
+            <span class="font-size-sm text-muted">
+                {{ feeder.recloser_amount }}
+            </span>
+        </td>
+        <td class="text-center">
+            <a href="{% url 'electric_points:updateFeeder' feeder.id %}">
+                <i class="si si-note text-secondary"></i>
+            </a>
+        </td>
+        <td class="text-center">
+            <a
+                href="#"
+                target="{% url 'electric_points:deleteFeeder' feeder.id %}"
+                onclick="passDataToModal(this.getAttribute('target'))"
+                data-toggle="modal" 
+                data-target="#modal-block-popout">
+                <i class="si si-close text-danger"></i>
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+{% endblock list_body %}

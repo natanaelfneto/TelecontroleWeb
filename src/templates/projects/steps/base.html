@@ -1,0 +1,62 @@
+{% load staticfiles %}
+{% load i18n %}
+<tr>
+    <!-- table block 1 -->
+    <td 
+        class="font-w600 pl-4 pr-1">
+        {% block progress_status_icon %}
+        {% endblock progress_status_icon %}
+    </td>
+    <!-- table block 2 -->
+    <td 
+        class="font-w600" 
+        style="width: 140px;">
+        {% block progress_status %}
+        {% endblock progress_status %}
+    </td>
+    <!-- table block 3 -->
+    <td style="width: 180px;">
+        <span class="font-w600 text-primary">
+            {% block progress_status_programmed_date_title %}
+            {% endblock progress_status_programmed_date_title %}
+        </span>
+        <div class="text-muted mt-1">
+            {% block progress_status_programmed_date %}
+            {% endblock progress_status_programmed_date %}
+        </div>
+    </td>
+    <!-- table block 4 -->
+    <td style="width: 200px;">
+        <span class="font-w600 text-primary">
+            {% block progress_status_actual_date_title %}
+            {% endblock progress_status_actual_date_title %}
+        </span>
+        <div class="text-muted mt-1">
+            {% block progress_status_actual_date %}
+            {% endblock progress_status_actual_date %}
+        </div>
+    </td>
+    <!-- table block 5 -->
+    <td class="text-muted" style="width: 180px;">
+        <span class="font-w600 text-primary">
+            {% block table_block_5_head %}
+            {% endblock table_block_5_head %}
+        </span>
+        <div class="text-muted mt-1">
+            {% block table_block_5_body %}
+            {% endblock table_block_5_body %}
+        </div>
+    </td>
+    <!-- table block 6 -->
+    <td class="text-muted" style="width: 110px;">
+        <em>{% block delay %}{% endblock delay %}</em>
+    </td>
+    <!-- table block 7 -->
+    <td class="text-muted" style="width: 50px;">
+        {% block progress_status_action %}
+        {% endblock progress_status_action %}
+    </td>
+</tr>
+<!-- modal block -->
+{% block progress_status_modal %}
+{% endblock progress_status_modal %}

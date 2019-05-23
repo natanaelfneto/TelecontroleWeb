@@ -1,0 +1,137 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>Telecontrole</title>
+        <meta name="description" content="Telecontrole">
+        <meta name="author" content="natanaelfneto">
+        <meta name="robots" content="noindex, nofollow">
+        <!-- Open Graph Meta -->
+        <meta property="og:title" content="Telecontrole">
+        <meta property="og:site_name" content="Telecontrole">
+        <meta property="og:description" content="Telecontrole">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="">
+        <meta property="og:image" content="">
+        <link rel="shortcut icon" href="{% static 'img/enel/favicon.ico' %}">
+        <link rel="stylesheet" id="css-main"
+            href="{% static 'plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css' %}">
+        <link rel="stylesheet" id="css-main" href="{% static 'plugins/oneui/css/oneui.min.css' %}">
+        {% block styles %}
+        {% endblock styles %}
+        <style>
+            .text-unset {
+                text-transform: unset;
+            }
+            .h-3 {
+                height: 3rem;
+            }
+            .borderless {
+                border: 0;
+            }
+            .muted-page-link:hover {
+                color: unset;
+            }
+            li.my-0 {
+                max-height: 4rem;
+            }
+            textarea {
+                resize: none;
+            }
+            td > span.btn.text-secondary:hover {
+                /* color: blue !important */
+            }
+            .dropdown-menu-right {
+                position: absolute;
+                will-change: transform; 
+                top: 0px; 
+                left: 0px; 
+                transform: translate3d(0px, 38px, 0px);
+            }
+        </style>
+    </head>
+    <body>
+        <div 
+            id="page-container" 
+            class="sidebar-o sidebar-dark sidebar-mini enable-page-overlay side-scroll page-header-fixed">
+            {% include 'common/sidebar_user.html' %}            
+            {% include 'common/sidebar_menu.html' %}
+            <!-- Header -->
+            <header id="page-header">
+                <!-- Header Content -->
+                <div class="content-header">
+                    <div class="d-flex align-items-center"></div>
+                    <div class="d-flex align-items-center">
+                        {# {% include 'common/notifications.html' %} #}
+                        <div class="link-fx font-w600 mr-2">
+                            <small class="">
+                            {{ request.user.get_full_name }} ({{ request.user.username }})
+                            </small>
+                        </div>
+                        <button 
+                            type="button" 
+                            class="btn btn-sm btn-dual ml-2" 
+                            data-toggle="layout" 
+                            data-action="side_overlay_toggle">
+                            <i class="fa fa-fw fa-list-ul fa-flip-horizontal"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- END Header Content -->
+                <!-- Header Loader -->
+                <div id="page-header-loader" class="overlay-header bg-white">
+                    <div class="content-header">
+                        <div class="w-100 text-center">
+                            <i class="fa fa-fw fa-circle-notch fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Header Loader -->
+            </header>
+            <!-- END Header -->
+            {% block content %}
+            {% endblock content %}  
+            {% include 'common/footer.html' %}
+        </div>
+        <!-- END Page Container -->
+        <script src="{% static 'plugins/oneui/js/oneui.core.min.js' %}"></script>
+        <script src="{% static 'plugins/oneui/js/oneui.app.min.js' %}"></script>
+        <script src="{% static 'plugins/chart.js/Chart.bundle.min.js' %}"></script>
+        <script src="{% static 'plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
+        <script src="{% static 'plugins/oneui/js/pages/be_pages_dashboard.min.js' %}"></script>
+        <script>
+            /*
+            * DateTimePicker configuration function
+            */
+            function addDatePicker(selector, start_range, end_range) {
+                $(selector).datepicker({
+                    format: 'dd/mm/yyyy',
+                    todayBtn: "false",
+                    todayHighlight: true,
+                    clearBtn: false,
+                    language: "pt-BR",
+                    toggleActive: true,
+                    startDate: start_range,
+                    endDate: end_range,
+                });
+            }
+            /*
+            * Run script on page document status 'ready' 
+            */
+            $(document).ready(function() {
+                // call datepicker for selector
+                addDatePicker('.dateinput[name="programmed_date"]', 'today', '+1y');
+                addDatePicker('.dateinput[name="real_date"]', '-1y', 'today');
+                    
+                // hide datepicker on date selection
+                $('.dateinput').on('changeDate', function(ev){
+                    $(this).datepicker('hide');
+                });
+            });
+        </script>
+        {% block scripts %}
+        {% endblock scripts %}
+    </body>
+</html>

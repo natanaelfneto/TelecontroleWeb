@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load get_most_recent_avatar_url %}
+{% block content %}
+<!-- Main Container -->
+<main id="main-container">
+    {% include 'common/page_navigation_head.html' %}
+    <!-- Page Content -->
+    <div class="content">
+        <div class="row">
+            <div class="col-md-5 col-xl-3">
+                <!-- Inbox Side Navigation -->
+                <div id="one-inbox-side-nav" class="d-block push">
+                    <!-- Inbox Menu -->
+                    <div class="block">
+                        <div class="block-header block-header-default">
+                            <h3 class="block-title">Perfil</h3>
+                            <div class="block-options">
+                                <a
+                                    href="{% url 'accounts:updateUser' object.id %}"
+                                    class="btn btn-sm btn-outline-info">
+                                    <i class="fa fa-pencil-alt mr-1"></i>
+                                    Editar Perfil
+                                </a>
+                            </div>
+                        </div>
+                        <div class="block-content">
+                            <div class="options-container fx-item-rotate-l">
+                                <img 
+                                    class="img-fluid options-item w-100" 
+                                    src="{{ object.id|get_most_recent_avatar_url }}" 
+                                    alt="">
+                                <div class="options-overlay bg-black-75">
+                                    <div class="options-overlay-content"></div>
+                                </div>
+                            </div>
+                            <ul class="nav nav-pills flex-column font-size-sm push">
+                                {% if object.is_superuser %}
+                                <li>
+                                    <a 
+                                        class="btn btn-block btn-outline-dark btn-square borderless"
+                                        {% if request.user.is_superuser %}
+                                        href="{% url 'accounts:toggleSuperUser' object.id %}">
+                                        {% else %}href="#">{% endif %}
+                                        <span>
+                                            <i class="fa fa-fw fa-star mr-1 text-warning"></i>
+                                            <span>Administrador</span>
+                                        </span>
+                                    </a>
+                                </li>
+                                {% else %}
+                                <li>
+                                    <a 
+                                        class="btn btn-block btn-outline-dark btn-square borderless"
+                                        {% if request.user.is_superuser %}
+                                        href="{% url 'accounts:toggleSuperUser' object.id %}">
+                                        {% else %}href="#">{% endif %}
+                                        <span>
+                                            <i class="fa fa-fw fa-user mr-1 text-secondary"></i>
+                                            <span>Usuário</span>
+                                        </span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                                <li class="my-0">
+                                    <a class="btn btn-block btn-outline-light btn-square borderless" href="">
+                                        <div class="row m-auto">
+                                            <span class="col-2 m-auto pl-0 text-muted">
+                                                <i class="fa fa-fw fa-user mr-1"></i>
+                                            </span>
+                                            <span class="col-10 px-0">
+                                                <span class="row mx-1 pt-1 font-w300">
+                                                    <small class="text-muted">Nome completo</small>
+                                                </span>
+                                                <span class="row mx-1 pb-1 text-left text-muted font-w400">
+                                                    {{ object.get_full_name }}
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="my-0">
+                                    <a class="btn btn-block btn-outline-light btn-square borderless" href="">
+                                        <div class="row m-auto">
+                                            <span class="col-2 m-auto pl-0 text-muted">
+                                                <i class="fa fa-fw fa-id-badge mr-1"></i>
+                                            </span>
+                                            <span class="col-10 px-0">
+                                                <span class="row mx-1 pt-1 font-w300">
+                                                    <small class="text-muted">Usuário Enel</small>
+                                                </span>
+                                                <span class="row mx-1 pb-1 text-left text-muted font-w400">
+                                                    {{ object.username }}
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="my-0">
+                                    <a class="btn btn-block btn-outline-light btn-square borderless" href="">
+                                        <div class="row m-auto">
+                                            <span class="col-2 m-auto pl-0 text-muted">
+                                                <i class="fa fa-fw fa-envelope mr-1"></i>
+                                            </span>
+                                            <span class="col-10 px-0">
+                                                <span class="row mx-1 pt-1 font-w300">
+                                                    <small class="text-muted">Email</small>
+                                                </span>
+                                                <span class="row mx-1 pb-1 text-left text-muted font-w400">
+                                                    {{ object.email }}
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="my-0">
+                                    <a class="btn btn-block btn-outline-light btn-square borderless" href="">
+                                        <div class="row m-auto">
+                                            <span class="col-2 m-auto pl-0 text-muted">
+                                                <i class="fa fa-fw fa-calendar-alt mr-1"></i>
+                                            </span>
+                                            <span class="col-10 px-0">
+                                                <span class="row mx-1 pt-1 font-w300">
+                                                    <small class="text-muted">Cadastrado em</small>
+                                                </span>
+                                                <span class="row mx-1 pb-1 text-left text-muted font-w400">
+                                                    {% language 'pt' %}
+                                                    {{ object.created_at|date:"D, d \d\e F \d\e Y" }}
+                                                    {% endlanguage %}
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="my-0">
+                                    <a class="btn btn-block btn-outline-light btn-square borderless" href="">
+                                        <div class="row m-auto">
+                                            <span class="col-2 m-auto pl-0 text-muted">
+                                                <i class="fa fa-fw fa-clone mr-1"></i>
+                                            </span>
+                                            <span class="col-10 px-0">
+                                                <span class="row mx-1 pt-1 font-w300">
+                                                    <small class="text-muted">Cadastrado por</small>
+                                                </span>
+                                                <span class="row mx-1 text-left text-muted font-w400">
+                                                    {{ object.created_by.get_full_name }}
+                                                </span>
+                                                <span class="row mx-1 text-left text-muted font-w400">
+                                                    ({{ object.created_by.username }})
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}

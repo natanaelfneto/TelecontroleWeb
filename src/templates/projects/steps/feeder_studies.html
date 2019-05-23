@@ -1,0 +1,217 @@
+{% extends 'projects/steps/base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load display_pendency_type %}
+{% load display_coverage_studies_type %}
+
+{% block progress_status_icon %}
+    <i class="si si-book-open text-primary font-w600"></i>
+{% endblock progress_status_icon %}
+
+{% block progress_status %}
+Estudo de Alimentador
+{% endblock progress_status %}
+
+{% block progress_status_programmed_date_title %}
+Registrado em
+{% endblock progress_status_programmed_date_title %}
+ 
+{% block progress_status_programmed_date %}
+    {% language 'pt' %}
+        {{ study.created_at|date:"D, d \d\e F \d\e Y" }}
+    {% endlanguage %}
+{% endblock progress_status_programmed_date %}
+
+{% block progress_status_actual_date_title %}
+Responsável pelo estudo
+{% endblock progress_status_actual_date_title %}
+
+{% block progress_status_actual_date %}
+<span>{{ study.created_by.get_full_name }} ({{ study.created_by.username }})</span>    
+{% endblock progress_status_actual_date %}
+
+{% block table_block_5_head %}
+    {% if study.applied %}
+    Implementado por
+    {% endif %}
+{% endblock table_block_5_head %}
+
+{% block table_block_5_body %}
+    {% if study.applied %}
+    <span>{{ study.created_by.get_full_name }} ({{ study.created_by.username }})</span>
+    {% else %}
+    <span 
+        class="btn btn-block btn-outline-dark border-0 disabled text-center" 
+        style="color: black !important;">
+        Estudo ainda não Implementado
+    </span>
+    {% endif %}
+{% endblock table_block_5_body %}
+
+{% block delay %}
+{% endblock delay %}
+
+{% block progress_status_action %}
+    {% if not study.applied %}
+    <span 
+        class="btn btn-outline-success"    
+        data-toggle="modal"
+        target="{{ study.id }}"
+        onclick="passDataToStudyModal(this.getAttribute('target'), 'feeder_studies')"
+        data-target="#modal-finished-feeder-study-popout">
+        <i class="fa fa-check mr-1"></i>
+    </span>
+    {% else %}
+    <span 
+        class="btn btn-outline-info border-0"    
+        data-toggle="modal"
+        data-target="#modal-feeder-study-info-popout">
+        <i class="fa fa-eye mr-1"></i>
+    </span>
+    {% endif %}
+{% endblock progress_status_action %}
+
+{% block progress_status_modal %}
+{% load crispy_forms_tags %}
+<div 
+    class="modal fade show" 
+    id="modal-feeder-study-info-popout" 
+    tabindex="-1" 
+    role="dialog" 
+    aria-labelledby="modal-feeder-popout" 
+    style="display: none; padding-right: 17px;" 
+    aria-modal="true">
+    <div class="modal-dialog modal-dialog-popout" role="document">
+        <div class="modal-content">
+                <div class="block block-themed block-transparent mb-0">
+                    <div class="block-header bg-primary-dark">
+                        <h3 class="block-title">Detalhes do estudo de alimentador</h3>
+                        <div class="block-options">
+                            <button 
+                                type="button" 
+                                class="btn-block-option" 
+                                data-dismiss="modal" 
+                                aria-label="Close">
+                                <i class="fa fa-fw fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="block-content font-size-sm">
+                        <div id="modal_content_for_feeder">
+                            <div class="my-2 mx-2 row">
+                                <span class="col-6 px-0 my-auto">
+                                    <i class="si si-share-alt mr-3 font-w600"></i>
+                                    <span class="font-w300">Alimentador:</span>
+                                </span>
+                                <span class="col-5 font-w400">
+                                    {{ study.electric_point.feeder.name }}
+                                </span>
+                            </div>
+                            <div class="my-2 mx-2 row">
+                                <span class="col-6 px-0 my-auto">
+                                    <i class="si si-energy mr-3 font-w600"></i>
+                                    <span class="font-w300">Ponto Elétrico:</span>
+                                </span>
+                                <span class="col-5 font-w400">
+                                    {{ study.electric_point.name }}
+                                </span>
+                            </div>
+                            <div class="my-2 mx-2 row">
+                                <span class="col-6 px-0 my-auto">
+                                    <i class="si si-equalizer mr-3 font-w600"></i>
+                                    <span class="font-w300">Ajuste de Fase:</span>
+                                </span>
+                                <span class="col-5 font-w400">
+                                    {{ study.phase_adjustment }}
+                                </span>
+                            </div>
+                            <div class="my-2 mx-2 row">
+                                <span class="col-6 px-0 my-auto">
+                                    <i class="si si-equalizer mr-3 font-w600"></i>
+                                    <span class="font-w300">Ajuste de Neutro:</span>
+                                </span>
+                                <span class="col-5 font-w400">
+                                    {{ study.neutral_adjustment }}
+                                </span>
+                            </div>
+                            <div class="my-2 mx-2 row">
+                                <span class="col-6 px-0 my-auto">
+                                    <i class="si si-equalizer mr-3 font-w600"></i>
+                                    <span class="font-w300">Ajuste de Neutro Sensível:</span>
+                                </span>
+                                <span class="col-5 font-w400">
+                                    {{ study.sensitive_neutral_adjustment }}
+                                </span>
+                            </div>
+                            <div class="my-2 mx-2 row">
+                                <span class="col-6 px-0 my-auto">
+                                    <i class="si si-frame mr-3 font-w600"></i>
+                                    <span class="font-w300">Disparos:</span>
+                                </span>
+                                <span class="col-5 font-w400">
+                                    {{ study.shots }}
+                                </span>
+                            </div>
+                            <div class="my-2 mx-2 row">
+                                <span class="col-6 px-0 my-auto">
+                                    <i class="si si-user mr-3 font-w600"></i>
+                                    <span class="font-w300">Registrado por:</span>
+                                </span>
+                                <span class="col-5 font-w400">
+                                    {% if study.applied %}
+                                        {{ study.created_by.get_full_name }}
+                                        ({{ study.created_by.username }})
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <div class="my-2 mx-2 row">
+                                <span class="col-6 px-0 my-auto">
+                                    <i class="si si-calendar mr-3 font-w600"></i>
+                                    <span class="font-w300">Registrado em:</span>
+                                </span>
+                                <span class="col-5 font-w400">
+                                    {% language 'pt' %}
+                                        {{ study.created_at|date:"D, d \d\e F \d\e Y" }}
+                                    {% endlanguage %}
+                                </span>
+                            </div>
+                            <div class="my-2 mx-2 row">
+                                <span class="col-6 px-0 my-auto">
+                                    <i class="si si-user mr-3 font-w600"></i>
+                                    <span class="font-w300">Implementado por:</span>
+                                </span>
+                                <span class="col-5 font-w400">
+                                    {% if study.applied %}
+                                        {{ study.applied_by.get_full_name }}
+                                        ({{ study.applied_by.username }})
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <div class="my-2 mx-2 row">
+                                <span class="col-6 px-0 my-auto">
+                                    <i class="si si-calendar mr-3 font-w600"></i>
+                                    <span class="font-w300">Implementado em:</span>
+                                </span>
+                                <span class="col-5 font-w400">
+                                    {% language 'pt' %}
+                                        {{ study.applied_at|date:"D, d \d\e F \d\e Y" }}
+                                    {% endlanguage %}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block-content block-content-full text-right border-top">
+                        <button 
+                            type="button" 
+                            class="btn btn-sm btn-outline-info" 
+                            data-dismiss="modal">
+                            Fechar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock progress_status_modal %}

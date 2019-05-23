@@ -1,0 +1,195 @@
+{% extends 'common/list.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block scripts %}        
+<script>
+    function passDataToModal(url) {
+        document.getElementById('modal-submit-button').href = url;
+    }
+</script>
+{% endblock scripts %}
+
+{% block list_add_new %}
+{% comment %} {% if request.user.is_admin or request.user.is_designer %}
+<div>
+    <a
+        href="{% url 'projects:addProject' %}"
+        class="btn btn-outline-primary" 
+        data-toggle="block-option">
+        <i class="si si-plus"></i>
+        <span>Adicionar {{ page_title }}</span>
+    </a>
+</div>  
+{% endif %} {% endcomment %}
+{% endblock list_add_new %}
+
+{% block list_head %}  
+<thead>
+    <tr class="text-uppercase">
+        <!-- <th class="font-w700">ID</th> -->
+        <th class="d-none d-sm-table-cell font-w700 align-middle">Ponto Elétrico</th>
+        <th class="font-w700 align-middle">SOB</th>
+        <th class="font-w700 align-middle">Tipo de Equipamento</th>
+        <th class="font-w700 align-middle">Data de conclusão da etapa</th>
+        <th class="font-w700 align-middle text-center">Progresso</th>
+        {% comment %} <th class="font-w700 text-center" style="width: 40px;"></th> {% endcomment %}
+        <th class="font-w700 text-center" style="width: 40px;"></th>
+        <th class="font-w700 text-center" style="width: 40px;"></th>
+    </tr>
+</thead>
+{% endblock list_head %}
+
+{% block list_body %}
+<tbody>
+    {% for project in object_list %}
+    <tr>
+        <!-- <td><span class="font-w600">{{ feeder.id }}</span></td> -->
+        <td class="d-none d-sm-table-cell">
+            <span class="font-size-sm text-muted">
+                {{ project.electric_point.name }}
+            </span>
+        </td>
+        <td class="d-none d-sm-table-cell">
+            <span class="font-size-sm text-muted">
+                {{ project.sob }}
+            </span>
+        </td>
+        <td class="d-none d-sm-table-cell">
+            <span class="font-size-sm text-muted">
+                {{ project.electric_point.get_equipment_type_display }}
+            </span>
+        </td>
+        <td class="d-none d-sm-table-cell">
+            <span class="font-size-sm text-muted">
+                {% if project.get_progress_status_display == 'A projetar' %}
+                    {% if project.designing.real_date %}
+                    {% language 'pt' %}
+                        {{ project.designing.real_date|date:"D, d \d\e F \d\e Y" }}
+                        {% endlanguage %}
+                    {% else %}
+                        {% if project.designing.programmed_date %}
+                            {% language 'pt' %} 
+                            {{ project.designing.programmed_date|date:"D, d \d\e F \d\e Y" }}
+                            {% endlanguage %}
+                            (programada)
+                        {% else %}
+                            Finalização de Projeto a ser programado
+                        {% endif %}
+                    {% endif %}
+
+                {% elif project.get_progress_status_display == 'A instalar' %}
+                    {% if project.installation.real_date %}
+                        {% language 'pt' %}
+                        {{ project.installation.real_date|date:"D, d \d\e F \d\e Y" }}
+                        {% endlanguage %}
+                    {% else %}
+                        {% if project.installation.programmed_date %}
+                            {% language 'pt' %} 
+                            {{ project.installation.programmed_date|date:"D, d \d\e F \d\e Y" }}
+                            {% endlanguage %}
+                            (programada)
+                        {% else %}
+                            Instalação a ser programada
+                        {% endif %}
+                    {% endif %}
+
+                {% elif project.get_progress_status_display == 'A energizar' %}
+                    {% if project.energizing.real_date %}
+                        {% language 'pt' %}
+                        {{ project.energizing.real_date|date:"D, d \d\e F \d\e Y" }}
+                        {% endlanguage %}
+                    {% else %}
+                        {% if project.energizing.programmed_date %}
+                            {% language 'pt' %}
+                            {{ project.energizing.programmed_date|date:"D, d \d\e F \d\e Y" }}
+                            {% endlanguage %}
+                            (programada)
+                        {% else %}
+                            Energização a ser programada
+                        {% endif %}
+                    {% endif %}
+
+                {% elif project.get_progress_status_display == 'A comissionar' %}
+                    {% if project.commissioning.real_date %}
+                        {% language 'pt' %}
+                        {{ project.commissioning.real_date|date:"D, d \d\e F \d\e Y" }}
+                        {% endlanguage %}
+                    {% else %}
+                        {% if project.commissioning.programmed_date %}
+                            {% language 'pt' %}
+                            {{ project.commissioning.programmed_date|date:"D, d \d\e F \d\e Y" }}
+                            {% endlanguage %}
+                            (programada)
+                        {% else %}
+                            Comissionamento a ser programada
+                        {% endif %}
+                    {% endif %}
+
+                {% elif project.get_progress_status_display == 'A operar' %}
+                    {% if project.operation.real_date %}
+                        {% language 'pt' %}
+                        {{ project.operation.real_date|date:"D, d \d\e F \d\e Y" }}
+                        {% endlanguage %}
+                    {% else %}
+                        {% if project.operation.programmed_date %}
+                            {% language 'pt' %}
+                            {{ project.operation.programmed_date|date:"D, d \d\e F \d\e Y" }}
+                            {% endlanguage %}
+                            (programada)
+                        {% else %}
+                            Operação a ser programada
+                        {% endif %}
+                    {% endif %}
+
+                {% elif project.get_progress_status_display == 'Concluído' %}
+                    {% language 'pt' %}
+                    {{ project.finished_at|date:"D, d \d\e F \d\e Y" }}
+                    {% endlanguage %}
+
+                {% endif %}
+            </span>
+        </td>
+        <td class="d-none d-sm-table-cell text-center">
+            {% if project.get_progress_status_display == 'A projetar' %}
+            <span class="font-w600 badge badge-info">
+            {% elif project.get_progress_status_display == 'A instalar' %}
+            <span class="font-w600 badge badge-secondary">
+            {% elif project.get_progress_status_display == 'A energizar' %}
+            <span class="font-w600 badge badge-warning">
+            {% elif project.get_progress_status_display == 'A comissionar' %}
+            <span class="font-w600 badge badge-primary">
+            {% elif project.get_progress_status_display == 'A operar' %}
+            <span class="font-w600 badge badge-dark">
+            {% elif project.get_progress_status_display == 'Concluído' %}
+            <span class="font-w600 badge badge-success">
+            {% else %}
+            <span class="font-w600 badge badge-default">
+            {% endif %}
+                {{ project.get_progress_status_display }}
+            </span>
+        </td>
+        {% comment %} <td class="text-center">
+            <a href="{% url 'projects:updateProject' project.id %}">
+                <i class="si si-note text-secondary"></i>
+            </a>
+        </td> {% endcomment %}
+        <td class="text-center">
+            <a href="{% url 'projects:detailProject' project.id %}">
+                <i class="si si-info text-info"></i>
+            </a>
+        </td>
+        <td class="text-center">
+            <a
+                href="#"
+                target="{% url 'projects:deleteProject' project.id %}"
+                onclick="passDataToModal(this.getAttribute('target'))"
+                data-toggle="modal" 
+                data-target="#modal-delete-popout">
+                <i class="si si-close text-danger"></i>
+            </a> 
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+{% endblock list_body %}

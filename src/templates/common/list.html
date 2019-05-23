@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<!-- Main Container -->
+<main id="main-container">
+    <!-- Hero -->
+    {% include 'common/page_navigation_head.html' %}
+    <!-- END Hero -->
+    <!-- Page Content -->
+    <div class="content">
+        <!-- Your Block -->
+        <div class="block">
+            <div class="block-header">
+                <h3 class="block-title">
+                    {{ page_subtitle }}
+                </h3>
+                {% block list_add_new %}
+                {% endblock list_add_new %}
+            </div>
+            <div class="block-content">
+                <table class="table table-striped table-hover table-vcenter font-size-sm mb-0">   
+                    {% block list_head %} 
+                    {% endblock list_head %} 
+                    {% block list_body %}
+                    {% endblock list_body %}
+                </table>
+                {% if not object_list.all %}
+                <div class="px-2 pt-2">Não foi encontrado nenhum cadastro de <b>{{ page_title }}</b></div>
+                {% endif %}
+                <div class="my-3">{% include 'common/list_paginator.html' %}</div>     
+            </div>
+        </div>
+        <!-- END Your Block -->
+    </div>
+    <!-- END Page Content -->
+    {% include 'common/delete_modal.html' %}
+
+    {% include 'common/no_project_modal.html' %}
+</main>
+{% endblock content %}

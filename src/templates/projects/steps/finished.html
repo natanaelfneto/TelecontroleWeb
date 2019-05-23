@@ -1,0 +1,43 @@
+{% extends 'projects/steps/base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block progress_status_icon %}
+<i class="si si-check text-success font-w600"></i>
+{% endblock progress_status_icon %}
+
+{% block progress_status %}
+Concluído
+{% endblock progress_status %}
+
+{% block progress_status_programmed_date_title %}
+Registro de início em
+{% endblock progress_status_programmed_date_title %}
+
+{% block progress_status_programmed_date %}
+    {% if object.created_at %}
+        {% language 'pt' %}
+            {{ object.created_at|date:"D, d \d\e F \d\e Y" }}
+        {% endlanguage %}
+    {% else %}
+        <em>Sem programação</em>
+    {% endif %}
+{% endblock progress_status_programmed_date %}
+
+{% block progress_status_actual_date_title %}
+Registro de conclusão em
+{% endblock progress_status_actual_date_title %}
+
+{% block progress_status_actual_date %}
+    {% if object.finished_at %}
+        {% language 'pt' %}
+            {{ object.finished_at|date:"D, d \d\e F \d\e Y" }}
+        {% endlanguage %}
+    {% else %}
+        <em>Ainda não foi concluído</em>
+    {% endif %}
+{% endblock progress_status_actual_date %}
+
+{% block delay %}
+    {{ object.get_delay }} (corridos)
+{% endblock delay %}

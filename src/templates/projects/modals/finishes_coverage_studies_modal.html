@@ -1,0 +1,60 @@
+{% load crispy_forms_tags %}
+<div 
+    class="modal fade show" 
+    id="modal-finished-coverage-study-popout" 
+    tabindex="-1" 
+    role="dialog" 
+    aria-labelledby="modal-block-popout" 
+    style="display: none; padding-right: 17px;" 
+    aria-modal="true">
+    <div class="modal-dialog modal-dialog-popout" role="document">
+        <div class="modal-content">
+            <form 
+                id="finishes_coverage_studies_form"
+                method="POST" 
+                action="{% url 'electric_points:finishesCoverageStudy' object.id %}">
+                {% csrf_token %}
+                <div class="block block-themed block-transparent mb-0">
+                    <div class="block-header bg-primary-dark">
+                        <h3 class="block-title">Finalizar estudo teórico de cobertura</h3>
+                        <div class="block-options">
+                            <button
+                                type="button" 
+                                class="btn-block-option" 
+                                data-dismiss="modal" 
+                                aria-label="Close">
+                                <i class="fa fa-fw fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="block-content font-size-sm">
+                        <div id="modal_content_for_finishes_coverage_studies">
+                            {% crispy forms.coverage_studies_finishes %}
+                            <input 
+                                id="finishes_study_id" 
+                                type="text" 
+                                name="finishes_study_id" 
+                                class="d-none"/>
+                        </div>
+                    </div>
+                    <div class="block-content block-content-full text-right border-top">
+                        <button 
+                            id="finishes_coverage_studies_button"
+                            name="finishes_coverage_studies_button"
+                            type="submit"
+                            class="btn btn-sm btn-info">
+                            <i class="fa fa-exchange-alt mr-1"></i>
+                            Finalizar estudo
+                        </button>
+                        <button
+                            type="button" 
+                            class="btn btn-sm btn-outline-secondary" 
+                            data-dismiss="modal">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

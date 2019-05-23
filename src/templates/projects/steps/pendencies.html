@@ -1,0 +1,329 @@
+{% extends 'projects/steps/base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load display_pendency_type %}
+
+{% block progress_status_icon %}
+    <i class="si si-ban text-danger font-w600"></i>
+{% endblock progress_status_icon %}
+
+{% block progress_status %}
+    Pendência #{{ pendency.id }}
+{% endblock progress_status %}
+
+{% block progress_status_programmed_date_title %}
+Registrada em
+{% endblock progress_status_programmed_date_title %}
+
+{% block progress_status_programmed_date %}
+    {% language 'pt' %}
+        {{ pendency.created_at|date:"D, d \d\e F \d\e Y" }}
+    {% endlanguage %}
+{% endblock progress_status_programmed_date %}
+
+{% block progress_status_actual_date_title %}
+Solucionada em
+{% endblock progress_status_actual_date_title %}
+
+{% block progress_status_actual_date %}
+    {% if pendency.solved_at %}
+        {% language 'pt' %}
+            {{ pendency.solved_at|date:"D, d \d\e F \d\e Y" }}
+        {% endlanguage %}
+    {% else %}
+        <em>Ainda não solucionada</em>
+    {% endif %}
+{% endblock progress_status_actual_date %}
+
+<!-- table block 5 -->
+{% block table_block_5_head %}
+{% endblock table_block_5_head %}
+
+{% block table_block_5_body %}
+    <span 
+        class="btn btn-block btn-outline-dark border-0 disabled text-left pl-0" 
+        style="color: black !important;">
+        {{ pendency|display_pendency_type:'type' }}
+    </span>
+{% endblock table_block_5_body %}
+
+
+{% block delay %}
+    {% if pendency.get_step_delay is not null %}
+        {{ pendency.get_step_delay }}
+    {% else %}
+        0 dias
+    {% endif %}
+    (corridos)
+{% endblock delay %}
+
+{% block progress_status_action %}
+    {% if not pendency.solved %}
+    <span 
+        class="btn btn-outline-success border-0"    
+        data-toggle="modal" 
+        data-target="#modal-solve-pendency-popout-{{ pendency.id }}">
+        <i class="fa fa-play-circle mr-1"></i>
+    </span>
+    {% else %}
+    <span 
+        class="btn btn-outline-info border-0"    
+        data-toggle="modal" 
+        data-target="#modal-pendency-detail-popout-{{ pendency.id }}">
+        <i class="fa fa-eye mr-1"></i>
+    </span>
+    {% endif %}
+{% endblock progress_status_action %}
+
+{% block progress_status_modal %}
+<div 
+    class="modal fade show" 
+    id="modal-solve-pendency-popout-{{ pendency.id }}" 
+    tabindex="-1" 
+    role="dialog" 
+    aria-labelledby="modal-block-popout" 
+    style="display: none; padding-right: 17px;" 
+    aria-modal="true">
+    <div class="modal-dialog modal-lg modal-dialog-popout" role="document">
+        <div class="modal-content"> 
+            <div class="block block-themed block-transparent mb-0">
+                <div class="block-header bg-primary-dark">
+                    <h3 class="block-title">Detalhes da pendência</h3>
+                    <div class="block-options">
+                        <button 
+                            type="button" 
+                            class="btn-block-option" 
+                            data-dismiss="modal" 
+                            aria-label="Close">
+                            <i class="fa fa-fw fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="block-content font-size-sm">
+                    <div id="modal-content">
+                        <div class="form-group">
+                            <div
+                                id="div_id_solve_description_{{ pendency.id }}" 
+                                class="control-group">
+                                <label 
+                                    for="id_solve_description_{{ pendency.id }}" 
+                                    class="control-label requiredField">
+                                    Descrição da Solução
+                                    <span class="asteriskField">*</span>
+                                </label>
+                                <div class="solved_description controls">
+                                    <div class="my-2 mx-2 row">
+                                        <span class="col-4 px-0 my-auto">
+                                            <i class="si si-layers mr-3 font-w600"></i>
+                                            <span class="font-w300">Tipo de pendência:</span>
+                                        </span>
+                                        <span class="col-8 font-w400">
+                                            {{ pendency|display_pendency_type:'type' }}
+                                        </span>
+                                    </div>
+                                    <div class="my-2 mx-2 row">
+                                        <span class="col-4 px-0 my-auto">
+                                            <i class="si si-users mr-3 font-w600"></i>
+                                            <span class="font-w300">Setor responsável:</span>
+                                        </span>
+                                        <span class="col-8 font-w400">
+                                            {{ pendency|display_pendency_type:'responsable' }}
+                                        </span>
+                                    </div>
+                                    <div class="my-2 mx-2 row">
+                                        <span class="col-4 px-0 my-auto">
+                                            <i class="si si-bubble mr-3 font-w600"></i>
+                                            <span class="font-w300">Descrição da pendência:</span>
+                                        </span>
+                                        <span class="col-8 font-w600">
+                                            {{ pendency.description }}
+                                        </span>
+                                    </div>
+                                    <div class="my-2 mx-2 row">
+                                        <span class="col-4 px-0 my-auto">
+                                            <i class="si si-calendar mr-3 font-w600"></i>
+                                            <span class="font-w300">Registrada em:</span>
+                                        </span>
+                                        <span class="col-8 font-w400">
+                                            {% language 'pt' %}
+                                            {{ pendency.created_at|date:"D, d \d\e F \d\e Y" }}
+                                            {% endlanguage %}
+                                        </span>
+                                    </div>
+                                    <div class="my-2 mx-2 row">
+                                        <span class="col-4 px-0 my-auto">
+                                            <i class="si si-calendar mr-3 font-w600"></i>
+                                            <span class="font-w300">Solucionada em:</span>
+                                        </span>
+                                        <span class="col-8 font-w400">
+                                            {% if pendency.solved_at %}
+                                                {% language 'pt' %}
+                                                    {{ pendency.solved_at|date:"D, d \d\e F \d\e Y" }}
+                                                {% endlanguage %}
+                                            {% else %}
+                                                <em>Ainda não solucionada</em>
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                    <div class="my-2 mx-2 row">
+                                        <span class="col-4 px-0 my-auto">
+                                            <i class="si si-user mr-3 font-w600"></i>
+                                            <span class="font-w300">Registrada por:</span>
+                                        </span>
+                                        <span class="col-8 font-w400">
+                                            {{ pendency.created_by.get_full_name }}
+                                            ({{ pendency.created_by.username }})
+                                            <div>
+                                                <span class="font-w600">Perfil:</span>
+                                                <span>{{ pendency.created_by.get_profile_display }}</span>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="block-content block-content-full text-right border-top">
+                    <a 
+                        id="id_solve_description_{{ pendency.id }}_button"
+                        name="id_solve_description_{{ pendency.id }}_button"
+                        href="{% url 'projects:solvePendency' pendency.id %}"
+                        class="btn btn-sm btn-success">
+                        <i class="fa fa-check mr-1"></i>
+                        Registrar solução
+                    </a>
+                    <button 
+                        type="button" 
+                        class="btn btn-sm btn-outline-info" 
+                        data-dismiss="modal">
+                        Fechar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div 
+    class="modal fade show" 
+    id="modal-pendency-detail-popout-{{ pendency.id }}" 
+    tabindex="-1" 
+    role="dialog" 
+    aria-labelledby="modal-block-popout" 
+    style="display: none; padding-right: 17px;" 
+    aria-modal="true">
+    <div class="modal-dialog modal-lg modal-dialog-popout" role="document">
+        <div class="modal-content"> 
+            <div class="block block-themed block-transparent mb-0">
+                <div class="block-header bg-primary-dark">
+                    <h3 class="block-title">Detalhes da pendência</h3>
+                    <div class="block-options">
+                        <button 
+                            type="button" 
+                            class="btn-block-option" 
+                            data-dismiss="modal" 
+                            aria-label="Close">
+                            <i class="fa fa-fw fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="block-content font-size-sm">
+                    <div id="modal-content">
+                        <div class="form-group">
+                            <div
+                                id="div_id_solve_description_{{ pendency.id }}" 
+                                class="control-group">
+                                <label 
+                                    for="id_solve_description_{{ pendency.id }}" 
+                                    class="control-label requiredField">
+                                    Descrição da Solução
+                                    <span class="asteriskField">*</span>
+                                </label>
+                                <div class="solved_description controls">
+                                    <div class="my-2 mx-2 row">
+                                        <span class="col-4 px-0 my-auto">
+                                            <i class="si si-layers mr-3 font-w600"></i>
+                                            <span class="font-w300">Tipo de pendência:</span>
+                                        </span>
+                                        <span class="col-8 font-w400">
+                                            {{ pendency|display_pendency_type:'type' }}
+                                        </span>
+                                    </div>
+                                    <div class="my-2 mx-2 row">
+                                        <span class="col-4 px-0 my-auto">
+                                            <i class="si si-users mr-3 font-w600"></i>
+                                            <span class="font-w300">Setor responsável:</span>
+                                        </span>
+                                        <span class="col-8 font-w400">
+                                            {{ pendency|display_pendency_type:'responsable' }}
+                                        </span>
+                                    </div>
+                                    <div class="my-2 mx-2 row">
+                                        <span class="col-4 px-0 my-auto">
+                                            <i class="si si-bubble mr-3 font-w600"></i>
+                                            <span class="font-w300">Descrição da pendência:</span>
+                                        </span>
+                                        <span class="col-8 font-w600">
+                                            {{ pendency.description }}
+                                        </span>
+                                    </div>
+                                    <div class="my-2 mx-2 row">
+                                        <span class="col-4 px-0 my-auto">
+                                            <i class="si si-calendar mr-3 font-w600"></i>
+                                            <span class="font-w300">Registrada em:</span>
+                                        </span>
+                                        <span class="col-8 font-w400">
+                                            {% language 'pt' %}
+                                            {{ pendency.created_at|date:"D, d \d\e F \d\e Y" }}
+                                            {% endlanguage %}
+                                        </span>
+                                    </div>
+                                    <div class="my-2 mx-2 row">
+                                        <span class="col-4 px-0 my-auto">
+                                            <i class="si si-calendar mr-3 font-w600"></i>
+                                            <span class="font-w300">Solucionada em:</span>
+                                        </span>
+                                        <span class="col-8 font-w400">
+                                            {% if pendency.solved_at %}
+                                                {% language 'pt' %}
+                                                    {{ pendency.solved_at|date:"D, d \d\e F \d\e Y" }}
+                                                {% endlanguage %}
+                                            {% else %}
+                                                <em>Ainda não solucionada</em>
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                    <div class="my-2 mx-2 row">
+                                        <span class="col-4 px-0 my-auto">
+                                            <i class="si si-user mr-3 font-w600"></i>
+                                            <span class="font-w300">Registrada por:</span>
+                                        </span>
+                                        <span class="col-8 font-w400">
+                                            {{ pendency.created_by.get_full_name }}
+                                            ({{ pendency.created_by.username }})
+                                            <div>
+                                                <span class="font-w600">Perfil:</span>
+                                                <span>{{ pendency.created_by.get_profile_display }}</span>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="block-content block-content-full text-right border-top">
+                    <button 
+                        type="button" 
+                        class="btn btn-sm btn-outline-info" 
+                        data-dismiss="modal">
+                        Fechar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock progress_status_modal %}
