@@ -145,6 +145,88 @@ class UserForm(forms.ModelForm):
         return user
 
 
+class UpdateUserPasswordForm(forms.ModelForm):
+    '''
+    User Forms
+        form used when creating new users in database
+    '''
+
+    # username field
+    username = forms.CharField(    
+        widget=forms.TextInput(attrs={
+            'class':'form-control my-3 d-none',
+            'maxlength':'12',
+        })
+    )
+
+    # field to receive user current passord
+    password0 = forms.CharField(widget=forms.PasswordInput, label='Senha atual')
+
+    # field to receive user desired passord
+    password1 = forms.CharField(widget=forms.PasswordInput, label='Nova senha')
+
+    # field to receive user desired password confirmation
+    password2 = forms.CharField(widget=forms.PasswordInput, label='Confirmação de nova senha')
+
+    class Meta:
+        model = BasicUser
+        fields = [
+            # custom fields
+            'username',
+            'password0',
+            'password1',
+            'password2',
+        ]
+
+    # use helper file to fileds
+    def __init__(self, *args, **kwargs):
+        super(UpdateUserPasswordForm, self).__init__(*args, **kwargs)
+        self.helper = UpdateUserPasswordHelper()
+
+        # 
+        if self.instance.pk:
+            # make custom fields for password and confirmation to not be required
+            # when user already exist on database, i.e. user is being updated
+            self.fields['password0'].required = True
+            self.fields['password1'].required = False
+            self.fields['password2'].required = False
+
+    # validate password0
+    def clean_password0(self):
+
+        # standard message error for user and password mismatch
+        error_message = u'Não foi possível validar a senha para o usuário autenticado'
+
+        # get user from database
+        user_to_update = BasicUser.objects.filter(username=self.cleaned_data['username'])
+
+        if user_to_update.count() == 0 or not user_to_update[0].check_password(self.cleaned_data.get("password0")):
+            self.add_error('password0', error_message)
+
+        # if password hash for user do not macth
+        if (not user_to_update[0] or not user_to_update[0].active == 1):            
+            self.add_error('password0', error_message)
+
+    # get a cleared password fileds
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+
+        # check if password and confirmation fields macth
+        if password1 != password2:
+            raise forms.ValidationError(u"As senhas não corresponderam")
+
+    # save function
+    def save(self, commit=True):
+        user = super(UpdateUserPasswordForm, self).save(commit=False)
+        if self.cleaned_data["password1"]:
+            user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+
+        return user
+
+
 # for render to update users avatars
 class AvatarsForm(forms.ModelForm):
     '''

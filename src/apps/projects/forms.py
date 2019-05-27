@@ -223,3 +223,23 @@ class OperationPendenciesForm(forms.ModelForm):
             thisObject.save()
             self.save_m2m()
         return thisObject
+
+
+class ProjectSobForm(forms.ModelForm):
+    '''
+    '''
+ 
+    class Meta:
+        model = Projects
+        fields = ['sob',]
+        
+    def __init__(self, *args, **kwargs):
+        super(ProjectSobForm, self).__init__(*args, **kwargs)
+        self.helper = ProjectSobHelper()
+
+    def save(self, commit=True):
+        thisObject = super(ProjectSobForm, self).save(commit=False)
+        if commit:
+            thisObject.save()
+            self.save_m2m()
+        return thisObject

@@ -25,6 +25,9 @@ urlpatterns = [
     # update information of user page
     url(r'users/(?P<pk>\d+)/update/$', UpdateUserView.as_view(), name='updateUser'),
 
+    # 
+    url(r'users/(?P<pk>\d+)/update-password/$', UpdateUserPasswordView.as_view(), name='updateUserPassword'),
+
     # remove information of user page
     url(r'users/(?P<pk>\d+)/delete/$', DeleteUserView.as_view(), name='deleteUser'),
 

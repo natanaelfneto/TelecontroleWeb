@@ -122,7 +122,7 @@
                         </span>
                         <span class="col-7 px-0">
                             <span class="row mx-1 pt-1 font-w300">
-                                <small class="text-muted">alimentador</small>
+                                <small class="text-muted">Alimentador</small>
                             </span>
                             <span class="row mx-1 pb-1 text-left text-muted font-w400">
                                 {{ object.electric_point.feeder.name }}
@@ -141,21 +141,38 @@
                 </div>
             </li>
             <li class="my-0">
-                <a class="btn btn-block btn-outline-light btn-square borderless" href="">
+                <div class="btn btn-block btn-outline-light btn-square borderless">
                     <div class="row m-auto">
                         <span class="col-2 m-auto pl-0 text-muted">
-                            <i class="fa fa-fw fa-file-alt mr-1"></i>
+                            <i class="fa fa-fw fa-file mr-1"></i>
                         </span>
-                        <span class="col-10 px-0">
+                        <span class="col-7 px-0">
                             <span class="row mx-1 pt-1 font-w300">
-                                <small class="text-muted">SOB</small>
+                                <small class="text-muted">Nº Projeto</small>
                             </span>
                             <span class="row mx-1 pb-1 text-left text-muted font-w400">
+                                {% if object.sob is null %}
+                                <small>Não cadastrado</small>
+                                {% else %}
                                 {{ object.sob }}
+                                {% endif %}
                             </span>
                         </span>
+                        {% if object.sob is null %}
+                        <a 
+                            class="col-3 m-auto p-0 text-muted"
+                            data-toggle="modal" 
+                            data-target="#modal-sob-popout"
+                            href="">
+                            <span class="btn btn-outline-info">
+                                <i class="fa fa-fw fa-pen mr-1"></i>
+                            </span>
+                        </a>
+                        {% else %}
+                        <a class="col-3 m-auto p-0" href=""></a>
+                        {% endif %}
                     </div>
-                </a>
+                </div>
             </li>
             <li class="my-0">
                 <a class="btn btn-block btn-outline-light btn-square borderless" href="">
@@ -169,7 +186,7 @@
                             </span>
                             <span class="row mx-1 pb-1 text-left text-muted font-w400">
                                 {% language 'pt' %}
-                                {{ object.created_at|date:"D, d \d\e F \d\e Y" }}
+                                <small>{{ object.created_at|date:"D, d \d\e F \d\e Y" }}</small>
                                 {% endlanguage %}
                             </span>
                         </span>
@@ -187,7 +204,7 @@
                                 <small class="text-muted">Cadastrado por</small>
                             </span>
                             <span class="row mx-1 text-left text-muted font-w400">
-                                {{ object.created_by.get_full_name }}
+                                <small>{{ object.created_by.get_full_name }}</small>
                             </span>
                             <span class="row mx-1 text-left text-muted font-w400">
                                 ({{ object.created_by.username }})

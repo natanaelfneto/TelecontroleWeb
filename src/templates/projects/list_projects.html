@@ -29,7 +29,7 @@
     <tr class="text-uppercase">
         <!-- <th class="font-w700">ID</th> -->
         <th class="d-none d-sm-table-cell font-w700 align-middle">Ponto Elétrico</th>
-        <th class="font-w700 align-middle">SOB</th>
+        <th class="font-w700 align-middle">Nº Projeto</th>
         <th class="font-w700 align-middle">Tipo de Equipamento</th>
         <th class="font-w700 align-middle">Data de conclusão da etapa</th>
         <th class="font-w700 align-middle text-center">Progresso</th>
@@ -52,7 +52,11 @@
         </td>
         <td class="d-none d-sm-table-cell">
             <span class="font-size-sm text-muted">
+                {% if project.sob is null %}
+                Não cadastrado
+                {% else %}
                 {{ project.sob }}
+                {% endif %}
             </span>
         </td>
         <td class="d-none d-sm-table-cell">
