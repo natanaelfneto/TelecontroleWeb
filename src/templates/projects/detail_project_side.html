@@ -158,16 +158,20 @@
                                 {% endif %}
                             </span>
                         </span>
-                        {% if object.sob is null %}
-                        <a 
-                            class="col-3 m-auto p-0 text-muted"
-                            data-toggle="modal" 
-                            data-target="#modal-sob-popout"
-                            href="">
-                            <span class="btn btn-outline-info">
-                                <i class="fa fa-fw fa-pen mr-1"></i>
-                            </span>
-                        </a>
+                        {% if request.user.is_admin or request.user.is_constructor %}
+                            {% if object.sob is null %}
+                            <a 
+                                class="col-3 m-auto p-0 text-muted"
+                                data-toggle="modal" 
+                                data-target="#modal-sob-popout"
+                                href="">
+                                <span class="btn btn-outline-info">
+                                    <i class="fa fa-fw fa-pen mr-1"></i>
+                                </span>
+                            </a>
+                            {% else %}
+                            <a class="col-3 m-auto p-0" href=""></a>
+                            {% endif %}
                         {% else %}
                         <a class="col-3 m-auto p-0" href=""></a>
                         {% endif %}
