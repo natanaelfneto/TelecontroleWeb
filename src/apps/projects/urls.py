@@ -29,7 +29,9 @@ urlpatterns = [
     url(r'(?P<pendency_pk>\d+)/solve-pendency/$', SolvePendencyView.as_view(), name='solvePendency'),
     # 
     url(r'(?P<pk>\d+)/update-electric-point/$', UpdateElectricPointView.as_view(), name='updateElectricPoint'),
-    # list all users page
+    # 
+    url(r'(?P<pk>\d+)/add-sob/$', AddProjectSOBView.as_view(), name='addProjectSOB'),
+    # 
     url(r'$', ListProjectsView.as_view(), name='listProjects'),
 
 ]

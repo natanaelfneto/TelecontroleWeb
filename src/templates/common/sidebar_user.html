@@ -20,16 +20,18 @@
                 {{ request.user.first_name }}
             </a>
         </div>
+        
         <!-- END User Info -->
 
         <!-- Close Side Overlay -->
         <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
 
         <a 
-            class="ml-auto btn btn-sm btn-outline-danger" 
-            href="{% url 'accounts:logout' %}">
-            Sair
-            <i class="fa fa-sign-out-alt ml-2"></i>
+            class="ml-auto btn btn-sm btn-dual" 
+            href="javascript:void(0)" 
+            data-toggle="layout" 
+            data-action="side_overlay_close">
+            <i class="fa fa-fw fa-times text-danger"></i>
         </a>
         <!-- END Close Side Overlay -->
     </div>
@@ -145,6 +147,48 @@
                                                 {{ request.user.created_by.get_full_name }}
                                                 ({{ request.user.created_by.username }})
                                             </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                            <!-- END Activity List -->
+                        </div>
+                    </div>
+                    <!-- END Activity -->
+
+                    <!-- Activity -->
+                    <div class="block">
+                        <div class="block-header block-header-default">
+                            <h3 class="block-title">Ações de Usuário</h3>
+                            <div class="block-options">
+                                <button 
+                                    type="button" 
+                                    class="btn-block-option" 
+                                    data-toggle="block-option" 
+                                    data-action="content_toggle">
+                                </button>
+                            </div>
+                        </div>
+                        <div class="block-content">
+                            <!-- Activity List -->
+                            <ul class="nav-items mb-0">
+                                <li>
+                                    <a class="text-dark media py-2" href="{% url 'accounts:updateUserPassword' request.user.id %}">
+                                        <div class="mr-3 ml-2 my-auto">
+                                            <i class="fa fa-key text-secondary"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            <div class="text-dark">Atualizar senha</div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="text-dark media py-2" href="{% url 'accounts:logout' %}">
+                                        <div class="mr-3 ml-2 my-auto">
+                                            <i class="fa fa-sign-out-alt text-danger"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            <div class="text-danger">Sair do Sistema</div>
                                         </div>
                                     </a>
                                 </li>

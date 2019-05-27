@@ -275,3 +275,19 @@ class ToggleSuperUserView(LoginRequiredMixin, RedirectView):
             return super(ToggleSuperUserView, self).get(*args, **kwargs)
         
         return HttpResponseRedirect(reverse_lazy('index'))
+
+
+# update user class view
+class UpdateUserPasswordView(LoginRequiredMixin, UpdateView, FormUserView):
+    '''
+    Update User Passsword View
+        class based view to update parâmeters from users
+    '''
+    page_subtitle_action = 'Atualizar'
+    form_class = UpdateUserPasswordForm
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateUserPasswordView, self).get_context_data(**kwargs)
+        context['page_subtitle'] = f'{self.page_subtitle_action} {self.page_subtitle}'
+
+        return context

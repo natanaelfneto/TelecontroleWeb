@@ -64,3 +64,14 @@ class PendenciesHelper(FormHelper):
             ),
         )
 
+
+class ProjectSobHelper(FormHelper):
+    def __init__(self, *args, **kwargs):
+        super(ProjectSobHelper, self).__init__(*args, **kwargs)
+
+        self.layout = Layout(
+            Div(
+                Field('sob', css_class="form-control"),
+                css_class="form-group"
+            ),
+        )

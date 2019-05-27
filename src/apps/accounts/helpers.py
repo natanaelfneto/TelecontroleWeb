@@ -76,3 +76,28 @@ class AvatarsHelper(FormHelper):
             ),
             Submit('submit', 'Submeter', css_class="float-right")
         )
+
+
+class UpdateUserPasswordHelper(FormHelper):
+    def __init__(self, *args, **kwargs):
+        super(UpdateUserPasswordHelper, self).__init__(*args, **kwargs)
+
+        self.layout = Layout(
+            Div(
+                Field('username', css_class="form-control"),
+                css_class="form-group d-none"
+            ),
+            Div(
+                Field('password0', css_class="form-control"),
+                css_class="form-group"
+            ),
+            Div(
+                Field('password1', css_class="form-control"),
+                css_class="form-group"
+            ),
+            Div(
+                Field('password2', css_class="form-control"),
+                css_class="form-group"
+            ),
+            Submit('submit', 'Submeter', css_class="float-right")
+        )

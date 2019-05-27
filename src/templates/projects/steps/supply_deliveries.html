@@ -88,6 +88,12 @@ Responsável pela liberação
         {% endif %}
     {% else %} {% endcomment %}
     <span 
+        class="btn btn-outline-info border-0"
+        data-toggle="modal"
+        data-target="#modal-supply-info-popout">
+        <i class="fa fa-eye mr-1"></i>
+    </span>
+    <span 
         class="btn text-danger"
         data-toggle="modal"
         target=""
@@ -99,4 +105,97 @@ Responsável pela liberação
 {% endblock progress_status_action %}
 
 {% block progress_status_modal %}
+<div 
+    class="modal fade show" 
+    id="modal-supply-info-popout" 
+    tabindex="-1" 
+    role="dialog" 
+    aria-labelledby="modal-block-popout" 
+    style="display: none; padding-right: 17px;" 
+    aria-modal="true">
+    <div class="modal-dialog modal-dialog-popout" role="document">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent mb-0">
+                <div class="block-header bg-primary-dark">
+                    <h3 class="block-title">Detalhes da liberação de material</h3>
+                    <div class="block-options">
+                        <button 
+                            type="button" 
+                            class="btn-block-option" 
+                            data-dismiss="modal" 
+                            aria-label="Close">
+                            <i class="fa fa-fw fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="block-content font-size-sm">
+                    <div id="modal-content">
+                        <div class="my-2 mx-2 row">
+                            <span class="col-5 px-0 my-auto">
+                                <i class="fa fa-satellite-dish mr-3 font-w600"></i>
+                                <span class="font-w300">Tipo de comunicação:</span>
+                            </span>
+                            <span class="col-5 font-w400"> 
+                                {{ supply.communication_type }}
+                            </span>
+                        </div>
+                        <div class="my-2 mx-2 row">
+                            <span class="col-5 px-0 my-auto">
+                                <i class="si si-layers mr-3 font-w600"></i>
+                                <span class="font-w300">Tipo de equipamento:</span>
+                            </span>
+                            <span class="col-5 font-w400">
+                                {{ supply.equipment_type }}
+                            </span>
+                        </div>
+                        <div class="my-2 mx-2 row">
+                            <span class="col-5 px-0 my-auto">
+                                <i class="si si-doc mr-3 font-w600"></i>
+                                <span class="font-w300">Código do equipamento:</span>
+                            </span>
+                            <span class="col-5 font-w400">
+                                {{ supply.code }}
+                            </span>
+                        </div>
+                        <div class="my-2 mx-2 row">
+                            <span class="col-5 px-0 my-auto">
+                                <i class="si si-doc mr-3 font-w600"></i>
+                                <span class="font-w300">Número de série:</span>
+                            </span>
+                            <span class="col-5 font-w400">
+                                {{ supply.serial }}
+                            </span>
+                        </div>
+                        <div class="my-2 mx-2 row">
+                            <span class="col-5 px-0 my-auto">
+                                <i class="si si-vector mr-3 font-w600"></i>
+                                <span class="font-w300">Conexão primária</span>
+                            </span>
+                            <span class="col-5 font-w400">
+                                {{ supply.internet_protocol_one }}:{{ supply.port_one }}
+                            </span>
+                        </div>
+                        <div class="my-2 mx-2 row">
+                            <span class="col-5 px-0 my-auto">
+                                <i class="si si-vector mr-3 font-w600"></i>
+                                <span class="font-w300">Conexão secundária</span>
+                            </span>
+                            <span class="col-5 font-w400">
+                                {{ supply.internet_protocol_two }}:{{ supply.port_two }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="block-content block-content-full text-right border-top">
+                    <button 
+                        type="button" 
+                        class="btn btn-sm btn-outline-info" 
+                        data-dismiss="modal">
+                        Fechar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock progress_status_modal %}
