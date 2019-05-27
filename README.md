@@ -12,11 +12,7 @@ Version: **1.0**
 ***
 # Table of Contents
 * [Getting Started](#getting-started)
-    * [Unix version comparison](#unix-version-comparison)
-    * [Installation process](#installation-process)
-    * [Usage](#usage)
-    * [Examples](#examples)
-* [License](#license)
+    * [Development Environment](#development-environment)
 ***
 ## Getting Started
 #### Development Environment
