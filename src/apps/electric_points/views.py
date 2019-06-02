@@ -193,8 +193,12 @@ class DeleteElectricPointView(LoginRequiredMixin, RedirectView):
                 return HttpResponseRedirect(reverse_lazy('index'))
             
             electric_point = get_object_or_404(ElectricPoints, pk = self.kwargs['pk'])
-            electric_point.delete()
 
+            # delete all related locations to this electric point
+            Locations.objects.filter(electricpoints__id =self.kwargs['pk']).delete()
+
+            electric_point.delete()
+            
             return super(DeleteElectricPointView, self).get(*args, **kwargs)
 
         return HttpResponseRedirect(reverse_lazy('index'))
