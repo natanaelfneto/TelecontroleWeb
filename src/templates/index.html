@@ -10,10 +10,28 @@
     <div class="content content-narrow">
         <!-- Stats -->
         <div class="row">
+            <form 
+                id="project_progress_status_filter_form"
+                class="d-none" 
+                action="{% url 'projects:listProjects' %}" 
+                method="POST">{% csrf_token %}
+                <input 
+                    type="submit" 
+                    class="d-none"
+                    name="project_progress_status_filter"
+                    value="" />
+            </form>
+            <script>
+                function callFilteredProjectList(target) {
+                    $('input[name="project_progress_status_filter"]').val(target).click();
+                }
+            </script>
             <div class="col-6 col-md-2 col-lg-6 col-xl-2">
                 <a 
-                    class="block block-rounded block-link-pop border-left border-primary border-4x" 
-                    href="javascript:void(0)">
+                    class="block block-rounded block-link-pop border-left border-primary border-4x"
+                    href="javascript:void(0)"
+                    target="A projetar"
+                    onclick="callFilteredProjectList(this.getAttribute('target'))">
                     <div class="block-content block-content-full">
                         <div 
                             class="font-size-sm font-w600 text-uppercase">
@@ -30,7 +48,9 @@
             <div class="col-6 col-md-2 col-lg-6 col-xl-2">
                 <a 
                     class="block block-rounded block-link-pop border-left border-primary border-4x" 
-                    href="javascript:void(0)">
+                    href="javascript:void(0)"
+                    target="A instalar"
+                    onclick="callFilteredProjectList(this.getAttribute('target'))">
                     <div class="block-content block-content-full">
                         <div 
                             class="font-size-sm font-w600 text-uppercase">
@@ -47,7 +67,9 @@
             <div class="col-6 col-md-2 col-lg-6 col-xl-2">
                 <a 
                     class="block block-rounded block-link-pop border-left border-primary border-4x" 
-                    href="javascript:void(0)">
+                    href="javascript:void(0)"
+                    target="A energizar"
+                    onclick="callFilteredProjectList(this.getAttribute('target'))">
                     <div class="block-content block-content-full">
                         <div 
                             class="font-size-sm font-w600 text-uppercase">
@@ -64,7 +86,9 @@
             <div class="col-6 col-md-2 col-lg-6 col-xl-2">
                 <a 
                     class="block block-rounded block-link-pop border-left border-primary border-4x" 
-                    href="javascript:void(0)">
+                    href="javascript:void(0)"
+                    target="A comissionar"
+                    onclick="callFilteredProjectList(this.getAttribute('target'))">
                     <div class="block-content block-content-full">
                         <div 
                             class="font-size-sm font-w600 text-uppercase">
@@ -81,7 +105,9 @@
             <div class="col-6 col-md-2 col-lg-6 col-xl-2">
                 <a 
                     class="block block-rounded block-link-pop border-left border-primary border-4x" 
-                    href="javascript:void(0)">
+                    href="javascript:void(0)"
+                    target="A operar"
+                    onclick="callFilteredProjectList(this.getAttribute('target'))">
                     <div class="block-content block-content-full">
                         <div 
                             class="font-size-sm font-w600 text-uppercase">
@@ -98,7 +124,9 @@
             <div class="col-6 col-md-2 col-lg-6 col-xl-2">
                 <a 
                     class="block block-rounded block-link-pop border-left border-primary border-4x" 
-                    href="javascript:void(0)">
+                    href="javascript:void(0)"
+                    target="Concluído"
+                    onclick="callFilteredProjectList(this.getAttribute('target'))">
                     <div class="block-content block-content-full">
                         <div 
                             class="font-size-sm font-w600 text-uppercase">
@@ -174,17 +202,9 @@
                                         xAxes: [{
                                             ticks: {
                                                 beginAtZero: true,
-                                                stepSize: 1,
                                                 precision: 1,
                                             }
                                         }],
-                                        yAxes: [{
-                                            ticks: {
-                                                beginAtZero: true,
-                                                stepSize: 1,
-                                                precision: 1,
-                                            }
-                                        }]
                                     }
                                 }
                             });
