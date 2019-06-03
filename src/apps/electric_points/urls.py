@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'electric_points/(?P<pk>\d+)/delete/$', DeleteElectricPointView.as_view(), name='deleteElectricPoint'),
     # list all users page
     url(r'electric_points/$', ListElectricPointsView.as_view(), name='listElectricPoints'),
+    # 
     # add project to specific electric point
     url(r'(?P<pk>\d+)/add-project-to-electric-point/$', AddProjectToElectricPointView.as_view(), name='addProjectToElectricPoint'),
     # 
@@ -51,18 +52,14 @@ urlpatterns = [
     url(r'(?P<pk>\d+)/find-coverage-study-project/$', FindCoverageStudyProjectView.as_view(), name='findCoverageStudyProject'),
     # list all coverage studies page
     url(r'coverage-studies/$', ListCoverageStudiesView.as_view(), name='listCoverageStudies'),
-
-    # 
     # 
     url(r'supply-deliveries/(?P<pk>\d+)/add/$', AddSupplyDeliveryView.as_view(), name='addSupplyDelivery'),
     # 
     url(r'supply-deliveries/$', ListSupplyDeliveriesView.as_view(), name='listSupplyDeliveries'),
     # 
     url(r'(?P<pk>\d+)/find-supply-delivery-project/$', FindSupplyDeliveryProjectView.as_view(), name='findSupplyDeliveryProject'),
-
-    # 
     # 
     url(r'feeder-studies/(?P<pk>\d+)/add/$', AddFeederStudyView.as_view(), name='addFeederStudy'),
     # 
-    url(r'feeder-studies/(?P<pk>\d+)/finishes/$', FinishesFeederStudyView.as_view(), name='finishesFeederStudy'),
+    url(r'feeder-studies/(?P<pk>\d+)/finishes/$', FinishesFeederStudyView.as_view(), name='finishesFeederStudy'),    
 ]

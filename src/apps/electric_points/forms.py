@@ -94,10 +94,10 @@ class LocationsForm(forms.ModelForm):
         form used to add new location objects to database
     '''
   
-    related_electric_point_name = forms.ModelChoiceField(
-        label="Ponto Elétrico",          
-        queryset=ElectricPoints.objects.filter(projects__electric_point=None)
-    )
+    # related_electric_point_name = forms.ModelChoiceField(
+    #     label="Ponto Elétrico",          
+    #     queryset=ElectricPoints.objects.filter(projects__electric_point=None)
+    # )
 
     # latitude of the location (e.g. -16.642649)
     latitude = forms.DecimalField(

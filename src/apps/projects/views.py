@@ -245,6 +245,20 @@ class ListProjectsView(LoginRequiredMixin, ListView):
     form = []
     paginate_by = 15
 
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        if not user.is_active:
+            return HttpResponseRedirect(reverse_lazy('index'))
+        
+        progress_status = self.request.POST['project_progress_status_filter']
+
+        if progress_status is not '' and progress_status != "Todos":
+            self.queryset = Projects.objects.filter(
+                progress_status=get_choices_index(PROGRESS_STATUS, str(progress_status))
+                ).order_by('id')
+        
+        return super(ListProjectsView, self).get(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super(ListProjectsView, self).get_context_data(**kwargs)
         context['page_title'] = self.page_title

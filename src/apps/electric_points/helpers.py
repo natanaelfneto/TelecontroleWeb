@@ -81,19 +81,19 @@ class LocationsHelper(FormHelper):
             ),
             Div(
                 Field('latitude', css_class="form-control"),
-                css_class="form-group d-none"
+                css_class="form-group"
             ),
             Div(
                 Field('longitude', css_class="form-control"),
-                css_class="form-group d-none"
+                css_class="form-group"
             ),
             Div(
                 Field('city', css_class="form-control"),
-                css_class="form-group d-none"
+                css_class="form-group"
             ),
             Div(
                 Field('state', css_class="form-control"),
-                css_class="form-group d-none"
+                css_class="form-group"
             ),
         )
 

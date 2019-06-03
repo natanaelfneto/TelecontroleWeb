@@ -118,8 +118,8 @@ class ElectricPoints(models.Model):
 
     class Meta:
         db_table = 'electric_points'
-        verbose_name = 'Ponto Elétrico'
-        verbose_name_plural = 'Pontos Elétricos'
+        verbose_name = 'Posto Elétrico'
+        verbose_name_plural = 'Postos Elétricos'
         ordering = ['created_at']
 
     def __str__(self):
@@ -237,7 +237,7 @@ class Locations(models.Model):
     related_electric_point_name = models.CharField(
         max_length=255,
         blank=True, null=True, 
-        verbose_name="Ponto Elétrico obsoleto",
+        verbose_name="Novo Ponto",
     )
 
     class Meta:

@@ -24,13 +24,7 @@ def get_active_location(received_object, arg):
         pass
 
     if str(arg) == 'related_electric_point_name':
-        electric_point = ElectricPoints.objects.filter(
-            pk=int(last_active_location.related_electric_point_name)
-        )
-        if len(electric_point) > 0:
-            return electric_point[0].name
-        else:
-            return electric_point_name
+        return last_active_location.related_electric_point_name
     # 
     if str(arg) == 'latitude':
         return last_active_location.latitude

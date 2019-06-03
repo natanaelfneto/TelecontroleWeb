@@ -28,11 +28,145 @@
 <thead>
     <tr class="text-uppercase">
         <!-- <th class="font-w700">ID</th> -->
-        <th class="d-none d-sm-table-cell font-w700 align-middle">Ponto Elétrico</th>
+        <th class="d-none d-sm-table-cell font-w700 align-middle">Ponto Indicado</th>
         <th class="font-w700 align-middle">Nº Projeto</th>
         <th class="font-w700 align-middle">Tipo de Equipamento</th>
         <th class="font-w700 align-middle">Data de conclusão da etapa</th>
-        <th class="font-w700 align-middle text-center">Progresso</th>
+        <th class="font-w700 align-middle text-center">
+            <div class="btn-group">
+                <div class="mt-2 border-0">Progresso</div>
+                <a 
+                    class="btn btn-outlline-secondary dropdown-toggle dropdown-toggle-filter dropdown-toggle-split" 
+                    style="cursor: pointer;"
+                    id="dropdown-split-filter"
+                    data-toggle="dropdown" 
+                    aria-haspopup="true" 
+                    aria-expanded="false">
+                    <span class="fa fa-filter"></span>
+                </a>
+                <div 
+                    class="dropdown-menu dropdown-menu-right font-size-sm" 
+                    aria-labelledby="dropdown-split-warning" 
+                    x-placement="top-start" 
+                    style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(74px, -185px, 0px); min-width: 13rem;">
+                    <form 
+                        class="p-2" 
+                        action="{% url 'projects:listProjects' %}" 
+                        method="POST">{% csrf_token %}
+                        <div class="form-group mb-1">
+                            <label class="m-2">Filtrar:</label>
+                            <div class="input-group dropdown-item px-0 py-1">
+                                <div class="input-group-prepend">
+                                    <span 
+                                        class="input-group-text border-0" 
+                                        style="background-color: unset;">
+                                        <span class="font-w700 text-dark si si-layers"></span>
+                                    </span>
+                                </div>
+                                <input 
+                                    type="submit" 
+                                    class="text-uppercase col text-left border-0"
+                                    style="background-color: unset;"
+                                    name="project_progress_status_filter"
+                                    value="Todos">
+                            </div>
+                            <div class="input-group dropdown-item px-0 py-1">
+                                <div class="input-group-prepend">
+                                    <span 
+                                        class="input-group-text border-0" 
+                                        style="background-color: unset;">
+                                        <span class="text-info si si-puzzle"></span>
+                                    </span>
+                                </div>
+                                <input 
+                                    type="submit" 
+                                    class="text-uppercase col text-left border-0"
+                                    style="background-color: unset;"
+                                    name="project_progress_status_filter"
+                                    value="A projetar">
+                            </div>
+                            <div class="input-group dropdown-item px-0 py-1">
+                                <div class="input-group-prepend">
+                                    <span 
+                                        class="input-group-text border-0" 
+                                        style="background-color: unset;">
+                                        <span class="text-secondary si si-wrench"></span>
+                                    </span>
+                                </div>
+                                <input 
+                                    type="submit" 
+                                    class="text-uppercase col text-left border-0"
+                                    style="background-color: unset;"
+                                    name="project_progress_status_filter"
+                                    value="A instalar">
+                            </div>
+                            <div class="input-group dropdown-item px-0 py-1">
+                                <div class="input-group-prepend">
+                                    <span 
+                                        class="input-group-text border-0" 
+                                        style="background-color: unset;">
+                                        <span class="si si-energy text-warning"></span>
+                                    </span>
+                                </div>
+                                <input 
+                                    type="submit" 
+                                    class="text-uppercase col text-left border-0"
+                                    style="background-color: unset;"
+                                    name="project_progress_status_filter"
+                                    value="A energizar">
+                            </div>
+                            <div class="input-group dropdown-item px-0 py-1">
+                                <div class="input-group-prepend">
+                                    <span 
+                                        class="input-group-text border-0" 
+                                        style="background-color: unset;">
+                                        <span class="si si-graph text-info"></span>
+                                    </span>
+                                </div>
+                                <input 
+                                    type="submit" 
+                                    class="text-uppercase col text-left border-0"
+                                    style="background-color: unset;"
+                                    name="project_progress_status_filter"
+                                    value="A comissionar">
+                            </div>
+                            <div class="input-group dropdown-item px-0 py-1">
+                                <div class="input-group-prepend">
+                                    <span 
+                                        class="input-group-text border-0" 
+                                        style="background-color: unset;">
+                                        <span class="si si-settings text-dark"></span>
+                                    </span>
+                                </div>
+                                <input 
+                                    type="submit" 
+                                    class="text-uppercase col text-left border-0"
+                                    style="background-color: unset;"
+                                    name="project_progress_status_filter"
+                                    value="A operar">
+                            </div>
+                            <div class="input-group dropdown-item px-0 py-1">
+                                <div class="input-group-prepend">
+                                    <span 
+                                        class="input-group-text border-0" 
+                                        style="background-color: unset;">
+                                        <span class="si si-check text-success"></span>
+                                    </span>
+                                </div>
+                                <input 
+                                    type="submit" 
+                                    class="text-uppercase col text-left border-0"
+                                    style="background-color: unset;"
+                                    name="project_progress_status_filter"
+                                    value="Concluído">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            </div>
+        </th>
         {% comment %} <th class="font-w700 text-center" style="width: 40px;"></th> {% endcomment %}
         <th class="font-w700 text-center" style="width: 40px;"></th>
         <th class="font-w700 text-center" style="width: 40px;"></th>
@@ -156,19 +290,19 @@
         </td>
         <td class="d-none d-sm-table-cell text-center">
             {% if project.get_progress_status_display == 'A projetar' %}
-            <span class="font-w600 badge badge-info">
+            <span class="font-w600 btn btn-sm btn-info">
             {% elif project.get_progress_status_display == 'A instalar' %}
-            <span class="font-w600 badge badge-secondary">
+            <span class="font-w600 btn btn-sm btn-secondary">
             {% elif project.get_progress_status_display == 'A energizar' %}
-            <span class="font-w600 badge badge-warning">
+            <span class="font-w600 btn btn-sm btn-warning">
             {% elif project.get_progress_status_display == 'A comissionar' %}
-            <span class="font-w600 badge badge-primary">
+            <span class="font-w600 btn btn-sm btn-primary">
             {% elif project.get_progress_status_display == 'A operar' %}
-            <span class="font-w600 badge badge-dark">
+            <span class="font-w600 btn btn-sm btn-dark">
             {% elif project.get_progress_status_display == 'Concluído' %}
-            <span class="font-w600 badge badge-success">
+            <span class="font-w600 btn btn-sm btn-success">
             {% else %}
-            <span class="font-w600 badge badge-default">
+            <span class="font-w600 btn btn-sm btn-default">
             {% endif %}
                 {{ project.get_progress_status_display }}
             </span>

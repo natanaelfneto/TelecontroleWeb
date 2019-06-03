@@ -64,7 +64,7 @@ class Projects(models.Model):
     sob = models.CharField(
         max_length=255, unique=True,
         blank=False, null=True,
-        verbose_name="SOB",
+        verbose_name="Número do Projeto",
     )
     # traceble datetime of project creation
     created_at = models.DateTimeField(

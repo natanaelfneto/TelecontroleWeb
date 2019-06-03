@@ -116,6 +116,18 @@ class ListElectricPointsView(LoginRequiredMixin, ListView):
     form = []
     paginate_by = 15
 
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        if not user.is_active:
+            return HttpResponseRedirect(reverse_lazy('index'))
+
+        name = self.request.POST['searched_list_name']
+
+        if name is not '':
+            self.queryset = ElectricPoints.objects.filter(name=name).order_by('id')
+        
+        return super(ListElectricPointsView, self).get(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super(ListElectricPointsView, self).get_context_data(**kwargs)
         context['page_title'] = self.page_title

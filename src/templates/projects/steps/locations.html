@@ -23,11 +23,11 @@ Atualização em
 {% endblock progress_status_programmed_date %}
 
 {% block progress_status_actual_date_title %}
-Ponto Elétrico Obsoleto
+Ponto Obsoleto
 {% endblock progress_status_actual_date_title %}
 
 {% block progress_status_actual_date %}
-    {{ location.related_electric_point_name|get_electric_point_name }}
+    {{ location.related_electric_point_name }}
 {% endblock progress_status_actual_date %}
 
 <!-- table block 5 -->
@@ -119,10 +119,10 @@ Atuallizada por
                         <div class="my-2 mx-2 row">
                             <span class="col-5 px-0 my-auto">
                                 <i class="si si-energy mr-3 font-w600"></i>
-                                <span class="font-w300">Ponto Elétrico Obsoleto:</span>
+                                <span class="font-w300">Ponto Obsoleto:</span>
                             </span>
                             <span class="col-7 font-w400">
-                                {{ location.related_electric_point_name|get_electric_point_name }}
+                                {{ location.related_electric_point_name }}
                             </span>
                         </div>
                         <div class="my-2 mx-2 row">

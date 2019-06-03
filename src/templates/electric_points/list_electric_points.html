@@ -26,12 +26,33 @@
 {% endif %}  
 {% endblock list_add_new %}
 
+{% block search_list_block %}            
+<form 
+    class="d-none d-sm-inline-block w-25 ml-auto" 
+    action="{% url 'electric_points:listElectricPoints' %}"
+    method="POST">{% csrf_token %}
+    <div class="input-group input-group-sm">
+        <input 
+            type="text" 
+            class="form-control form-control-alt bg-light" 
+            placeholder="Pesquisar poste indicado.." 
+            id="search_list" 
+            name="searched_list_name">
+        <div class="input-group-append">
+            <span class="input-group-text bg-body border-0">
+                <i class="si si-magnifier"></i>
+            </span>
+        </div>
+    </div>
+</form>
+{% endblock search_list_block %}
+
 {% block list_head %}
 <thead>
     <tr class="text-uppercase">
         <!-- <th class="font-w700">ID</th> -->
-        <th class="d-sm-table-cell font-w700" style="max-width: 120px;">Ponto Elétrico Indicado</th>
-        <th class="d-sm-table-cell font-w700" style="max-width: 120px;">Ponto Elétrico Projetado</th>
+        <th class="d-sm-table-cell font-w700" style="max-width: 120px;">Ponte Indicado</th>
+        <th class="d-sm-table-cell font-w700" style="max-width: 120px;">Ponto Projetado</th>
         <th class="font-w700 align-middle" style="max-width: 120px;">Alimentador</th>
         <th class="font-w700 align-middle">
             <span style="position: relative; left: 4rem;">Localização</span>
