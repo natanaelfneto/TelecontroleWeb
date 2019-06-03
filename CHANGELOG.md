@@ -6,8 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Released]
 
+### 1.1 - 2019-06-03
+#### Added
+- electric point list filter by point name
+- electric point display name changed
+- project list filter by progress status
+- project detail left side bar item list updated to show the projected point and suggested point
+
 ### 1.0 - 2019-05-27
-### Added
+#### Added
 - dashborad index with progress status cards
 
 ## [Unreleased]

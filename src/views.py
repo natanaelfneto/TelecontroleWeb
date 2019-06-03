@@ -15,32 +15,42 @@ class IndexView(LoginRequiredMixin, TemplateView):
     page_title = "Visão Geral"
     page_subtitle = "Dashboard"
     page_group = "Acompanhamento"
-    models = {
-        'electric_points': {
-            'total': ElectricPoints.objects.all().count(),
-        },
-        'projects': {
-            'total': Projects.objects.all().count(),
-            'designing': Projects.objects.filter(
-                progress_status=get_choices_index(PROGRESS_STATUS, 'A projetar')
-                ).count(),
-            'installation': Projects.objects.filter(
-                progress_status=get_choices_index(PROGRESS_STATUS, 'A instalar')
-                ).count(),
-            'energizing': Projects.objects.filter(
-                progress_status=get_choices_index(PROGRESS_STATUS, 'A energizar')
-                ).count(),
-            'commissioning': Projects.objects.filter(
-                progress_status=get_choices_index(PROGRESS_STATUS, 'A comissionar')
-                ).count(),
-            'operation': Projects.objects.filter(
-                progress_status=get_choices_index(PROGRESS_STATUS, 'A operar')
-                ).count(),
-            'finished': Projects.objects.filter(
-                progress_status=get_choices_index(PROGRESS_STATUS, 'Concluído')
-                ).count(),
+    models = {}
+
+    def get(self, *args, **kwargs):
+        # check if user is active
+        user = self.request.user
+        if not user.is_active:
+            return HttpResponseRedirect(reverse_lazy('index'))
+
+        self.models = {
+            'electric_points': {
+                'total': ElectricPoints.objects.all().count(),
+            },
+            'projects': {
+                'total': Projects.objects.all().count(),
+                'designing': Projects.objects.filter(
+                    progress_status=get_choices_index(PROGRESS_STATUS, 'A projetar')
+                    ).count(),
+                'installation': Projects.objects.filter(
+                    progress_status=get_choices_index(PROGRESS_STATUS, 'A instalar')
+                    ).count(),
+                'energizing': Projects.objects.filter(
+                    progress_status=get_choices_index(PROGRESS_STATUS, 'A energizar')
+                    ).count(),
+                'commissioning': Projects.objects.filter(
+                    progress_status=get_choices_index(PROGRESS_STATUS, 'A comissionar')
+                    ).count(),
+                'operation': Projects.objects.filter(
+                    progress_status=get_choices_index(PROGRESS_STATUS, 'A operar')
+                    ).count(),
+                'finished': Projects.objects.filter(
+                    progress_status=get_choices_index(PROGRESS_STATUS, 'Concluído')
+                    ).count(),
+            }
         }
-    }
+
+        return super(IndexView, self).get(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
