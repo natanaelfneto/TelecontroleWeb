@@ -47,8 +47,29 @@ class IndexView(LoginRequiredMixin, TemplateView):
                 'finished': Projects.objects.filter(
                     progress_status=get_choices_index(PROGRESS_STATUS, 'Concluído')
                     ).count(),
-            }
+            },
+            'feeders': {
+                'electric_regions': {
+                    'names': Feeders.objects.values('electric_region').distinct(),
+                    'count': {},
+                },
+            },
         }
+
+        for progress_status in PROGRESS_STATUS:
+
+            self.models['feeders']['electric_regions']['count'][progress_status[1]] = {}
+            
+            for name in self.models['feeders']['electric_regions']['names']:
+
+                electric_region_count = Projects.objects.filter(
+                    electric_point__feeder__electric_region=name['electric_region'],
+                    progress_status=progress_status[0]
+                ).count()
+
+                self.models['feeders']['electric_regions']['count'][progress_status[1]][name['electric_region']] = electric_region_count
+
+        print(self.models)
 
         return super(IndexView, self).get(*args, **kwargs)
 

@@ -151,7 +151,7 @@
                         <div class="block-options"></div>
                     </div>
                     <div class="block-content p-0 bg-body-light text-center">
-                        <div class="pt-3" style="height: 360px;">
+                        <div class="pt-3">
                             <canvas id="progressStatusChart"></canvas>
                             <script>
                             var ctx = document.getElementById('progressStatusChart').getContext('2d');
@@ -200,6 +200,122 @@
                                     },
                                     scales: {
                                         xAxes: [{
+                                            ticks: {
+                                                beginAtZero: true,
+                                                precision: 1,
+                                            }
+                                        }],
+                                    }
+                                }
+                            });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="block block-rounded block-mode-loading-oneui">
+                    <div class="block-header">
+                        <h3 class="block-title">Projetos por Regional</h3>
+                        <div class="block-options"></div>
+                    </div>
+                    <div class="block-content p-0 bg-body-light text-center">
+                        <div class="pt-3">
+                            <canvas id="projectsByRegionChart"></canvas>
+                            <script>
+                            var ctx = document.getElementById('projectsByRegionChart').getContext('2d');
+                            var projectsByRegionChart = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels: [
+                                        {% for name in models.feeders.electric_regions.names %}
+                                        '{{ name.electric_region }}',
+                                        {% endfor %}
+                                    ],
+                                    datasets: [
+                                        {% for progress_status, values in models.feeders.electric_regions.count.items %}
+                                        {
+                                            label: '{{ progress_status }}',
+                                            data: [
+                                                {% for region, value in values.items %}
+                                                '{{ value }}',
+                                                {% endfor %}
+                                            ],
+                                            {% if progress_status == 'A projetar' %}
+                                                backgroundColor: [
+                                                    '#4EA9E6', '#4EA9E6', '#4EA9E6',
+                                                    '#4EA9E6', '#4EA9E6', '#4EA9E6',
+                                                    '#4EA9E6', '#4EA9E6', '#4EA9E6',
+                                                ],
+                                                borderColor: [
+                                                    '#4EA9E6', '#4EA9E6', '#4EA9E6',
+                                                    '#4EA9E6', '#4EA9E6', '#4EA9E6',
+                                                    '#4EA9E6', '#4EA9E6', '#4EA9E6',
+                                                ],
+                                            {% elif progress_status == 'A instalar' %}
+                                                backgroundColor: [
+                                                    '#5A6268', '#5A6268', '#5A6268',
+                                                    '#5A6268', '#5A6268', '#5A6268',
+                                                    '#5A6268', '#5A6268', '#5A6268',
+                                                ],
+                                                borderColor: [
+                                                    '#5A6268', '#5A6268', '#5A6268',
+                                                    '#5A6268', '#5A6268', '#5A6268',
+                                                    '#5A6268', '#5A6268', '#5A6268',
+                                                ],
+                                            {% elif progress_status == 'A energizar' %}
+                                                backgroundColor: [
+                                                    '#F0A73C', '#F0A73C', '#F0A73C',
+                                                    '#F0A73C', '#F0A73C', '#F0A73C',
+                                                    '#F0A73C', '#F0A73C', '#F0A73C',
+                                                ],
+                                                borderColor: [
+                                                    '#F0A73C', '#F0A73C', '#F0A73C',
+                                                    '#F0A73C', '#F0A73C', '#F0A73C',
+                                                    '#F0A73C', '#F0A73C', '#F0A73C',
+                                                ],
+                                            {% elif progress_status == 'A comissionar' %}
+                                                backgroundColor: [
+                                                    '#3E69C9', '#3E69C9', '#3E69C9',
+                                                    '#3E69C9', '#3E69C9', '#3E69C9',
+                                                    '#3E69C9', '#3E69C9', '#3E69C9',
+                                                ],
+                                                borderColor: [
+                                                    '#3E69C9', '#3E69C9', '#3E69C9',
+                                                    '#3E69C9', '#3E69C9', '#3E69C9',
+                                                    '#3E69C9', '#3E69C9', '#3E69C9',
+                                                ],
+                                            {% elif progress_status == 'A operar' %}
+                                                backgroundColor: [
+                                                    '#23272B', '#23272B', '#23272B',
+                                                    '#23272B', '#23272B', '#23272B',
+                                                    '#23272B', '#23272B', '#23272B',
+                                                ],
+                                                borderColor: [
+                                                    '#23272B', '#23272B', '#23272B',
+                                                    '#23272B', '#23272B', '#23272B',
+                                                    '#23272B', '#23272B', '#23272B',
+                                                ],
+                                            {% elif progress_status == 'Concluído' %}
+                                                backgroundColor: [
+                                                    '#38AB69', '#38AB69', '#38AB69',
+                                                    '#38AB69', '#38AB69', '#38AB69',
+                                                    '#38AB69', '#38AB69', '#38AB69',
+                                                ],
+                                                borderColor: [
+                                                    '#38AB69', '#38AB69', '#38AB69',
+                                                    '#38AB69', '#38AB69', '#38AB69',
+                                                    '#38AB69', '#38AB69', '#38AB69',
+                                                ],
+                                            {% endif %}
+                                            borderWidth: 1
+                                        },
+                                        {% endfor %}
+                                    ]
+                                },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
                                             ticks: {
                                                 beginAtZero: true,
                                                 precision: 1,
