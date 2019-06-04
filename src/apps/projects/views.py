@@ -625,6 +625,14 @@ class UpdateProgressStatusView(LoginRequiredMixin, UpdateView):
                     )
                     installation.save()
                     project.installation = installation
+
+                    # upgrade project progress status
+                    project.progress_status = str(int(project.progress_status) + 1)
+
+                    # save object
+                    project.save()
+
+                    return HttpResponseRedirect(success_url)
                 
                 # check user profile and # do it for 'installation' status
                 if ((user.is_admin or user.is_constructor) and
@@ -643,6 +651,14 @@ class UpdateProgressStatusView(LoginRequiredMixin, UpdateView):
                     energizing.save()
                     project.energizing = energizing
 
+                    # upgrade project progress status
+                    project.progress_status = str(int(project.progress_status) + 1)
+
+                    # save object
+                    project.save()
+
+                    return HttpResponseRedirect(success_url)
+
                 # check user profile and # do it for 'energizing' status
                 if ((user.is_admin or user.is_constructor) and
                     project.get_progress_status_display() == 'A energizar'):
@@ -659,6 +675,14 @@ class UpdateProgressStatusView(LoginRequiredMixin, UpdateView):
                     )
                     commissioning.save()
                     project.commissioning = commissioning
+
+                    # upgrade project progress status
+                    project.progress_status = str(int(project.progress_status) + 1)
+
+                    # save object
+                    project.save()
+
+                    return HttpResponseRedirect(success_url)
 
                 # check user profile and # do it for 'commissioning' status
                 if ((user.is_admin or user.is_telecontrol) and
@@ -677,6 +701,14 @@ class UpdateProgressStatusView(LoginRequiredMixin, UpdateView):
                     operation.save()
                     project.operation = operation
 
+                    # upgrade project progress status
+                    project.progress_status = str(int(project.progress_status) + 1)
+
+                    # save object
+                    project.save()
+
+                    return HttpResponseRedirect(success_url)
+
                 # check user profile and # do it for 'operation' status
                 if ((user.is_admin or user.is_telecontrol) and
                     project.get_progress_status_display() == 'A operar'):
@@ -687,12 +719,14 @@ class UpdateProgressStatusView(LoginRequiredMixin, UpdateView):
                     project.finished_at = now
                     project.finished_by = user
 
-                # upgrade project progress status
-                project.progress_status = str(int(project.progress_status) + 1)
+                    # upgrade project progress status
+                    project.progress_status = str(int(project.progress_status) + 1)
 
-                # save object
-                project.save()
+                    # save object
+                    project.save()
 
+                    return HttpResponseRedirect(success_url)
+                
                 return HttpResponseRedirect(success_url)
                 
             # if project has pendencies
