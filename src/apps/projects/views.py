@@ -613,6 +613,10 @@ class UpdateProgressStatusView(LoginRequiredMixin, UpdateView):
                 if ((user.is_admin or user.is_designer) and
                     project.get_progress_status_display() == 'A projetar'):
                     # set real date for this projects progress status
+
+                    if not project.designing.programmed_date:
+                        return HttpResponseRedirect(success_url)
+
                     project.designing.real_date = real_date
                     project.designing.save()
 
@@ -638,6 +642,13 @@ class UpdateProgressStatusView(LoginRequiredMixin, UpdateView):
                 if ((user.is_admin or user.is_constructor) and
                     project.get_progress_status_display() == 'A instalar'):
                     # set real date for this projects progress status
+
+                    if not project.designing.programmed_date:
+                        return HttpResponseRedirect(success_url)
+
+                    if not project.installation.programmed_date:
+                        return HttpResponseRedirect(success_url)
+
                     project.installation.real_date = real_date
                     project.installation.save()
 
@@ -663,6 +674,16 @@ class UpdateProgressStatusView(LoginRequiredMixin, UpdateView):
                 if ((user.is_admin or user.is_constructor) and
                     project.get_progress_status_display() == 'A energizar'):
                     # set real date for this projects progress status
+
+                    if not project.designing.programmed_date:
+                        return HttpResponseRedirect(success_url)
+
+                    if not project.installation.programmed_date:
+                        return HttpResponseRedirect(success_url)
+
+                    if not project.energizing.programmed_date:
+                        return HttpResponseRedirect(success_url)
+
                     project.energizing.real_date = real_date
                     project.energizing.save()
 
@@ -688,6 +709,19 @@ class UpdateProgressStatusView(LoginRequiredMixin, UpdateView):
                 if ((user.is_admin or user.is_telecontrol) and
                     project.get_progress_status_display() == 'A comissionar'):
                     # set real date for this projects progress status
+
+                    if not project.designing.programmed_date:
+                        return HttpResponseRedirect(success_url)
+
+                    if not project.installation.programmed_date:
+                        return HttpResponseRedirect(success_url)
+
+                    if not project.energizing.programmed_date:
+                        return HttpResponseRedirect(success_url)
+
+                    if not project.commissioning.programmed_date:
+                        return HttpResponseRedirect(success_url)
+
                     project.commissioning.real_date = real_date
                     project.commissioning.save()
 
@@ -713,8 +747,25 @@ class UpdateProgressStatusView(LoginRequiredMixin, UpdateView):
                 if ((user.is_admin or user.is_telecontrol) and
                     project.get_progress_status_display() == 'A operar'):
                     # set real date for this projects progress status
+
+                    if not project.designing.programmed_date:
+                        return HttpResponseRedirect(success_url)
+
+                    if not project.installation.programmed_date:
+                        return HttpResponseRedirect(success_url)
+
+                    if not project.energizing.programmed_date:
+                        return HttpResponseRedirect(success_url)
+
+                    if not project.commissioning.programmed_date:
+                        return HttpResponseRedirect(success_url)
+
+                    if not project.operation.programmed_date:
+                        return HttpResponseRedirect(success_url)
+
                     project.operation.real_date = real_date
                     project.operation.save()
+
                     # set project finished date to datetime of now
                     project.finished_at = now
                     project.finished_by = user

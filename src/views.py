@@ -69,8 +69,6 @@ class IndexView(LoginRequiredMixin, TemplateView):
 
                 self.models['feeders']['electric_regions']['count'][progress_status[1]][name['electric_region']] = electric_region_count
 
-        print(self.models)
-
         return super(IndexView, self).get(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
