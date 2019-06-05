@@ -27,32 +27,89 @@
 {% block list_head %}  
 <thead>
     <tr class="text-uppercase">
-        <!-- <th class="font-w700">ID</th> -->
-        <th class="d-none d-sm-table-cell font-w700 align-middle">Ponto Indicado</th>
-        <th class="font-w700 align-middle">Nº Projeto</th>
-        <th class="font-w700 align-middle">Tipo de Equipamento</th>
-        <th class="font-w700 align-middle">Data de conclusão da etapa</th>
-        <th class="font-w700 align-middle text-center">
-            <div class="btn-group">
-                <div class="mt-2 border-0">Progresso</div>
-                <a 
-                    class="btn btn-outlline-secondary dropdown-toggle dropdown-toggle-filter dropdown-toggle-split" 
-                    style="cursor: pointer;"
-                    id="dropdown-split-filter"
-                    data-toggle="dropdown" 
-                    aria-haspopup="true" 
-                    aria-expanded="false">
-                    <span class="fa fa-filter"></span>
-                </a>
-                <div 
-                    class="dropdown-menu dropdown-menu-right font-size-sm" 
-                    aria-labelledby="dropdown-split-warning" 
-                    x-placement="top-start" 
-                    style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(74px, -185px, 0px); min-width: 13rem;">
-                    <form 
-                        class="p-2" 
-                        action="{% url 'projects:listProjects' %}" 
-                        method="POST">{% csrf_token %}
+        <form 
+            class="p-2" 
+            action="{% url 'projects:listProjects' %}" 
+            method="POST">{% csrf_token %}
+            <!-- <th class="font-w700">ID</th> -->
+            <th class="d-none d-sm-table-cell font-w700 align-middle">Ponto Indicado</th>
+            <th class="font-w700 align-middle">Nº Projeto</th>
+            <th class="font-w700 align-middle">Tipo de Equipamento</th>
+            <th class="font-w700 align-middle">
+                <div class="btn-group">
+                    <div class="mt-2 border-0">Regional</div>
+                        <a 
+                            class="btn btn-outlline-secondary dropdown-toggle dropdown-toggle-filter dropdown-toggle-split" 
+                            style="cursor: pointer;"
+                            id="dropdown-split-filter"
+                            data-toggle="dropdown" 
+                            aria-haspopup="true" 
+                            aria-expanded="false">
+                            <span class="fa fa-filter"></span>
+                        </a>
+                    <div 
+                        class="dropdown-menu dropdown-menu-right font-size-sm" 
+                        aria-labelledby="dropdown-split-warning" 
+                        x-placement="top-start" 
+                        style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(74px, -185px, 0px); min-width: 15rem;">
+                        <div class="form-group mb-1">
+                            <label class="m-2">Filtrar:</label>
+                            <div class="input-group dropdown-item px-0 py-1">
+                                <div class="input-group-prepend">
+                                    <span 
+                                        class="input-group-text border-0" 
+                                        style="background-color: unset;">
+                                        <span class="font-w700 text-dark si si-layers"></span>
+                                    </span>
+                                </div>
+                                <input 
+                                    type="submit" 
+                                    class="text-uppercase col text-left border-0"
+                                    style="background-color: unset;"
+                                    name="electric_region_filter"
+                                    value="Todas" />
+                            </div>
+                            {% for region in electric_regions %}                                
+                                <div class="input-group dropdown-item px-0 py-1">
+                                <div class="input-group-prepend">
+                                    <span 
+                                        class="input-group-text border-0" 
+                                        style="background-color: unset;">
+                                        <span class="font-w300 text-dark si si-map"></span>
+                                    </span>
+                                </div>
+                                <input 
+                                    type="submit" 
+                                    class="text-uppercase col text-left border-0"
+                                    style="background-color: unset;"
+                                    name="electric_region_filter"
+                                    value="{{ region.electric_region }}" />
+                            </div>
+                            {% endfor %}
+                            
+
+                        </div>
+                    </div>
+                </div>
+            </th>
+            <th class="font-w700 align-middle">Data de conclusão da etapa</th>
+            <th class="font-w700 align-middle text-center">
+                <div class="btn-group">
+                    <div class="mt-2 border-0">Progresso</div>
+                        <a 
+                            class="btn btn-outlline-secondary dropdown-toggle dropdown-toggle-filter dropdown-toggle-split" 
+                            style="cursor: pointer;"
+                            id="dropdown-split-filter"
+                            data-toggle="dropdown" 
+                            aria-haspopup="true" 
+                            aria-expanded="false">
+                            <span class="fa fa-filter"></span>
+                        </a>
+                    <div 
+                        class="dropdown-menu dropdown-menu-right font-size-sm" 
+                        aria-labelledby="dropdown-split-warning" 
+                        x-placement="top-start" 
+                        style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(74px, -185px, 0px); min-width: 13rem;">
                         <div class="form-group mb-1">
                             <label class="m-2">Filtrar:</label>
                             <div class="input-group dropdown-item px-0 py-1">
@@ -161,15 +218,13 @@
                                     value="Concluído" />
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
-
-            </div>
-        </th>
-        {% comment %} <th class="font-w700 text-center" style="width: 40px;"></th> {% endcomment %}
-        <th class="font-w700 text-center" style="width: 40px;"></th>
-        <th class="font-w700 text-center" style="width: 40px;"></th>
+            </th>
+            {% comment %} <th class="font-w700 text-center" style="width: 40px;"></th> {% endcomment %}
+            <th class="font-w700 text-center" style="width: 40px;"></th>
+            <th class="font-w700 text-center" style="width: 40px;"></th>
+        </form>
     </tr>
 </thead>
 {% endblock list_head %}
@@ -196,6 +251,11 @@
         <td class="d-none d-sm-table-cell">
             <span class="font-size-sm text-muted">
                 {{ project.electric_point.get_equipment_type_display }}
+            </span>
+        </td>
+        <td class="d-none d-sm-table-cell">
+            <span class="font-size-sm text-muted">
+                {{ project.electric_point.feeder.electric_region }}
             </span>
         </td>
         <td class="d-none d-sm-table-cell">

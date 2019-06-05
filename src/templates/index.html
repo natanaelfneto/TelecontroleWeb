@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load mathfilters %}
+{% load decimal_filter %}
+{% block scripts %}
+{% endblock scripts %}
 {% block content %}
 <!-- Main Container -->
 <main id="main-container">
@@ -9,7 +13,7 @@
     <!-- Page Content -->
     <div class="content content-narrow">
         <!-- Stats -->
-        <div class="row">
+        <div>
             <form 
                 id="project_progress_status_filter_form"
                 class="d-none" 
@@ -26,119 +30,320 @@
                     $('input[name="project_progress_status_filter"]').val(target).click();
                 }
             </script>
-            <div class="col-6 col-md-2 col-lg-6 col-xl-2">
-                <a 
-                    class="block block-rounded block-link-pop border-left border-primary border-4x"
-                    href="javascript:void(0)"
-                    target="A projetar"
-                    onclick="callFilteredProjectList(this.getAttribute('target'))">
-                    <div class="block-content block-content-full">
-                        <div 
-                            class="font-size-sm font-w600 text-uppercase">
-                            <small class="text-muted">Pontos Elétricos</small>
-                            <div class="text-info"><small>A projetar</small></div>
+            <style>
+                #progress_status_cards > div:hover > a:first-child {
+                    display: none;
+                }
+                #progress_status_cards > div:hover > a:first-child ~ a:nth-child(2) {
+                    display: block;
+                }
+                #progress_status_cards > div > a:nth-child(2) {
+                    display: none;
+                }
+            </style>
+            <div id="progress_status_cards" class="row">
+                <div class="col-6 col-md-2 col-lg-6 col-xl-2" style="max-height: 0;">
+                    <a 
+                        class="block block-rounded block-link-pop border-left border-info border-4x"
+                        href="javascript:void(0)"
+                        target="A projetar"
+                        onclick="callFilteredProjectList(this.getAttribute('target'))">
+                        <div class="block-content block-content-full">
+                            <div 
+                                class="font-size-sm font-w600 text-uppercase">
+                                <small class="text-muted">Pontos Elétricos</small>
+                                <div class="text-info"><small>A projetar</small></div>
+                            </div>
+                            <div 
+                                class="font-size-h2 font-w400 text-dark text-right">
+                                {{ models.projects.designing }}
+                                <small><small>/ {{ models.electric_points.designing }}</small></small>
+                            </div>
                         </div>
-                        <div 
-                            class="font-size-h2 font-w400 text-dark text-right">
-                            {{ models.projects.designing }}
+                    </a>
+                    <a 
+                        class="block block-rounded block-link-pop border-left border-info border-4x"
+                        href="javascript:void(0)"
+                        target="A projetar"
+                        onclick="callFilteredProjectList(this.getAttribute('target'))">
+                        <div class="block-content block-content-full">
+                            <div 
+                                class="font-size-sm font-w600 text-uppercase">
+                                <small class="text-muted">Avanço em</small>
+                                <div class="text-info">
+                                    {{ models.electric_points.designing|div:models.projects.total|mul:100|decimal_filter }}
+                                    <span>%</span>
+                                    <span class="text-dark">
+                                        ({{ models.electric_points.designing }})
+                                    </span>
+                                </div>
+                            </div>
+                            <div 
+                                class="font-size-sm font-w600 text-uppercase">
+                                <small class="text-muted">Com pendências</small>
+                                <div class="text-danger">
+                                    {{ models.pendencies.designing|div:models.projects.designing|mul:100|decimal_filter }}
+                                    <span>%</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-6 col-md-2 col-lg-6 col-xl-2">
-                <a 
-                    class="block block-rounded block-link-pop border-left border-primary border-4x" 
-                    href="javascript:void(0)"
-                    target="A instalar"
-                    onclick="callFilteredProjectList(this.getAttribute('target'))">
-                    <div class="block-content block-content-full">
-                        <div 
-                            class="font-size-sm font-w600 text-uppercase">
-                            <small class="text-muted">Pontos Elétricos</small>
-                            <div class="text-secondary"><small>A instalar</small></div>
+                    </a>
+                </div>
+                <div class="col-6 col-md-2 col-lg-6 col-xl-2">
+                    <a 
+                        class="block block-rounded block-link-pop border-left border-secondary border-4x" 
+                        href="javascript:void(0)"
+                        target="A instalar"
+                        onclick="callFilteredProjectList(this.getAttribute('target'))">
+                        <div class="block-content block-content-full">
+                            <div 
+                                class="font-size-sm font-w600 text-uppercase">
+                                <small class="text-muted">Pontos Elétricos</small>
+                                <div class="text-secondary"><small>A instalar</small></div>
+                            </div>
+                            <div 
+                                class="font-size-h2 font-w400 text-dark text-right">
+                                {{ models.projects.installation }}
+                                <small>
+                                    /<small class="text-secondary">
+                                    {{ models.electric_points.installation }}
+                                    </small>
+                                </small>
+                            </div>
                         </div>
-                        <div 
-                            class="font-size-h2 font-w400 text-dark text-right">
-                            {{ models.projects.installation }}
+                    </a>
+                    <a 
+                        class="block block-rounded block-link-pop border-left border-secondary border-4x"
+                        href="javascript:void(0)"
+                        target="A instalar"
+                        onclick="callFilteredProjectList(this.getAttribute('target'))">
+                        <div class="block-content block-content-full">
+                            <div 
+                                class="font-size-sm font-w600 text-uppercase">
+                                <small class="text-muted">Avanço em</small>
+                                <div class="text-secondary">
+                                    {{ models.electric_points.installation|div:models.projects.total|mul:100|decimal_filter }}
+                                    <span>%</span>
+                                    <span class="text-dark">
+                                        ({{ models.electric_points.installation }})
+                                    </span>
+                                </div>
+                            </div>
+                            <div 
+                                class="font-size-sm font-w600 text-uppercase">
+                                <small class="text-muted">Com pendências</small>
+                                <div class="text-danger">
+                                    {{ models.pendencies.installation|div:models.projects.installation|mul:100|decimal_filter }}
+                                    <span>%</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-6 col-md-2 col-lg-6 col-xl-2">
-                <a 
-                    class="block block-rounded block-link-pop border-left border-primary border-4x" 
-                    href="javascript:void(0)"
-                    target="A energizar"
-                    onclick="callFilteredProjectList(this.getAttribute('target'))">
-                    <div class="block-content block-content-full">
-                        <div 
-                            class="font-size-sm font-w600 text-uppercase">
-                            <small class="text-muted">Pontos Elétricos</small>
-                            <div class="text-warning"><small>A energizar</small></div>
+                    </a>
+                </div>
+                <div class="col-6 col-md-2 col-lg-6 col-xl-2">
+                    <a 
+                        class="block block-rounded block-link-pop border-left border-warning border-4x" 
+                        href="javascript:void(0)"
+                        target="A energizar"
+                        onclick="callFilteredProjectList(this.getAttribute('target'))">
+                        <div class="block-content block-content-full">
+                            <div 
+                                class="font-size-sm font-w600 text-uppercase">
+                                <small class="text-muted">Pontos Elétricos</small>
+                                <div class="text-warning"><small>A energizar</small></div>
+                            </div>
+                            <div 
+                                class="font-size-h2 font-w400 text-dark text-right">
+                                {{ models.projects.energizing }}
+                                <small>
+                                    /<small class="text-secondary">
+                                    {{ models.electric_points.energizing }}
+                                    </small>
+                                </small>
+                            </div>
                         </div>
-                        <div 
-                            class="font-size-h2 font-w400 text-dark text-right">
-                            {{ models.projects.energizing }}
+                    </a>
+                    <a 
+                        class="block block-rounded block-link-pop border-left border-warning border-4x" 
+                        href="javascript:void(0)"
+                        target="A energizar"
+                        onclick="callFilteredProjectList(this.getAttribute('target'))">
+                        <div class="block-content block-content-full">
+                            <div 
+                                class="font-size-sm font-w600 text-uppercase">
+                                <small class="text-muted">Avanço em</small>
+                                <div class="text-warning">
+                                    {{ models.electric_points.energizing|div:models.projects.total|mul:100|decimal_filter }}
+                                    <span>%</span>
+                                    <span class="text-dark">
+                                        ({{ models.electric_points.energizing }})
+                                    </span>
+                                </div>
+                            </div>
+                            <div 
+                                class="font-size-sm font-w600 text-uppercase">
+                                <small class="text-muted">Com pendências</small>
+                                <div class="text-danger">
+                                    {{ models.pendencies.energizing|div:models.projects.energizing|mul:100|decimal_filter }}
+                                    <span>%</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-6 col-md-2 col-lg-6 col-xl-2">
-                <a 
-                    class="block block-rounded block-link-pop border-left border-primary border-4x" 
-                    href="javascript:void(0)"
-                    target="A comissionar"
-                    onclick="callFilteredProjectList(this.getAttribute('target'))">
-                    <div class="block-content block-content-full">
-                        <div 
-                            class="font-size-sm font-w600 text-uppercase">
-                            <small class="text-muted">Pontos Elétricos</small>
-                            <div class="text-primary"><small>A comissionar</small></div>
+                    </a>
+                </div>
+                <div class="col-6 col-md-2 col-lg-6 col-xl-2">
+                    <a 
+                        class="block block-rounded block-link-pop border-left border-primary border-4x" 
+                        href="javascript:void(0)"
+                        target="A comissionar"
+                        onclick="callFilteredProjectList(this.getAttribute('target'))">
+                        <div class="block-content block-content-full">
+                            <div 
+                                class="font-size-sm font-w600 text-uppercase">
+                                <small class="text-muted">Pontos Elétricos</small>
+                                <div class="text-primary"><small>A comissionar</small></div>
+                            </div>
+                            <div 
+                                class="font-size-h2 font-w400 text-dark text-right">
+                                {{ models.projects.commissioning }}
+                                <small>
+                                    /<small class="text-secondary">
+                                    {{ models.electric_points.commissioning }}
+                                    </small>
+                                </small>
+                            </div>
                         </div>
-                        <div 
-                            class="font-size-h2 font-w400 text-dark text-right">
-                            {{ models.projects.commissioning }}
+                    </a>
+                    <a 
+                        class="block block-rounded block-link-pop border-left border-primary border-4x" 
+                        href="javascript:void(0)"
+                        target="A comissionar"
+                        onclick="callFilteredProjectList(this.getAttribute('target'))">
+                        <div class="block-content block-content-full">
+                            <div 
+                                class="font-size-sm font-w600 text-uppercase">
+                                <small class="text-muted">Avanço em</small>
+                                <div class="text-primary">
+                                    {{ models.electric_points.commissioning|div:models.projects.total|mul:100|decimal_filter }}
+                                    <span>%</span>
+                                    <span class="text-dark">
+                                        ({{ models.electric_points.commissioning }})
+                                    </span>
+                                </div>
+                            </div>
+                            <div 
+                                class="font-size-sm font-w600 text-uppercase">
+                                <small class="text-muted">Com pendências</small>
+                                <div class="text-danger">
+                                    {{ models.pendencies.commissioning|div:models.projects.commissioning|mul:100|decimal_filter }}
+                                    <span>%</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-6 col-md-2 col-lg-6 col-xl-2">
-                <a 
-                    class="block block-rounded block-link-pop border-left border-primary border-4x" 
-                    href="javascript:void(0)"
-                    target="A operar"
-                    onclick="callFilteredProjectList(this.getAttribute('target'))">
-                    <div class="block-content block-content-full">
-                        <div 
-                            class="font-size-sm font-w600 text-uppercase">
-                            <small class="text-muted">Pontos Elétricos</small>
-                            <div class="text-dark"><small>A operar</small></div>
+                    </a>
+                </div>
+                <div class="col-6 col-md-2 col-lg-6 col-xl-2">
+                    <a 
+                        class="block block-rounded block-link-pop border-left border-dark border-4x" 
+                        href="javascript:void(0)"
+                        target="A operar"
+                        onclick="callFilteredProjectList(this.getAttribute('target'))">
+                        <div class="block-content block-content-full">
+                            <div 
+                                class="font-size-sm font-w600 text-uppercase">
+                                <small class="text-muted">Pontos Elétricos</small>
+                                <div class="text-dark"><small>A operar</small></div>
+                            </div>
+                            <div 
+                                class="font-size-h2 font-w400 text-dark text-right">
+                                {{ models.projects.operation }}
+                                <small>
+                                    /<small class="text-secondary">
+                                    {{ models.electric_points.operation }}
+                                    </small>
+                                </small>
+                            </div>
                         </div>
-                        <div 
-                            class="font-size-h2 font-w400 text-dark text-right">
-                            {{ models.projects.operation }}
+                    </a>
+                    <a 
+                        class="block block-rounded block-link-pop border-left border-dark border-4x" 
+                        href="javascript:void(0)"
+                        target="A operar"
+                        onclick="callFilteredProjectList(this.getAttribute('target'))">
+                        <div class="block-content block-content-full">
+                            <div 
+                                class="font-size-sm font-w600 text-uppercase">
+                                <small class="text-muted">Avanço em</small>
+                                <div class="text-dark">
+                                    {{ models.electric_points.operation|div:models.projects.total|mul:100|decimal_filter }}
+                                    <span>%</span>
+                                    <span class="text-dark">
+                                        ({{ models.electric_points.operation }})
+                                    </span>
+                                </div>
+                            </div>
+                            <div 
+                                class="font-size-sm font-w600 text-uppercase">
+                                <small class="text-muted">Com pendências</small>
+                                <div class="text-danger">
+                                    {{ models.pendencies.operation|div:models.projects.operation|mul:100|decimal_filter }}
+                                    <span>%</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-6 col-md-2 col-lg-6 col-xl-2">
-                <a 
-                    class="block block-rounded block-link-pop border-left border-primary border-4x" 
-                    href="javascript:void(0)"
-                    target="Concluído"
-                    onclick="callFilteredProjectList(this.getAttribute('target'))">
-                    <div class="block-content block-content-full">
-                        <div 
-                            class="font-size-sm font-w600 text-uppercase">
-                            <small class="text-muted">Pontos Elétricos</small>
-                            <div class="text-success"><small>Concluídos</small></div>
+                    </a>
+                </div>
+                <div class="col-6 col-md-2 col-lg-6 col-xl-2">
+                    <a 
+                        class="block block-rounded block-link-pop border-left border-success border-4x" 
+                        href="javascript:void(0)"
+                        target="Concluído"
+                        onclick="callFilteredProjectList(this.getAttribute('target'))">
+                        <div class="block-content block-content-full">
+                            <div 
+                                class="font-size-sm font-w600 text-uppercase">
+                                <small class="text-muted">Pontos Elétricos</small>
+                                <div class="text-success"><small>Concluídos</small></div>
+                            </div>
+                            <div 
+                                class="font-size-h2 font-w400 text-dark text-right">
+                                {{ models.projects.finished }}
+                                <small>
+                                    /<small class="text-secondary">
+                                    {{ models.electric_points.finished }}
+                                    </small>
+                                </small>
+                            </div>
                         </div>
-                        <div 
-                            class="font-size-h2 font-w400 text-dark text-right">
-                            {{ models.projects.finished }}
+                    </a>
+                    <a 
+                        class="block block-rounded block-link-pop border-left border-success border-4x" 
+                        href="javascript:void(0)"
+                        target="Concluído"
+                        onclick="callFilteredProjectList(this.getAttribute('target'))">
+                        <div class="block-content block-content-full">
+                            <div 
+                                class="font-size-sm font-w600 text-uppercase">
+                                <small class="text-muted">Avanço em</small>
+                                <div class="text-success">
+                                    {{ models.electric_points.finished|div:models.projects.total|mul:100|decimal_filter }}
+                                    <span>%</span>
+                                    <span class="text-dark">
+                                        ({{ models.electric_points.finished }})
+                                    </span>
+                                </div>
+                            </div>
+                            <div 
+                                class="font-size-sm font-w600 text-uppercase">
+                                <small class="text-muted">Com pendências</small>
+                                <div class="text-danger">
+                                    {{ models.pendencies.finished|div:models.projects.finished|mul:100|decimal_filter }}
+                                    <span>%</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
         </div>
         <!-- END Stats -->

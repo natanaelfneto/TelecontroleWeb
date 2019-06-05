@@ -244,18 +244,26 @@ class ListProjectsView(LoginRequiredMixin, ListView):
     queryset = Projects.objects.filter().order_by('id')
     form = []
     paginate_by = 15
+    electric_regions = Feeders.objects.values('electric_region').distinct()
 
     def post(self, request, *args, **kwargs):
         user = self.request.user
         if not user.is_active:
             return HttpResponseRedirect(reverse_lazy('index'))
         
-        progress_status = self.request.POST['project_progress_status_filter']
+        progress_status = self.request.POST.get('project_progress_status_filter', False)
 
-        if progress_status is not '' and progress_status != "Todos":
+        if progress_status and progress_status is not '' and progress_status != "Todos":
             self.queryset = Projects.objects.filter(
                 progress_status=get_choices_index(PROGRESS_STATUS, str(progress_status))
-                ).order_by('id')
+            ).order_by('id')
+
+        electric_region = self.request.POST.get('electric_region_filter', False)
+
+        if electric_region and electric_region is not '' and electric_region != "Todas":
+            self.queryset = Projects.objects.filter(
+                electric_point__feeder__electric_region=electric_region
+            ).order_by('id')
         
         return super(ListProjectsView, self).get(request, *args, **kwargs)
 
@@ -264,6 +272,7 @@ class ListProjectsView(LoginRequiredMixin, ListView):
         context['page_title'] = self.page_title
         context['page_subtitle'] = self.page_subtitle
         context['page_group'] = self.page_group
+        context['electric_regions'] = self.electric_regions
 
         return context
 
