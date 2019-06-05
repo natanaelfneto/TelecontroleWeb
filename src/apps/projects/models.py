@@ -89,7 +89,7 @@ class Projects(models.Model):
     finished_by = models.ForeignKey(
         'accounts.BasicUser',
         on_delete=models.CASCADE,
-        blank=False, null=True, 
+        blank=True, null=True, 
         verbose_name="Encerrado por",
         related_name="project_finished_by"
     )
