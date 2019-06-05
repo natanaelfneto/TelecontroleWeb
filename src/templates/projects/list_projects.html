@@ -31,7 +31,7 @@
             class="p-2" 
             action="{% url 'projects:listProjects' %}" 
             method="POST">{% csrf_token %}
-            <th class="font-w700">ID</th>
+            <!-- <th class="font-w700">ID</th> -->
             <th class="d-none d-sm-table-cell font-w700 align-middle">Ponto Indicado</th>
             <th class="font-w700 align-middle">Nº Projeto</th>
             <th class="font-w700 align-middle">Tipo de Equipamento</th>
@@ -233,7 +233,7 @@
 <tbody>
     {% for project in object_list %}
     <tr>
-        <td><span class="font-w600">{{ project.id }}</span></td>
+        <!-- <td><span class="font-w600">{{ project.id }}</span></td> -->
         <td class="d-none d-sm-table-cell">
             <span class="font-size-sm text-muted">
                 {{ project.electric_point.name }}
