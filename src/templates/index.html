@@ -49,16 +49,20 @@
                         href="javascript:void(0)"
                         target="A projetar"
                         onclick="callFilteredProjectList(this.getAttribute('target'))">
-                        <div class="block-content block-content-full">
+                        <div class="block-content block-content-full" style="min-height: 147px;">
                             <div 
                                 class="font-size-sm font-w600 text-uppercase">
-                                <small class="text-muted">Pontos Elétricos</small>
+                                <small class="text-muted">Pontos Telecontrole</small>
                                 <div class="text-info"><small>A projetar</small></div>
                             </div>
-                            <div 
-                                class="font-size-h2 font-w400 text-dark text-right">
-                                {{ models.projects.designing }}
-                                <small><small>/ {{ models.electric_points.designing }}</small></small>
+                            <div class="row">
+                                <div 
+                                    class="font-size-h2 font-w400 text-dark text-right ml-auto mr-2">
+                                    {{ models.projects.designing }}
+                                    <small><small>
+                                        / {{ models.electric_points.designing }}
+                                    </small></small>
+                                </div>
                             </div>
                         </div>
                     </a>
@@ -67,7 +71,7 @@
                         href="javascript:void(0)"
                         target="A projetar"
                         onclick="callFilteredProjectList(this.getAttribute('target'))">
-                        <div class="block-content block-content-full">
+                        <div class="block-content block-content-full" style="min-height: 147px;">
                             <div 
                                 class="font-size-sm font-w600 text-uppercase">
                                 <small class="text-muted">Avanço em</small>
@@ -96,20 +100,22 @@
                         href="javascript:void(0)"
                         target="A instalar"
                         onclick="callFilteredProjectList(this.getAttribute('target'))">
-                        <div class="block-content block-content-full">
+                        <div class="block-content block-content-full" style="min-height: 147px;">
                             <div 
                                 class="font-size-sm font-w600 text-uppercase">
-                                <small class="text-muted">Pontos Elétricos</small>
+                                <small class="text-muted">Pontos Telecontrole</small>
                                 <div class="text-secondary"><small>A instalar</small></div>
                             </div>
-                            <div 
-                                class="font-size-h2 font-w400 text-dark text-right">
-                                {{ models.projects.installation }}
-                                <small>
-                                    /<small class="text-secondary">
-                                    {{ models.electric_points.installation }}
+                            <div class="row">
+                                <div 
+                                    class="font-size-h2 font-w400 text-dark text-right ml-auto mr-2">
+                                    {{ models.projects.installation }}
+                                    <small>
+                                        /<small class="text-secondary">
+                                        {{ models.electric_points.installation }}
+                                        </small>
                                     </small>
-                                </small>
+                                </div>
                             </div>
                         </div>
                     </a>
@@ -118,7 +124,7 @@
                         href="javascript:void(0)"
                         target="A instalar"
                         onclick="callFilteredProjectList(this.getAttribute('target'))">
-                        <div class="block-content block-content-full">
+                        <div class="block-content block-content-full" style="min-height: 147px;">
                             <div 
                                 class="font-size-sm font-w600 text-uppercase">
                                 <small class="text-muted">Avanço em</small>
@@ -132,7 +138,7 @@
                             </div>
                             <div 
                                 class="font-size-sm font-w600 text-uppercase">
-                                <small class="text-muted">Pendentes em</small>
+                                <small class="text-muted">Com pendências</small>
                                 <div class="text-danger">
                                     {{ models.pendencies.installation|div_by_zero:models.projects.installation|mul:100|decimal_filter }}
                                     <span>%</span>
@@ -147,20 +153,22 @@
                         href="javascript:void(0)"
                         target="A energizar"
                         onclick="callFilteredProjectList(this.getAttribute('target'))">
-                        <div class="block-content block-content-full">
+                        <div class="block-content block-content-full" style="min-height: 147px;">
                             <div 
                                 class="font-size-sm font-w600 text-uppercase">
-                                <small class="text-muted">Pontos Elétricos</small>
+                                <small class="text-muted">Pontos Telecontrole</small>
                                 <div class="text-warning"><small>A energizar</small></div>
                             </div>
-                            <div 
-                                class="font-size-h2 font-w400 text-dark text-right">
-                                {{ models.projects.energizing }}
-                                <small>
-                                    /<small class="text-secondary">
-                                    {{ models.electric_points.energizing }}
+                            <div class="row">
+                                <div 
+                                    class="font-size-h2 font-w400 text-dark text-right ml-auto mr-2">
+                                    {{ models.projects.energizing }}
+                                    <small>
+                                        /<small class="text-secondary">
+                                        {{ models.electric_points.energizing }}
+                                        </small>
                                     </small>
-                                </small>
+                                </div>
                             </div>
                         </div>
                     </a>
@@ -169,7 +177,7 @@
                         href="javascript:void(0)"
                         target="A energizar"
                         onclick="callFilteredProjectList(this.getAttribute('target'))">
-                        <div class="block-content block-content-full">
+                        <div class="block-content block-content-full" style="min-height: 147px;">
                             <div 
                                 class="font-size-sm font-w600 text-uppercase">
                                 <small class="text-muted">Avanço em</small>
@@ -198,20 +206,22 @@
                         href="javascript:void(0)"
                         target="A comissionar"
                         onclick="callFilteredProjectList(this.getAttribute('target'))">
-                        <div class="block-content block-content-full">
+                        <div class="block-content block-content-full" style="min-height: 147px;">
                             <div 
                                 class="font-size-sm font-w600 text-uppercase">
-                                <small class="text-muted">Pontos Elétricos</small>
+                                <small class="text-muted">Pontos Telecontrole</small>
                                 <div class="text-primary"><small>A comissionar</small></div>
                             </div>
-                            <div 
-                                class="font-size-h2 font-w400 text-dark text-right">
-                                {{ models.projects.commissioning }}
-                                <small>
-                                    /<small class="text-secondary">
-                                    {{ models.electric_points.commissioning }}
+                            <div class="row">
+                                <div 
+                                    class="font-size-h2 font-w400 text-dark text-right ml-auto mr-2">
+                                    {{ models.projects.commissioning }}
+                                    <small>
+                                        /<small class="text-secondary">
+                                        {{ models.electric_points.commissioning }}
+                                        </small>
                                     </small>
-                                </small>
+                                </div>
                             </div>
                         </div>
                     </a>
@@ -220,7 +230,7 @@
                         href="javascript:void(0)"
                         target="A comissionar"
                         onclick="callFilteredProjectList(this.getAttribute('target'))">
-                        <div class="block-content block-content-full">
+                        <div class="block-content block-content-full" style="min-height: 147px;">
                             <div 
                                 class="font-size-sm font-w600 text-uppercase">
                                 <small class="text-muted">Avanço em</small>
@@ -249,20 +259,22 @@
                         href="javascript:void(0)"
                         target="A operar"
                         onclick="callFilteredProjectList(this.getAttribute('target'))">
-                        <div class="block-content block-content-full">
+                        <div class="block-content block-content-full" style="min-height: 147px;">
                             <div 
                                 class="font-size-sm font-w600 text-uppercase">
-                                <small class="text-muted">Pontos Elétricos</small>
+                                <small class="text-muted">Pontos Telecontrole</small>
                                 <div class="text-dark"><small>A operar</small></div>
                             </div>
-                            <div 
-                                class="font-size-h2 font-w400 text-dark text-right">
-                                {{ models.projects.operation }}
-                                <small>
-                                    /<small class="text-secondary">
-                                    {{ models.electric_points.operation }}
+                            <div class="row">
+                                <div 
+                                    class="font-size-h2 font-w400 text-dark text-right ml-auto mr-2">
+                                    {{ models.projects.operation }}
+                                    <small>
+                                        /<small class="text-secondary">
+                                        {{ models.electric_points.operation }}
+                                        </small>
                                     </small>
-                                </small>
+                                </div>
                             </div>
                         </div>
                     </a>
@@ -271,7 +283,7 @@
                         href="javascript:void(0)"
                         target="A operar"
                         onclick="callFilteredProjectList(this.getAttribute('target'))">
-                        <div class="block-content block-content-full">
+                        <div class="block-content block-content-full" style="min-height: 147px;">
                             <div 
                                 class="font-size-sm font-w600 text-uppercase">
                                 <small class="text-muted">Avanço em</small>
@@ -300,16 +312,18 @@
                         href="javascript:void(0)"
                         target="Concluído"
                         onclick="callFilteredProjectList(this.getAttribute('target'))">
-                        <div class="block-content block-content-full">
+                        <div class="block-content block-content-full" style="min-height: 147px;">
                             <div 
                                 class="font-size-sm font-w600 text-uppercase">
-                                <small class="text-muted">Pontos Elétricos</small>
+                                <small class="text-muted">Pontos Telecontrole</small>
                                 <div class="text-success"><small>Concluídos</small></div>
                             </div>
-                            <div 
-                                class="font-size-h2 font-w400 text-dark text-right">
-                                {{ models.projects.finished }}
-                                </small>
+                            <div class="row">
+                                <div 
+                                    class="font-size-h2 font-w400 text-dark text-right ml-auto mr-2">
+                                    {{ models.projects.finished }}
+                                    </small>
+                                </div>
                             </div>
                         </div>
                     </a>

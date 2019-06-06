@@ -89,21 +89,21 @@
                     aria-expanded="false" 
                     href="#">
                     <i class="nav-main-link-icon si si-energy"></i>
-                    <span class="nav-main-link-name">Postos Elétricos</span>
+                    <span class="nav-main-link-name">Pontos Telecontrole</span>
                 </a>
                 <ul class="nav-main-submenu">
                     {% if request.user.is_admin or request.user.is_planner %}
                     <li class="nav-main-item">
                         <a class="nav-main-link" href="{% url 'electric_points:addElectricPoint' %}">
                             <i class="nav-main-link-icon si si-plus"></i>
-                            <span class="nav-main-link-name">Cadastrar Posto Elétrico</span>
+                            <span class="nav-main-link-name">Cadastrar Ponto Telecontrole</span>
                         </a>
                     </li>
                     {% endif %}
                     <li class="nav-main-item">
                         <a class="nav-main-link" href="{% url 'electric_points:listElectricPoints' %}">
                             <i class="nav-main-link-icon si si-list"></i>
-                            <span class="nav-main-link-name">Listar Postos Elétricos</span>
+                            <span class="nav-main-link-name">Listar Pontos Telecontrole</span>
                         </a>
                     </li>
                 </ul>

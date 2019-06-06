@@ -118,8 +118,8 @@ class ElectricPoints(models.Model):
 
     class Meta:
         db_table = 'electric_points'
-        verbose_name = 'Posto Elétrico'
-        verbose_name_plural = 'Postos Elétricos'
+        verbose_name = 'Ponto Telecontrole'
+        verbose_name_plural = 'Pontos Telecontroles'
         ordering = ['created_at']
 
     def __str__(self):
@@ -262,7 +262,7 @@ class CoverageStudies(models.Model):
         'electric_points.ElectricPoints',
         on_delete=models.CASCADE,
         blank=False, null=True,
-        verbose_name="Ponto Elétrico",
+        verbose_name="Ponto Telecontrole",
     )
     # study communication type
     communication_type = models.CharField(
@@ -318,7 +318,7 @@ class SupplyDelivery(models.Model):
         'electric_points.ElectricPoints',
         on_delete=models.CASCADE,
         blank=False, null=True,
-        verbose_name="Ponto Elétrico",
+        verbose_name="Ponto Telecontrole",
     )
     # study communication type
     communication_type = models.CharField(
@@ -407,7 +407,7 @@ class FeederStudies(models.Model):
         'electric_points.ElectricPoints',
         on_delete=models.CASCADE,
         blank=False, null=True,
-        verbose_name="Ponto Elétrico",
+        verbose_name="Ponto Telecontrole",
     )
     # study communication type
     phase_adjustment = models.CharField(
