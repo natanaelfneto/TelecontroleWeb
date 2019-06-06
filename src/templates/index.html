@@ -442,72 +442,72 @@
                                                 {% for region, value in values.items %}
                                                 '{{ value }}',
                                                 {% endfor %}
-                                            ],
+                                            ],                                            
                                             {% if progress_status == 'A projetar' %}
                                                 backgroundColor: [
-                                                    '#4EA9E6', '#4EA9E6', '#4EA9E6',
-                                                    '#4EA9E6', '#4EA9E6', '#4EA9E6',
-                                                    '#4EA9E6', '#4EA9E6', '#4EA9E6',
+                                                    {% for region, value in values.items %}
+                                                    '#4EA9E6',
+                                                    {% endfor %}
                                                 ],
                                                 borderColor: [
-                                                    '#4EA9E6', '#4EA9E6', '#4EA9E6',
-                                                    '#4EA9E6', '#4EA9E6', '#4EA9E6',
-                                                    '#4EA9E6', '#4EA9E6', '#4EA9E6',
+                                                    {% for region, value in values.items %}
+                                                    '#4EA9E6',
+                                                    {% endfor %}
                                                 ],
                                             {% elif progress_status == 'A instalar' %}
                                                 backgroundColor: [
-                                                    '#5A6268', '#5A6268', '#5A6268',
-                                                    '#5A6268', '#5A6268', '#5A6268',
-                                                    '#5A6268', '#5A6268', '#5A6268',
+                                                    {% for region, value in values.items %}
+                                                    '#5A6268',
+                                                    {% endfor %}
                                                 ],
                                                 borderColor: [
-                                                    '#5A6268', '#5A6268', '#5A6268',
-                                                    '#5A6268', '#5A6268', '#5A6268',
-                                                    '#5A6268', '#5A6268', '#5A6268',
+                                                    {% for region, value in values.items %}
+                                                    '#5A6268',
+                                                    {% endfor %}
                                                 ],
                                             {% elif progress_status == 'A energizar' %}
                                                 backgroundColor: [
-                                                    '#F0A73C', '#F0A73C', '#F0A73C',
-                                                    '#F0A73C', '#F0A73C', '#F0A73C',
-                                                    '#F0A73C', '#F0A73C', '#F0A73C',
+                                                    {% for region, value in values.items %}
+                                                    '#F0A73C',
+                                                    {% endfor %}
                                                 ],
                                                 borderColor: [
-                                                    '#F0A73C', '#F0A73C', '#F0A73C',
-                                                    '#F0A73C', '#F0A73C', '#F0A73C',
-                                                    '#F0A73C', '#F0A73C', '#F0A73C',
+                                                    {% for region, value in values.items %}
+                                                    '#F0A73C',
+                                                    {% endfor %}
                                                 ],
                                             {% elif progress_status == 'A comissionar' %}
                                                 backgroundColor: [
-                                                    '#3E69C9', '#3E69C9', '#3E69C9',
-                                                    '#3E69C9', '#3E69C9', '#3E69C9',
-                                                    '#3E69C9', '#3E69C9', '#3E69C9',
+                                                    {% for region, value in values.items %}
+                                                    '#3E69C9',
+                                                    {% endfor %}
                                                 ],
                                                 borderColor: [
-                                                    '#3E69C9', '#3E69C9', '#3E69C9',
-                                                    '#3E69C9', '#3E69C9', '#3E69C9',
-                                                    '#3E69C9', '#3E69C9', '#3E69C9',
+                                                    {% for region, value in values.items %}
+                                                    '#3E69C9',
+                                                    {% endfor %}
                                                 ],
                                             {% elif progress_status == 'A operar' %}
                                                 backgroundColor: [
-                                                    '#23272B', '#23272B', '#23272B',
-                                                    '#23272B', '#23272B', '#23272B',
-                                                    '#23272B', '#23272B', '#23272B',
+                                                    {% for region, value in values.items %}
+                                                    '#23272B',
+                                                    {% endfor %}
                                                 ],
                                                 borderColor: [
-                                                    '#23272B', '#23272B', '#23272B',
-                                                    '#23272B', '#23272B', '#23272B',
-                                                    '#23272B', '#23272B', '#23272B',
+                                                    {% for region, value in values.items %}
+                                                    '#23272B',
+                                                    {% endfor %}
                                                 ],
                                             {% elif progress_status == 'Concluído' %}
                                                 backgroundColor: [
-                                                    '#38AB69', '#38AB69', '#38AB69',
-                                                    '#38AB69', '#38AB69', '#38AB69',
-                                                    '#38AB69', '#38AB69', '#38AB69',
+                                                    {% for region, value in values.items %}
+                                                    '#38AB69',
+                                                    {% endfor %}
                                                 ],
                                                 borderColor: [
-                                                    '#38AB69', '#38AB69', '#38AB69',
-                                                    '#38AB69', '#38AB69', '#38AB69',
-                                                    '#38AB69', '#38AB69', '#38AB69',
+                                                    {% for region, value in values.items %}
+                                                    '#38AB69',
+                                                    {% endfor %}
                                                 ],
                                             {% endif %}
                                             borderWidth: 1
