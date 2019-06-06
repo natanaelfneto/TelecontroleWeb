@@ -34,6 +34,8 @@ urlpatterns = [
     url(r'feeders/(?P<pk>\d+)/update/$', UpdateFeederView.as_view(), name='updateFeeder'),
     # detail information of feeder page
     url(r'feeders/(?P<pk>\d+)/delete/$', DeleteFeederView.as_view(), name='deleteFeeder'),
+    # list all coverage studies page
+    url(r'feeders/studies/$', ListFeederStudiesView.as_view(), name='listFeederStudiesView'),
     # list all feeders page
     url(r'feeders/$', ListFeedersView.as_view(), name='listFeeders'),
 

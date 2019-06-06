@@ -703,6 +703,54 @@ class AddFeederStudyView(LoginRequiredMixin, RedirectView):
         return HttpResponseRedirect(reverse_lazy('index'))
 
 
+# list coverage studies class
+class ListFeederStudiesView(LoginRequiredMixin, ListView):
+    '''
+    List  View
+        class used to list  objects from database
+    '''
+    template_name = "feeders/list_feeder_studies.html"
+    model = FeederStudies
+    page_title = model._meta.verbose_name.title()
+    page_subtitle = f'Listar {model._meta.verbose_name_plural.title()}' 
+    page_group = "Administrativo"
+    queryset = FeederStudies.objects.filter().order_by('id')
+    form = []
+    paginate_by = 15
+
+    def get_context_data(self, **kwargs):
+        context = super(ListFeederStudiesView, self).get_context_data(**kwargs)
+        context['page_title'] = self.page_title
+        context['page_subtitle'] = self.page_subtitle
+        context['page_group'] = self.page_group
+
+        return context
+
+
+# delete coverage study class
+class DeleteCoverageStudyView(LoginRequiredMixin, RedirectView):
+    '''
+    Delete Feeder View
+        class used to remove feeder objects from database
+    '''
+    model = FeederStudies
+
+    def get(self, *args, **kwargs):
+        user = self.request.user
+        if ((user.is_active or not user.is_admin) or
+            (user.is_active or not user.is_protection)):
+
+            coverage_study = get_object_or_404(FeederStudies, pk=self.kwargs['pk'])
+            coverage_study.delete()
+
+            project = get_object_or_404(Projects, electric_point=coverage_study.electric_point)
+            project_id = { 'pk':project.id }
+
+            return HttpResponseRedirect(reverse_lazy('projects:detailProject', kwargs=project_id))
+            
+        return HttpResponseRedirect(reverse_lazy('index'))
+
+
 class FinishesFeederStudyView(LoginRequiredMixin, RedirectView):
     '''
     Update  Study View

@@ -468,8 +468,8 @@ class FeederStudies(models.Model):
 
     class Meta:
         db_table = 'feeder_studies'
-        verbose_name = 'Estudo de Alimentador'
-        verbose_name_plural = 'Estudos de Alimentadores'
+        verbose_name = 'Estudo de Proteção'
+        verbose_name_plural = 'Estudos de Proteção'
 
     def __str__(self):
         return f'{self.id}'
