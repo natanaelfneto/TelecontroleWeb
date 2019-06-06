@@ -107,8 +107,6 @@ class IndexView(LoginRequiredMixin, TemplateView):
             },
         }
 
-        print(self.models)
-
         for progress_status in PROGRESS_STATUS:
             self.models['feeders']['electric_regions']['count'][progress_status[1]] = {}
             for name in self.models['feeders']['electric_regions']['names']:

@@ -916,7 +916,6 @@ class AddProjectSOBView(LoginRequiredMixin, UpdateView):
             if user.is_admin or user.is_constructor:
                 # 
                 project.sob = self.request.POST['sob']
-                print(project.sob)
                 project.save()
 
                 return HttpResponseRedirect(success_url)

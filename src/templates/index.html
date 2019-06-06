@@ -57,7 +57,7 @@
                             </div>
                             <div class="row">
                                 <div 
-                                    class="font-size-h2 font-w400 text-dark text-right ml-auto mr-2">
+                                    class="col font-size-h3 font-w400 text-dark text-right ml-auto mr-2 px-0">
                                     {{ models.projects.designing }}
                                     <small><small>
                                         / {{ models.electric_points.designing }}
@@ -89,6 +89,7 @@
                                 <div class="text-danger">
                                     {{ models.pendencies.designing|div_by_zero:models.projects.designing|mul:100|decimal_filter }}
                                     <span>%</span>
+                                    <span class="text-dark">({{ models.pendencies.designing }})</span>
                                 </div>
                             </div>
                         </div>
@@ -108,7 +109,7 @@
                             </div>
                             <div class="row">
                                 <div 
-                                    class="font-size-h2 font-w400 text-dark text-right ml-auto mr-2">
+                                    class="col font-size-h3 font-w400 text-dark text-right ml-auto mr-2 px-0">
                                     {{ models.projects.installation }}
                                     <small>
                                         /<small class="text-secondary">
@@ -142,6 +143,7 @@
                                 <div class="text-danger">
                                     {{ models.pendencies.installation|div_by_zero:models.projects.installation|mul:100|decimal_filter }}
                                     <span>%</span>
+                                    <span class="text-dark">({{ models.pendencies.installation }})</span>
                                 </div>
                             </div>
                         </div>
@@ -161,7 +163,7 @@
                             </div>
                             <div class="row">
                                 <div 
-                                    class="font-size-h2 font-w400 text-dark text-right ml-auto mr-2">
+                                    class="font-size-h3 font-w400 text-dark text-right ml-auto mr-2 px-0">
                                     {{ models.projects.energizing }}
                                     <small>
                                         /<small class="text-secondary">
@@ -195,6 +197,7 @@
                                 <div class="text-danger">
                                     {{ models.pendencies.energizing|div_by_zero:models.projects.energizing|mul:100|decimal_filter }}
                                     <span>%</span>
+                                    <span class="text-dark">({{ models.pendencies.energizing }})</span>
                                 </div>
                             </div>
                         </div>
@@ -214,7 +217,7 @@
                             </div>
                             <div class="row">
                                 <div 
-                                    class="font-size-h2 font-w400 text-dark text-right ml-auto mr-2">
+                                    class="font-size-h3 font-w400 text-dark text-right ml-auto mr-2 px-0">
                                     {{ models.projects.commissioning }}
                                     <small>
                                         /<small class="text-secondary">
@@ -248,6 +251,7 @@
                                 <div class="text-danger">
                                     {{ models.pendencies.commissioning|div_by_zero:models.projects.commissioning|mul:100|decimal_filter }}
                                     <span>%</span>
+                                    <span class="text-dark">({{ models.pendencies.commissioning }})</span>
                                 </div>
                             </div>
                         </div>
@@ -267,7 +271,7 @@
                             </div>
                             <div class="row">
                                 <div 
-                                    class="font-size-h2 font-w400 text-dark text-right ml-auto mr-2">
+                                    class="font-size-h3 font-w400 text-dark text-right ml-auto mr-2 px-0">
                                     {{ models.projects.operation }}
                                     <small>
                                         /<small class="text-secondary">
@@ -301,6 +305,7 @@
                                 <div class="text-danger">
                                     {{ models.pendencies.operation|div_by_zero:models.projects.operation|mul:100|decimal_filter }}
                                     <span>%</span>
+                                    <span class="text-dark">({{ models.pendencies.operation }})</span>
                                 </div>
                             </div>
                         </div>
@@ -320,7 +325,7 @@
                             </div>
                             <div class="row">
                                 <div 
-                                    class="font-size-h2 font-w400 text-dark text-right ml-auto mr-2">
+                                    class="font-size-h3 font-w400 text-dark text-right ml-auto mr-2 px-0">
                                     {{ models.projects.finished }}
                                     </small>
                                 </div>
@@ -332,24 +337,16 @@
                         href="javascript:void(0)"
                         target="Concluído"
                         onclick="callFilteredProjectList(this.getAttribute('target'))">
-                        <div class="block-content block-content-full">
+                        <div class="block-content block-content-full" style="min-height: 147px;">
                             <div 
                                 class="font-size-sm font-w600 text-uppercase">
                                 <small class="text-muted">Avanço em</small>
                                 <div class="text-success">
-                                    {{ models.electric_points.finished|div_by_zero:models.projects.total|mul:100|decimal_filter }}
+                                    {{ models.projects.finished|div_by_zero:models.projects.total|mul:100|decimal_filter }}
                                     <span>%</span>
                                     <span class="text-dark">
-                                        ({{ models.electric_points.finished }})
+                                        ({{ models.projects.finished }})
                                     </span>
-                                </div>
-                            </div>
-                            <div 
-                                class="font-size-sm font-w600 text-uppercase">
-                                <small class="text-muted">Com pendências</small>
-                                <div class="text-danger">
-                                    {{ models.pendencies.finished|div_by_zero:models.projects.finished|mul:100|decimal_filter }}
-                                    <span>%</span>
                                 </div>
                             </div>
                         </div>
