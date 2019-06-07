@@ -19,29 +19,15 @@
                 id="project_progress_status_filter_form"
                 class="d-none" 
                 action="{% url 'projects:listProjects' %}" 
-                method="POST">{% csrf_token %}
-                <input 
-                    type="submit" 
-                    class="d-none"
-                    name="project_progress_status_filter"
-                    value="" />
+                method="GET">{% csrf_token %}
+                <input id="progress_status" type="text" class="d-none" name="progress_status" value=""/>
             </form>
             <script>
                 function callFilteredProjectList(target) {
-                    $('input[name="project_progress_status_filter"]').val(target).click();
+                    $('input[name="progress_status"]').val(target).click();
+                    $('#project_progress_status_filter_form').submit()
                 }
             </script>
-            <style>
-                #progress_status_cards > div:hover > a:first-child {
-                    display: none;
-                }
-                #progress_status_cards > div:hover > a:first-child ~ a:nth-child(2) {
-                    display: block;
-                }
-                #progress_status_cards > div > a:nth-child(2) {
-                    display: none;
-                }
-            </style>
             <div id="progress_status_cards" class="row">
                 <div class="col-6 col-md-2 col-lg-6 col-xl-2" style="max-height: 0;">
                     <a 

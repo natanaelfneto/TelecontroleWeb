@@ -254,10 +254,6 @@ class ListProjectsView(LoginRequiredMixin, ListView):
         if not user.is_active:
             return HttpResponseRedirect(reverse_lazy('index'))
 
-        print(self.request.GET.get('equipment_type', False))
-        print(self.request.GET.get('electric_region', False))
-        print(self.request.GET.get('progress_status', False))
-
         if self.request.GET.get('equipment_type', False):
             if self.request.GET.get('equipment_type') == 'CHAVE':
                 kwargs['electric_point__equipment_type'] = '0'
@@ -271,8 +267,6 @@ class ListProjectsView(LoginRequiredMixin, ListView):
             kwargs['progress_status'] = get_choices_index(
                 PROGRESS_STATUS, self.request.GET.get('progress_status').capitalize()
             )
-
-        print(kwargs)
 
         self.queryset = Projects.objects.filter(**kwargs).order_by('id')
         
