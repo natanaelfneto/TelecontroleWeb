@@ -63,6 +63,22 @@
             input:focus {
                 outline: none;
             }
+            .dropdown-toggle::after{
+                display: none;
+            }
+            .btn-toolbar-filter > div > span:hover,
+            .btn-toolbar-filter > div > span:active,
+            .btn-toolbar-filter > div > span:visited,
+            .btn-toolbar-filter > div > span:focus {
+                background-color: #d26a5c !important;
+                border-color: #d26a5c !important;
+            }
+            .btn-toolbar-filter > div > span:hover > i:nth-child(1) {
+                display: none;
+            }
+            .btn-toolbar-filter > div > span:hover > i:nth-child(2) {
+                display: unset !important;
+            }
         </style>
     </head>
     <body>

@@ -7,224 +7,185 @@
     function passDataToModal(url) {
         document.getElementById('modal-submit-button').href = url;
     }
+    function applyFilter() {
+        $('#filter-form').submit();
+    }
+    function applySelection(target) {
+        document.getElementById(target).value = event.target.innerText;
+        document.getElementById(target+'_ribbon').innerText = event.target.innerText;
+        document.getElementById(target+'_ribbon').parentElement.parentElement.classList.remove('d-none');
+    }
+    function removeFilter(target) {
+        document.getElementById(target).value = null;
+        document.getElementById(target+'_ribbon').innerText = null;
+        document.getElementById(target+'_ribbon').parentElement.parentElement.classList.add('d-none');
+    }
 </script>
 {% endblock scripts %}
 
 {% block list_add_new %}
-{% comment %} {% if request.user.is_admin or request.user.is_designer %}
+<div class="btn-toolbar btn-toolbar-filter" role="toolbar">
+    <div class="btn-group mr-2 d-none" role="group">
+        <span 
+            class="btn btn-outline-primary" 
+            target="equipment_type" 
+            onclick="removeFilter(this.getAttribute('target'));">
+            <i class="fa fa-filter"></i>
+            <i class="fa fa-times" style="display: none;"></i>
+            <span id="equipment_type_ribbon"></span>
+        </span>
+    </div>
+    <div class="btn-group mr-2 d-none" role="group">
+        <span 
+            class="btn btn-outline-primary" 
+            target="electric_region" 
+            onclick="removeFilter(this.getAttribute('target'));">
+            <i class="fa fa-filter"></i>
+            <i class="fa fa-times" style="display: none;"></i>
+            <span id="electric_region_ribbon"></span>
+        </span>
+    </div>
+    <div class="btn-group mr-2 d-none" role="group">
+        <span 
+            class="btn btn-outline-primary" 
+            target="progress_status" 
+            onclick="removeFilter(this.getAttribute('target'));">
+            <i class="fa fa-filter"></i>
+            <i class="fa fa-times" style="display: none;"></i>
+            <span id="progress_status_ribbon"></span>
+        </span>
+    </div>
+</div>   
 <div>
     <a
-        href="{% url 'projects:addProject' %}"
+        href="javascript:void(0)"
+        onclick="applyFilter();"
         class="btn btn-outline-primary" 
         data-toggle="block-option">
         <i class="si si-plus"></i>
-        <span>Adicionar {{ page_title }}</span>
+        <span>Aplicar Filtro</span>
     </a>
-</div>  
-{% endif %} {% endcomment %}
+</div>
 {% endblock list_add_new %}
 
 {% block list_head %}  
 <thead>
     <tr class="text-uppercase">
         <form 
+            id="filter-form"
             class="p-2" 
             action="{% url 'projects:listProjects' %}" 
-            method="POST">{% csrf_token %}
+            method="GET">
+            {% if is_paginated %}
+            <input type="text" class="d-none" name="page" value="{{ page_obj.number }}"/>
+            {% endif %}
+            <input id="equipment_type" type="text" class="d-none" name="equipment_type" value=""/>
+            <input id="electric_region" type="text" class="d-none" name="electric_region" value=""/>
+            <input id="progress_status" type="text" class="d-none" name="progress_status" value=""/>
+        </form>
             <!-- <th class="font-w700">ID</th> -->
             <th class="d-none d-sm-table-cell font-w700 align-middle">Ponto Indicado</th>
             <th class="font-w700 align-middle">Nº Projeto</th>
-            <th class="font-w700 align-middle">Tipo de Equipamento</th>
-            <th class="font-w700 align-middle">
-                <div class="btn-group">
-                    <div class="mt-2 border-0">Regional</div>
-                        <a 
-                            class="btn btn-outlline-secondary dropdown-toggle dropdown-toggle-filter dropdown-toggle-split" 
-                            style="cursor: pointer;"
-                            id="dropdown-split-filter"
-                            data-toggle="dropdown" 
-                            aria-haspopup="true" 
-                            aria-expanded="false">
-                            <span class="fa fa-filter"></span>
-                        </a>
-                    <div 
-                        class="dropdown-menu dropdown-menu-right font-size-sm" 
-                        aria-labelledby="dropdown-split-warning" 
-                        x-placement="top-start" 
-                        style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(74px, -185px, 0px); min-width: 15rem;">
-                        <div class="form-group mb-1">
-                            <label class="m-2">Filtrar:</label>
-                            <div class="input-group dropdown-item px-0 py-1">
-                                <div class="input-group-prepend">
-                                    <span 
-                                        class="input-group-text border-0" 
-                                        style="background-color: unset;">
-                                        <span class="font-w700 text-dark si si-layers"></span>
-                                    </span>
-                                </div>
-                                <input 
-                                    type="submit" 
-                                    class="text-uppercase col text-left border-0"
-                                    style="background-color: unset;"
-                                    name="electric_region_filter"
-                                    value="Todas" />
-                            </div>
-                            {% for region in electric_regions %}                                
-                                <div class="input-group dropdown-item px-0 py-1">
-                                <div class="input-group-prepend">
-                                    <span 
-                                        class="input-group-text border-0" 
-                                        style="background-color: unset;">
-                                        <span class="font-w300 text-dark si si-map"></span>
-                                    </span>
-                                </div>
-                                <input 
-                                    type="submit" 
-                                    class="text-uppercase col text-left border-0"
-                                    style="background-color: unset;"
-                                    name="electric_region_filter"
-                                    value="{{ region.electric_region }}" />
-                            </div>
-                            {% endfor %}
-                            
 
-                        </div>
+            <th class="font-w700 align-middle text-center">
+                <div class="dropdown">
+                    <button 
+                        type="button"
+                        style="font-size: .875rem;"
+                        class="btn btn-outline-dark dropdown-toggle text-uppercase border-0 font-w700" 
+                        id="equipment_type_dropdown" 
+                        data-toggle="dropdown" 
+                        aria-haspopup="true" 
+                        aria-expanded="false">
+                        Tipo de Equipamento
+                    </button>
+                    <div 
+                        class="dropdown-menu font-size-sm w-100" 
+                        aria-labelledby="dropdown-align-outline-primary" 
+                        x-placement="top-end" 
+                        style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(44px, -148px, 0px);">
+                        
+                        <a 
+                            target="equipment_type"
+                            class="dropdown-item" 
+                            href="javascript:void(0)"
+                            onclick="applySelection(this.getAttribute('target'));">
+                            Chave
+                        </a>
+                        <a 
+                            target="equipment_type"
+                            class="dropdown-item" 
+                            href="javascript:void(0)"
+                            onclick="applySelection(this.getAttribute('target'));">
+                            Religador
+                        </a>
+
+                    </div>
+                </div>
+            </th>
+
+            <th class="font-w700 align-middle text-center">
+                <div class="dropdown">
+                    <button 
+                        type="button"
+                        style="font-size: .875rem;"
+                        class="btn btn-outline-dark dropdown-toggle text-uppercase border-0 font-w700" 
+                        id="equipment_type_dropdown" 
+                        data-toggle="dropdown" 
+                        aria-haspopup="true" 
+                        aria-expanded="false">
+                        Regional
+                    </button>
+                    <div 
+                        class="dropdown-menu font-size-sm w-100" 
+                        aria-labelledby="dropdown-align-outline-primary" 
+                        x-placement="top-end" 
+                        style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(44px, -148px, 0px);">                        
+                        {% for electric_region in front_data.electric_regions %}    
+                        <a 
+                            target="electric_region"
+                            class="dropdown-item" 
+                            href="javascript:void(0)"
+                            onclick="applySelection(this.getAttribute('target'));">
+                            {{ electric_region.electric_region }}
+                        </a>
+                        {% endfor %}
                     </div>
                 </div>
             </th>
             <th class="font-w700 align-middle">Data de conclusão da etapa</th>
-            <th class="font-w700 align-middle text-center">
-                <div class="btn-group">
-                    <div class="mt-2 border-0">Progresso</div>
-                        <a 
-                            class="btn btn-outlline-secondary dropdown-toggle dropdown-toggle-filter dropdown-toggle-split" 
-                            style="cursor: pointer;"
-                            id="dropdown-split-filter"
-                            data-toggle="dropdown" 
-                            aria-haspopup="true" 
-                            aria-expanded="false">
-                            <span class="fa fa-filter"></span>
-                        </a>
+            <th class="font-w700 align-middle text-center d-flex">
+                <div class="dropdown">
+                    <button 
+                        type="button"
+                        style="font-size: .875rem;"
+                        class="btn btn-outline-dark dropdown-toggle text-uppercase border-0 font-w700" 
+                        id="equipment_type_dropdown" 
+                        data-toggle="dropdown" 
+                        aria-haspopup="true" 
+                        aria-expanded="false">
+                        Progresso
+                    </button>
                     <div 
-                        class="dropdown-menu dropdown-menu-right font-size-sm" 
-                        aria-labelledby="dropdown-split-warning" 
-                        x-placement="top-start" 
-                        style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(74px, -185px, 0px); min-width: 13rem;">
-                        <div class="form-group mb-1">
-                            <label class="m-2">Filtrar:</label>
-                            <div class="input-group dropdown-item px-0 py-1">
-                                <div class="input-group-prepend">
-                                    <span 
-                                        class="input-group-text border-0" 
-                                        style="background-color: unset;">
-                                        <span class="font-w700 text-dark si si-layers"></span>
-                                    </span>
-                                </div>
-                                <input 
-                                    type="submit" 
-                                    class="text-uppercase col text-left border-0"
-                                    style="background-color: unset;"
-                                    name="project_progress_status_filter"
-                                    value="Todos" />
-                            </div>
-                            <div class="input-group dropdown-item px-0 py-1">
-                                <div class="input-group-prepend">
-                                    <span 
-                                        class="input-group-text border-0" 
-                                        style="background-color: unset;">
-                                        <span class="text-info si si-puzzle"></span>
-                                    </span>
-                                </div>
-                                <input 
-                                    type="submit" 
-                                    class="text-uppercase col text-left border-0"
-                                    style="background-color: unset;"
-                                    name="project_progress_status_filter"
-                                    value="A projetar" />
-                            </div>
-                            <div class="input-group dropdown-item px-0 py-1">
-                                <div class="input-group-prepend">
-                                    <span 
-                                        class="input-group-text border-0" 
-                                        style="background-color: unset;">
-                                        <span class="text-secondary si si-wrench"></span>
-                                    </span>
-                                </div>
-                                <input 
-                                    type="submit" 
-                                    class="text-uppercase col text-left border-0"
-                                    style="background-color: unset;"
-                                    name="project_progress_status_filter"
-                                    value="A instalar" />
-                            </div>
-                            <div class="input-group dropdown-item px-0 py-1">
-                                <div class="input-group-prepend">
-                                    <span 
-                                        class="input-group-text border-0" 
-                                        style="background-color: unset;">
-                                        <span class="si si-energy text-warning"></span>
-                                    </span>
-                                </div>
-                                <input 
-                                    type="submit" 
-                                    class="text-uppercase col text-left border-0"
-                                    style="background-color: unset;"
-                                    name="project_progress_status_filter"
-                                    value="A energizar" />
-                            </div>
-                            <div class="input-group dropdown-item px-0 py-1">
-                                <div class="input-group-prepend">
-                                    <span 
-                                        class="input-group-text border-0" 
-                                        style="background-color: unset;">
-                                        <span class="si si-graph text-info"></span>
-                                    </span>
-                                </div>
-                                <input 
-                                    type="submit" 
-                                    class="text-uppercase col text-left border-0"
-                                    style="background-color: unset;"
-                                    name="project_progress_status_filter"
-                                    value="A comissionar" />
-                            </div>
-                            <div class="input-group dropdown-item px-0 py-1">
-                                <div class="input-group-prepend">
-                                    <span 
-                                        class="input-group-text border-0" 
-                                        style="background-color: unset;">
-                                        <span class="si si-settings text-dark"></span>
-                                    </span>
-                                </div>
-                                <input 
-                                    type="submit" 
-                                    class="text-uppercase col text-left border-0"
-                                    style="background-color: unset;"
-                                    name="project_progress_status_filter"
-                                    value="A operar" />
-                            </div>
-                            <div class="input-group dropdown-item px-0 py-1">
-                                <div class="input-group-prepend">
-                                    <span 
-                                        class="input-group-text border-0" 
-                                        style="background-color: unset;">
-                                        <span class="si si-check text-success"></span>
-                                    </span>
-                                </div>
-                                <input 
-                                    type="submit" 
-                                    class="text-uppercase col text-left border-0"
-                                    style="background-color: unset;"
-                                    name="project_progress_status_filter"
-                                    value="Concluído" />
-                            </div>
-                        </div>
+                        class="dropdown-menu font-size-sm w-100" 
+                        aria-labelledby="dropdown-align-outline-primary" 
+                        x-placement="top-end" 
+                        style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(44px, -148px, 0px);">                        
+                        {% for progress_status in front_data.progress_status %}
+                        <a 
+                            target="progress_status"
+                            class="dropdown-item" 
+                            href="javascript:void(0)"
+                            onclick="applySelection(this.getAttribute('target'));">
+                            {{ progress_status }}
+                        </a>
+                        {% endfor %}
                     </div>
                 </div>
             </th>
             {% comment %} <th class="font-w700 text-center" style="width: 40px;"></th> {% endcomment %}
             <th class="font-w700 text-center" style="width: 40px;"></th>
             <th class="font-w700 text-center" style="width: 40px;"></th>
-        </form>
     </tr>
 </thead>
 {% endblock list_head %}
@@ -248,12 +209,12 @@
                 {% endif %}
             </span>
         </td>
-        <td class="d-none d-sm-table-cell">
+        <td class="d-none d-sm-table-cell text-center">
             <span class="font-size-sm text-muted">
                 {{ project.electric_point.get_equipment_type_display }}
             </span>
         </td>
-        <td class="d-none d-sm-table-cell">
+        <td class="d-none d-sm-table-cell text-center">
             <span class="font-size-sm text-muted">
                 {{ project.electric_point.feeder.electric_region }}
             </span>
