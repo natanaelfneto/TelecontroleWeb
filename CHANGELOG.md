@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - electric point display name changed
 - project list filter by progress status
 - project detail left side bar item list updated to show the projected point and suggested point
+- prokect list filter by region and equipment type
 
 ### 1.0 - 2019-05-27
 #### Added
