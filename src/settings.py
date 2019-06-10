@@ -13,12 +13,12 @@ sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '_c4^(^_$8o%ar(t+2p4+=nr=&ps-q8*!%c*e5(r#-)kiirwp^3'
+SECRET_KEY = 'src.secret_key.development'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['10.125.42.158', '*']
+ALLOWED_HOSTS = ['10.125.42.158']
 
 # Application definition
 
@@ -72,21 +72,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'src.wsgi.application'
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'telecontrol',
-        'USER': 'postgres',
-        'PASSWORD': 'pgadmin',
-        'HOST': '10.125.42.158',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -139,3 +128,8 @@ STATICFILES_DIRS = [
 AUTH_USER_MODEL = 'accounts.BasicUser'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
