@@ -16,9 +16,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '_c4^(^_$8o%ar(t+2p4+=nr=&ps-q8*!%c*e5(r#-)kiirwp^3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['10.125.42.158', '*']
 
 # Application definition
 
@@ -41,6 +41,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # 
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -122,9 +125,10 @@ DATETIME_INPUT_FORMATS = (
 )
 
 STATIC_URL = '/static/'
-STATIC_ROOT = 'static'
+STATIC_ROOT = 'staticfiles'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'src', 'media')
+
 
 MEDIA_URL = '/media/'
 
@@ -133,3 +137,5 @@ STATICFILES_DIRS = [
 ]
 
 AUTH_USER_MODEL = 'accounts.BasicUser'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # django imports
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render
 from django.views.generic.base import TemplateView
 # 
 from accounts.models import *
@@ -126,3 +127,22 @@ class IndexView(LoginRequiredMixin, TemplateView):
         context['models'] = self.models
 
         return context
+
+
+#
+class HandlerView():        
+
+    def handler404(request, exception):
+        context = {
+            'error': '404',
+            'error_description': 'Desculpe, mas a página solicitada não foi encontrada'
+        }
+        return render(request, 'common/error.html', context)
+
+    def handler500(request):
+        context = {
+            'error': '500',
+            'error_description': 'Desculpe, uma instabilidade no servidor impediu \
+                que a página solicitada fosse carregada'
+        }
+        return render(request, 'common/error.html', context)

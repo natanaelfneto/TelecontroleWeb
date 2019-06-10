@@ -1,0 +1,79 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>Telecontrole</title>
+        <meta name="description" content="Telecontrole">
+        <meta name="author" content="natanaelfneto">
+        <meta name="robots" content="noindex, nofollow">
+        <!-- Open Graph Meta -->
+        <meta property="og:title" content="Telecontrole">
+        <meta property="og:site_name" content="Telecontrole">
+        <meta property="og:description" content="Telecontrole">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="">
+        <meta property="og:image" content="">
+        <link rel="shortcut icon" href="{% static 'img/enel/favicon.ico' %}">
+        <link rel="stylesheet" id="css-main"
+            href="{% static 'plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css' %}">
+        <link rel="stylesheet" id="css-main" href="{% static 'plugins/oneui/css/oneui.min.css' %}">
+        <script src="{% static 'plugins/chart.js/Chart.bundle.min.js' %}"></script> 
+    </head>
+    <body>
+        <div id="page-container">
+            <!-- Main Container -->
+            <main id="main-container">
+                <!-- Page Content -->
+                <div class="hero">
+                    <div class="hero-inner text-center">
+                        <div class="content content-full bg-white overflow-hidden">
+                            <div class="py-4">
+                                <!-- Error Header -->
+                                <h1 
+                                    class="display-1 text-city invisible" 
+                                    data-toggle="appear" 
+                                    data-class="animated flipInX">
+                                    {{ error }}
+                                </h1>
+                                <h2
+                                    class="h3 font-w300 text-muted invisible mb-5" 
+                                    data-toggle="appear" 
+                                    data-class="animated fadeInUp">
+                                    {{ error_description }}
+                                </h2>
+                                <!-- END Error Header -->
+
+                            </div>
+                        </div>
+                        <div class="content content-full font-size-sm text-muted">
+                            <!-- Error Footer -->
+                            <p class="mb-1">
+                                Volta para a página inicial
+                            </p>
+                            <a 
+                                class="link-fx" 
+                                href="{% url 'index' %}">
+                                Voltar para página inicial
+                            </a>
+                            or
+                            <a 
+                                class="link-fx" 
+                                href="{% url 'accounts:logout' %}">
+                                Voltar para a tela de autenticação
+                            </a>
+                            <!-- END Error Footer -->
+                        </div>
+                    </div>
+                </div>
+                <!-- END Page Content -->
+            </main>
+        </div>
+<!-- END Main Container -->
+        <script src="{% static 'plugins/oneui/js/oneui.core.min.js' %}"></script>
+        <script src="{% static 'plugins/oneui/js/oneui.app.min.js' %}"></script>
+        <script src="{% static 'plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
+        <script src="{% static 'plugins/oneui/js/pages/be_pages_dashboard.min.js' %}"></script>
+    </body>
+</html>
