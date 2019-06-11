@@ -1,5 +1,6 @@
 {% extends 'common/list.html' %}
 {% load staticfiles %}
+{% load get_most_recent_avatar_url %}
 
 {% block scripts %}        
 <script>
@@ -25,6 +26,7 @@
 <thead>
     <tr class="text-uppercase">
         <!-- <th class="font-w700">ID</th> -->
+        <th class="d-none d-sm-table-cell align-middle"></th>
         <th class="d-none d-sm-table-cell font-w700 align-middle">Nome completo</th>
         <th class="font-w700 align-middle">Usuário Enel</th>
         <th class="font-w700 align-middle">Email</th>
@@ -44,6 +46,13 @@
     {% for user in object_list %}
     <tr>
         <!-- <td><span class="font-w600">{{ user.id }}</span></td> -->
+        <td>
+            <a class="img-link mr-1" href="{% url 'accounts:detailUser' user.id %}">
+                <img 
+                    class="img-avatar img-avatar32" 
+                    src="{{ user.id|get_most_recent_avatar_url }}" alt="">
+            </a>
+        </td>
         <td class="d-none d-sm-table-cell">
             <a class="link-fx" href="{% url 'accounts:detailUser' user.id %}">
                 <span class="font-size-sm text-muted">

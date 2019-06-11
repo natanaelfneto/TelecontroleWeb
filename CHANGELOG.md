@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Released]
 
+### 1.2 - 2019-06-11
+#### Added
+- profile images for user list
+- bugfix for authenticated user to change its password
+
 ### 1.1 - 2019-06-03
 #### Added
 - electric point list filter by point name
