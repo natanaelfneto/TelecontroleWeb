@@ -528,6 +528,172 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-12">
+                <div class="block block-rounded block-mode-loading-oneui">
+                    <div class="block-header">
+                        <h3 class="block-title">Progresso dos Projetos no Tempo</h3>
+                        <div class="block-options"></div>
+                    </div>
+                    <div class="block-content p-0 bg-body-light text-center">
+                        <div class="pt-3">
+                            <canvas id="projectsProgressByTimeChart" height="80"></canvas>
+                            <script>
+                            var ctx = document.getElementById('projectsProgressByTimeChart').getContext('2d');
+                            var projectsByRegionChart = new Chart(ctx, {
+                                type: 'line',
+                                data: {
+                                    labels: [
+                                        "Janeiro",
+                                        "Fevereiro",
+                                        "Março",
+                                        "Abril",
+                                        "Maio",
+                                        "Junho",
+                                        "Julho",
+                                        "Agosto",
+                                        "Setembro",
+                                        "Outubro",
+                                        "Novembro",
+                                        "Dezembro"
+                                    ],
+                                    datasets: [
+                                        {
+                                            label:"A instalar",
+                                            data:[
+                                                {% for step, value in models.projects.year_2019.items %}
+                                                    {% if step == 'A instalar' %}
+                                                        {{ value.month_1.0 }},
+                                                        {{ value.month_2.0 }},
+                                                        {{ value.month_3.0 }},
+                                                        {{ value.month_4.0 }},
+                                                        {{ value.month_5.0 }},
+                                                        {{ value.month_6.0 }},
+                                                        {{ value.month_7.0 }},
+                                                        {{ value.month_8.0 }},
+                                                        {{ value.month_9.0 }},
+                                                        {{ value.month_10.0 }},
+                                                        {{ value.month_11.0 }},
+                                                        {{ value.month_12.0 }},
+                                                    {% endif %}
+                                                {% endfor %}
+                                            ],
+                                            fill:false,
+                                            borderColor:'#5A6268',
+                                            backgroundColor:'#5A6268',
+                                            lineTension:0.2,
+                                            hidden: true,
+                                        },
+                                        {
+                                            label:"A energizar",
+                                            data:[
+                                                {% for step, value in models.projects.year_2019.items %}
+                                                    {% if step == 'A energizar' %}
+                                                        {{ value.month_1.0 }},
+                                                        {{ value.month_2.0 }},
+                                                        {{ value.month_3.0 }},
+                                                        {{ value.month_4.0 }},
+                                                        {{ value.month_5.0 }},
+                                                        {{ value.month_6.0 }},
+                                                        {{ value.month_7.0 }},
+                                                        {{ value.month_8.0 }},
+                                                        {{ value.month_9.0 }},
+                                                        {{ value.month_10.0 }},
+                                                        {{ value.month_11.0 }},
+                                                        {{ value.month_12.0 }},
+                                                    {% endif %}
+                                                {% endfor %}
+                                            ],
+                                            fill:false,
+                                            borderColor:'#F0A73C',
+                                            backgroundColor:'#F0A73C',
+                                            lineTension:0.2
+                                        },
+                                        {
+                                            label:"A comissionar",
+                                            data:[
+                                                {% for step, value in models.projects.year_2019.items %}
+                                                    {% if step == 'A comissionar' %}
+                                                        {{ value.month_1.0 }},
+                                                        {{ value.month_2.0 }},
+                                                        {{ value.month_3.0 }},
+                                                        {{ value.month_4.0 }},
+                                                        {{ value.month_5.0 }},
+                                                        {{ value.month_6.0 }},
+                                                        {{ value.month_7.0 }},
+                                                        {{ value.month_8.0 }},
+                                                        {{ value.month_9.0 }},
+                                                        {{ value.month_10.0 }},
+                                                        {{ value.month_11.0 }},
+                                                        {{ value.month_12.0 }},
+                                                    {% endif %}
+                                                {% endfor %}
+                                            ],
+                                            fill:false,
+                                            borderColor:'#3E69C9',
+                                            backgroundColor:'#3E69C9',
+                                            lineTension:0.2
+                                        },
+                                        {
+                                            label:"A operar",
+                                            data:[
+                                                {% for step, value in models.projects.year_2019.items %}
+                                                    {% if step == 'A operar' %}
+                                                        {{ value.month_1.0 }},
+                                                        {{ value.month_2.0 }},
+                                                        {{ value.month_3.0 }},
+                                                        {{ value.month_4.0 }},
+                                                        {{ value.month_5.0 }},
+                                                        {{ value.month_6.0 }},
+                                                        {{ value.month_7.0 }},
+                                                        {{ value.month_8.0 }},
+                                                        {{ value.month_9.0 }},
+                                                        {{ value.month_10.0 }},
+                                                        {{ value.month_11.0 }},
+                                                        {{ value.month_12.0 }},
+                                                    {% endif %}
+                                                {% endfor %}
+                                            ],
+                                            fill:false,
+                                            borderColor:'#23272B',
+                                            backgroundColor:'#23272B',
+                                            lineTension:0.2
+                                        },
+                                        {
+                                            label:"Concluído",
+                                            data:[
+                                                {% for step, value in models.projects.year_2019.items %}
+                                                    {% if step == 'Concluído' %}
+                                                        {{ value.month_1.0 }},
+                                                        {{ value.month_2.0 }},
+                                                        {{ value.month_3.0 }},
+                                                        {{ value.month_4.0 }},
+                                                        {{ value.month_5.0 }},
+                                                        {{ value.month_6.0 }},
+                                                        {{ value.month_7.0 }},
+                                                        {{ value.month_8.0 }},
+                                                        {{ value.month_9.0 }},
+                                                        {{ value.month_10.0 }},
+                                                        {{ value.month_11.0 }},
+                                                        {{ value.month_12.0 }},
+                                                    {% endif %}
+                                                {% endfor %}
+                                            ],
+                                            fill:false,
+                                            borderColor:'#38AB69',
+                                            backgroundColor:'#38AB69',
+                                            lineTension:0.2
+                                        }
+                                    ]
+                                },
+                                options: {
+                                }
+                            });
+                            
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div> 
         <!-- END Dashboard Charts -->
     </div>

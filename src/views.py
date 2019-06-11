@@ -66,6 +66,9 @@ class IndexView(LoginRequiredMixin, TemplateView):
                 'finished': Projects.objects.filter(
                         progress_status=get_choices_index(PROGRESS_STATUS, 'Concluído')
                     ).count(),
+                'year_2019': {
+                    'total':''
+                },
             },
             'pendencies': {
                 'total': Projects.objects.all().count(),
@@ -107,6 +110,34 @@ class IndexView(LoginRequiredMixin, TemplateView):
                 },
             },
         }
+
+        for progress_status in PROGRESS_STATUS:
+            if not progress_status[1] == 'Concluído':
+                for month in range(1,13):
+
+                    project_count = Projects.objects.filter(
+                        step_project__progress_status=progress_status[0],
+                        step_project__real_date__year=2019,
+                        step_project__real_date__month=month,
+                    ).count(),
+                    
+                    if not str(PROGRESS_STATUS[int(progress_status[0]) + 1][1]) in self.models['projects']['year_2019']:
+                        self.models['projects']['year_2019'][str(PROGRESS_STATUS[int(progress_status[0]) + 1][1])] = {}
+                    
+                    self.models['projects']['year_2019'][str(PROGRESS_STATUS[int(progress_status[0]) + 1][1])][f'month_{str(month)}'] = project_count
+            else:
+                for month in range(1,13):
+
+                    project_count = Projects.objects.filter(
+                        progress_status=progress_status[0],
+                        finished_at__year=2019,
+                        finished_at__month=month,
+                    ).count(),
+                    
+                    if not progress_status[1] in self.models['projects']['year_2019']:
+                        self.models['projects']['year_2019'][progress_status[1]] = {}
+
+                    self.models['projects']['year_2019'][progress_status[1]][f'month_{str(month)}'] = project_count
 
         for progress_status in PROGRESS_STATUS:
             self.models['feeders']['electric_regions']['count'][progress_status[1]] = {}

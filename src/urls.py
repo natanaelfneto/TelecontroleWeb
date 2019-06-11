@@ -23,7 +23,7 @@ urlpatterns = [
     url(r'^projects/', include(('projects.urls', 'projects'), namespace='projects')),
 
     # admin urls
-    # path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
 ]
 
 handler404 = HandlerView.handler404
