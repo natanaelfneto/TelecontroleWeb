@@ -85,7 +85,8 @@ class FormUserView(FormView):
 
     def form_valid(self, form):
         # check if user is active
-        if self.request.user.is_active and self.request.user.is_admin:
+        user = self.request.user
+        if user.is_active and user.is_admin:
             
             # save instance
             user = form.save()
@@ -278,16 +279,50 @@ class ToggleSuperUserView(LoginRequiredMixin, RedirectView):
 
 
 # update user class view
-class UpdateUserPasswordView(LoginRequiredMixin, UpdateView, FormUserView):
+class UpdateUserPasswordView(LoginRequiredMixin, UpdateView):
     '''
     Update User Passsword View
         class based view to update parâmeters from users
     '''
-    page_subtitle_action = 'Atualizar'
+    success_url = reverse_lazy('accounts:listUsers')
+    template_name = 'common/add.html'
     form_class = UpdateUserPasswordForm
+    model = BasicUser
+    page_title = model._meta.verbose_name_plural.title()
+    page_subtitle = model._meta.verbose_name.title()
+    page_group = "Administrativo"
+    page_subtitle_action = 'Atualizar'
+
+    def get(self, *args, **kwargs):
+        # get requested user
+        basic_user = get_object_or_404(BasicUser, pk=self.kwargs['pk'])
+        # get logged user
+        user = self.request.user
+        if user.is_active and user.id == basic_user.id:
+            return super(UpdateUserPasswordView, self).get(*args, **kwargs)
+        return HttpResponseRedirect(reverse_lazy('index'))
+
+    def form_valid(self, form):
+        # get requested user
+        basic_user = get_object_or_404(BasicUser, pk=self.kwargs['pk'])
+        # get logged user
+        user = self.request.user
+        if user.is_active and user.id == basic_user.id:
+
+            # get form
+            user_form = form.save()
+
+            # save object
+            user_form.save()
+
+            return HttpResponseRedirect(self.success_url)
+
+        return super(UpdateUserPasswordView, self).get(form)
 
     def get_context_data(self, **kwargs):
         context = super(UpdateUserPasswordView, self).get_context_data(**kwargs)
+        context['page_title'] = self.page_title
         context['page_subtitle'] = f'{self.page_subtitle_action} {self.page_subtitle}'
+        context['page_group'] = self.page_group
 
         return context
