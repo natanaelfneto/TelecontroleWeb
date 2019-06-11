@@ -196,7 +196,7 @@ def user_directory_path(instance, filename):
     # check if file extension name matches regular expression
     extension = filename[-4:] if re.compile("(?:jpg|png)$").match(filename[-3:]) else 'nope'
     # File upload path: MEDIA_ROOT/BasicUser.id/<random name>
-    return '{0}/{1:06d}.{2}'.format('media/img/avatars/', random.randint(0,999999), extension)
+    return '{0}/{1:06d}.{2}'.format('img/avatars/', random.randint(0,999999), extension)
 
 
 # avatar image class
