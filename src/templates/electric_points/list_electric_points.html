@@ -28,14 +28,14 @@
 
 {% block search_list_block %}            
 <form 
-    class="d-none d-sm-inline-block w-25 ml-auto" 
+    class="d-none d-sm-inline-block mr-auto" 
     action="{% url 'electric_points:listElectricPoints' %}"
     method="POST">{% csrf_token %}
     <div class="input-group input-group-sm">
         <input 
             type="text" 
             class="form-control form-control-alt bg-light" 
-            placeholder="Pesquisar poste indicado.." 
+            placeholder="Pesquisar" 
             id="search_list" 
             name="searched_list_name">
         <div class="input-group-append">
