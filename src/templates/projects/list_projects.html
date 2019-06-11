@@ -97,9 +97,7 @@
             class="p-2" 
             action="{% url 'projects:listProjects' %}" 
             method="GET">
-            {% if is_paginated %}
-            <input type="text" class="d-none" name="page" value="{{ page_obj.number }}"/>
-            {% endif %}
+            
             <input id="equipment_type" type="text" class="d-none" name="equipment_type" value=""/>
             <input id="electric_region" type="text" class="d-none" name="electric_region" value=""/>
             <input id="progress_status" type="text" class="d-none" name="progress_status" value=""/>
