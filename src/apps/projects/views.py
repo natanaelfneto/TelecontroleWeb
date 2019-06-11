@@ -272,6 +272,18 @@ class ListProjectsView(LoginRequiredMixin, ListView):
         
         return super(ListProjectsView, self).get(*args, **kwargs)
 
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        if not user.is_active:
+            return HttpResponseRedirect(reverse_lazy('index'))
+
+        name = self.request.POST['searched_list_name']
+
+        if name is not '':
+            self.queryset = Projects.objects.filter(electric_point__name=name).order_by('id')
+        
+        return super(ListProjectsView, self).get(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super(ListProjectsView, self).get_context_data(**kwargs)
         context['page_title'] = self.page_title

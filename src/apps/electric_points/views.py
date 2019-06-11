@@ -520,6 +520,18 @@ class ListCoverageStudiesView(LoginRequiredMixin, ListView):
     form = []
     paginate_by = 15
 
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        if not user.is_active:
+            return HttpResponseRedirect(reverse_lazy('index'))
+
+        name = self.request.POST['searched_list_name']
+
+        if name is not '':
+            self.queryset = CoverageStudies.objects.filter(electric_point__name=name).order_by('id')
+        
+        return super(ListCoverageStudiesView, self).get(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super(ListCoverageStudiesView, self).get_context_data(**kwargs)
         context['page_title'] = self.page_title
@@ -604,6 +616,18 @@ class ListSupplyDeliveriesView(LoginRequiredMixin, ListView):
     queryset = SupplyDelivery.objects.filter().order_by('id')
     form = []
     paginate_by = 15
+
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        if not user.is_active:
+            return HttpResponseRedirect(reverse_lazy('index'))
+
+        name = self.request.POST['searched_list_name']
+
+        if name is not '':
+            self.queryset = SupplyDelivery.objects.filter(electric_point__name=name).order_by('id')
+        
+        return super(ListSupplyDeliveriesView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(ListSupplyDeliveriesView, self).get_context_data(**kwargs)
@@ -717,6 +741,18 @@ class ListFeederStudiesView(LoginRequiredMixin, ListView):
     queryset = FeederStudies.objects.filter().order_by('id')
     form = []
     paginate_by = 15
+
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        if not user.is_active:
+            return HttpResponseRedirect(reverse_lazy('index'))
+
+        name = self.request.POST['searched_list_name']
+
+        if name is not '':
+            self.queryset = FeederStudies.objects.filter(electric_point__name=name).order_by('id')
+
+        return super(ListFeederStudiesView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(ListFeederStudiesView, self).get_context_data(**kwargs)

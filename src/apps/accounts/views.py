@@ -186,6 +186,18 @@ class ListUsersView(LoginRequiredMixin, ListView):
             return super(ListUsersView, self).get(*args, **kwargs)
         return HttpResponseRedirect(reverse_lazy('index'))
 
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        if not user.is_active:
+            return HttpResponseRedirect(reverse_lazy('index'))
+
+        name = self.request.POST['searched_list_name'].upper()
+
+        if name is not '':
+            self.queryset = BasicUser.objects.filter(username=name).order_by('id')
+        
+        return super(ListUsersView, self).get(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super(ListUsersView, self).get_context_data(**kwargs)
         context['page_title'] = self.page_title

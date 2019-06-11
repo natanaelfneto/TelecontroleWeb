@@ -26,6 +26,27 @@
 {% endif %} {% endcomment %}
 {% endblock list_add_new %}
 
+{% block search_list_block %}            
+<form 
+    class="d-none d-sm-inline-block mr-auto" 
+    action="{% url 'electric_points:listCoverageStudies' %}"
+    method="POST">{% csrf_token %}
+    <div class="input-group input-group-sm">
+        <input 
+            type="text" 
+            class="form-control form-control-alt bg-light" 
+            placeholder="Pesquisar Ponto" 
+            id="search_list" 
+            name="searched_list_name">
+        <div class="input-group-append">
+            <span class="input-group-text bg-body border-0">
+                <i class="si si-magnifier"></i>
+            </span>
+        </div>
+    </div>
+</form>
+{% endblock search_list_block %}
+
 {% block list_head %}
 <thead>
     <tr class="text-uppercase">
