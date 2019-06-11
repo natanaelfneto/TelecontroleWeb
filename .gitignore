@@ -5,3 +5,4 @@ __pycache__
 staticfiles
 staticfiles/*
 src/local_settings.py
+src/media/*
