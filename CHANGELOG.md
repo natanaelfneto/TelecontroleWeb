@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - gráfico do quantitativo de avanço por status do progresso de projetos no tempo
 - grafico de quantidade de pendências por tipo
 - incremento de quantitativo de status não solucionados e solucionados no grafico de pendencias por tipo
+- filtro para projetos com e sem pendencias na lista de projetos
+- alterado rodapé de "desenvolvido por"
 
 ### 1.1 - 2019-06-03
 #### Added

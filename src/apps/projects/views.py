@@ -254,11 +254,19 @@ class ListProjectsView(LoginRequiredMixin, ListView):
         if not user.is_active:
             return HttpResponseRedirect(reverse_lazy('index'))
 
+        exclude_kwargs = {}
+
         if self.request.GET.get('equipment_type', False):
             if self.request.GET.get('equipment_type') == 'CHAVE':
                 kwargs['electric_point__equipment_type'] = '0'
             elif self.request.GET.get('equipment_type') == 'RELIGADOR':
                 kwargs['electric_point__equipment_type'] = '1'
+
+        if self.request.GET.get('pendencies', False):
+            if self.request.GET.get('pendencies') == 'COM PENDÊNCIAS':
+                kwargs['pendencies__solved'] = False
+            elif self.request.GET.get('pendencies') == 'AVANÇO LIBERADO':
+                exclude_kwargs['pendencies__solved'] = False
 
         if self.request.GET.get('electric_region', False):
             kwargs['electric_point__feeder__electric_region'] = self.request.GET.get('electric_region')
@@ -268,7 +276,7 @@ class ListProjectsView(LoginRequiredMixin, ListView):
                 PROGRESS_STATUS, self.request.GET.get('progress_status').capitalize()
             )
 
-        self.queryset = Projects.objects.filter(**kwargs).order_by('id')
+        self.queryset = Projects.objects.filter(**kwargs).exclude(**exclude_kwargs).order_by('id')
         
         return super(ListProjectsView, self).get(*args, **kwargs)
 

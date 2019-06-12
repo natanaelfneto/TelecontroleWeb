@@ -1,6 +1,7 @@
 {% extends 'common/list.html' %}
 {% load staticfiles %}
 {% load i18n %}
+{% load has_pendencies %}
 
 {% block scripts %}        
 <script>
@@ -55,6 +56,16 @@
             <span id="progress_status_ribbon"></span>
         </span>
     </div>
+    <div class="btn-group mr-2 d-none" role="group">
+        <span 
+            class="btn btn-outline-primary" 
+            target="pendencies" 
+            onclick="removeFilter(this.getAttribute('target'));">
+            <i class="fa fa-filter"></i>
+            <i class="fa fa-times" style="display: none;"></i>
+            <span id="pendencies_ribbon"></span>
+        </span>
+    </div>
 </div>   
 <div>
     <a
@@ -97,15 +108,14 @@
             class="p-2" 
             action="{% url 'projects:listProjects' %}" 
             method="GET">
-            
             <input id="equipment_type" type="text" class="d-none" name="equipment_type" value=""/>
             <input id="electric_region" type="text" class="d-none" name="electric_region" value=""/>
             <input id="progress_status" type="text" class="d-none" name="progress_status" value=""/>
+            <input id="pendencies" type="text" class="d-none" name="pendencies" value=""/>
         </form>
             <!-- <th class="font-w700">ID</th> -->
             <th class="d-none d-sm-table-cell font-w700 align-middle">Ponto Indicado</th>
             <th class="font-w700 align-middle">Nº Projeto</th>
-
             <th class="font-w700 align-middle text-center">
                 <div class="dropdown">
                     <button 
@@ -138,18 +148,16 @@
                             onclick="applySelection(this.getAttribute('target'));">
                             Religador
                         </a>
-
                     </div>
                 </div>
             </th>
-
             <th class="font-w700 align-middle text-center">
                 <div class="dropdown">
                     <button 
                         type="button"
                         style="font-size: .875rem;"
                         class="btn btn-outline-dark dropdown-toggle text-uppercase border-0 font-w700" 
-                        id="equipment_type_dropdown" 
+                        id="electric_region_dropdown" 
                         data-toggle="dropdown" 
                         aria-haspopup="true" 
                         aria-expanded="false">
@@ -173,13 +181,13 @@
                 </div>
             </th>
             <th class="font-w700 align-middle">Data de conclusão da etapa</th>
-            <th class="font-w700 align-middle text-center d-flex">
+            <th class="font-w700 align-middle text-center d-flex border-bottom-0">
                 <div class="dropdown">
                     <button 
                         type="button"
                         style="font-size: .875rem;"
                         class="btn btn-outline-dark dropdown-toggle text-uppercase border-0 font-w700" 
-                        id="equipment_type_dropdown" 
+                        id="progress_status_dropdown" 
                         data-toggle="dropdown" 
                         aria-haspopup="true" 
                         aria-expanded="false">
@@ -199,6 +207,40 @@
                             {{ progress_status }}
                         </a>
                         {% endfor %}
+                    </div>
+                </div>
+            </th>
+            <th class="font-w700 text-center" style="width: 40px;">
+                <div class="dropdown">
+                    <button 
+                        type="button"
+                        style="font-size: .875rem;"
+                        class="btn btn-outline-dark dropdown-toggle text-uppercase border-0 font-w700" 
+                        id="pendencies_dropdown" 
+                        data-toggle="dropdown" 
+                        aria-haspopup="true" 
+                        aria-expanded="false">
+                        Pendências
+                    </button>
+                    <div 
+                        class="dropdown-menu font-size-sm w-100" 
+                        aria-labelledby="dropdown-align-outline-primary" 
+                        x-placement="top-end" 
+                        style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(44px, -148px, 0px);">                        
+                        <a 
+                            target="pendencies"
+                            class="dropdown-item" 
+                            href="javascript:void(0)"
+                            onclick="applySelection(this.getAttribute('target'));">
+                            Com pendências
+                        </a>
+                        <a 
+                            target="pendencies"
+                            class="dropdown-item" 
+                            href="javascript:void(0)"
+                            onclick="applySelection(this.getAttribute('target'));">
+                            Avanço liberado
+                        </a>
                     </div>
                 </div>
             </th>
@@ -345,6 +387,16 @@
             <span class="font-w600 btn btn-sm btn-default">
             {% endif %}
                 {{ project.get_progress_status_display }}
+            </span>
+        </td>
+        <td class="d-none d-sm-table-cell text-center" style="min-width: 11rem;">
+            {% if project|has_pendencies %}
+            <span class="font-w600 btn btn-sm btn-danger">
+                Com pendências
+            {% else %}
+            <span class="font-w600 btn btn-sm btn-outline-success">
+                Avanço liberado
+            {% endif %}
             </span>
         </td>
         {% comment %} <td class="text-center">
