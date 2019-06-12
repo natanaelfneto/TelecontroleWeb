@@ -531,7 +531,7 @@
             <div class="col-lg-12">
                 <div class="block block-rounded block-mode-loading-oneui">
                     <div class="block-header">
-                        <h3 class="block-title">Progresso dos Projetos no Tempo</h3>
+                        <h3 class="block-title">Progresso dos Projetos (Quantidade x Tempo)</h3>
                         <div class="block-options"></div>
                     </div>
                     <div class="block-content p-0 bg-body-light text-center">
@@ -560,6 +560,7 @@
                                         {
                                             label:"A instalar",
                                             data:[
+                                                {% comment %}
                                                 {% for step, value in models.projects.year_2019.items %}
                                                     {% if step == 'A instalar' %}
                                                         {{ value.month_1.0 }},
@@ -576,6 +577,7 @@
                                                         {{ value.month_12.0 }},
                                                     {% endif %}
                                                 {% endfor %}
+                                                {% endcomment %}
                                             ],
                                             fill:false,
                                             borderColor:'#5A6268',
@@ -685,10 +687,122 @@
                                         }
                                     ]
                                 },
-                                options: {
+                                options: {}
+                            });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="block block-rounded block-mode-loading-oneui">
+                    <div class="block-header">
+                        <h3 class="block-title">Pendências (Quantidade x Tipo)</h3>
+                        <div class="block-options"></div>
+                    </div>
+                    <div class="block-content p-0 bg-body-light text-center">
+                        <div class="pt-3">
+                            <canvas id="pendenciesByTypeChart" height="220"></canvas>
+                            <script>
+                            var ctx = document.getElementById('pendenciesByTypeChart').getContext('2d');
+                            var pendenciesByTypeChart = new Chart(ctx, {
+                                type:"bar",
+                                data:{
+                                    labels:[
+                                        "Materiais de obra",
+                                        "Obra não concluída",
+                                        "Cobertura não condiz com estudo teórico",
+                                        "Equipamento de Telecom com defeito",
+                                        "Equipamento de MT com defeito",
+                                        "Falta conectar MT",
+                                        "IMS sem bateria",
+                                        "Sem cadastro no mapa",
+                                        "Tensão TP inadequada",
+                                        "Pendências de Operação",
+                                    ],
+                                    datasets:[
+                                        {
+                                            data:[
+                                                {{ models.pendencies.year_2019.installation_0 }},
+                                                {{ models.pendencies.year_2019.energizing_0 }},
+                                                {{ models.pendencies.year_2019.commissioning_0 }},
+                                                {{ models.pendencies.year_2019.commissioning_1 }},
+                                                {{ models.pendencies.year_2019.commissioning_2 }},
+                                                {{ models.pendencies.year_2019.commissioning_3 }},
+                                                {{ models.pendencies.year_2019.commissioning_4 }},
+                                                {{ models.pendencies.year_2019.commissioning_5 }},
+                                                {{ models.pendencies.year_2019.commissioning_6 }},
+                                                {{ models.pendencies.year_2019.operation_0 }},
+                                            ],
+                                            fill:false,
+                                            backgroundColor:[
+                                                '#d26a5c',
+                                                '#d26a5c',
+                                                '#d26a5c',
+                                                '#d26a5c',
+                                                '#d26a5c',
+                                                '#d26a5c',
+                                                '#d26a5c',
+                                                '#d26a5c',
+                                                '#d26a5c',
+                                                '#d26a5c',
+                                            ],
+                                            borderColor:[
+                                                '#5A6268',
+                                                '#F0A73C',
+                                                '#3E69C9',
+                                                '#3E69C9',
+                                                '#3E69C9',
+                                                '#3E69C9',
+                                                '#3E69C9',
+                                                '#3E69C9',
+                                                '#3E69C9',
+                                                '#23272B',
+                                            ],
+                                            hoverBackgroundColor:[
+                                                '#5A6268',
+                                                '#F0A73C',
+                                                '#3E69C9',
+                                                '#3E69C9',
+                                                '#3E69C9',
+                                                '#3E69C9',
+                                                '#3E69C9',
+                                                '#3E69C9',
+                                                '#3E69C9',
+                                                '#23272B',
+                                            ],
+                                            hoverBorderColor:[
+                                                '#d26a5c',
+                                                '#d26a5c',
+                                                '#d26a5c',
+                                                '#d26a5c',
+                                                '#d26a5c',
+                                                '#d26a5c',
+                                                '#d26a5c',
+                                                '#d26a5c',
+                                                '#d26a5c',
+                                                '#d26a5c',
+                                            ],
+                                            borderWidth:2,
+                                            hoverBorderWidth:2,
+                                        }
+                                    ]
+                                },
+                                options:{
+                                    legend: {
+                                        display: false
+                                    },
+                                    scales:{
+                                        yAxes:[
+                                            {
+                                                ticks:{
+                                                    beginAtZero:true
+                                                }
+                                            }
+                                        ]
+                                    }
                                 }
                             });
-                            
                             </script>
                         </div>
                     </div>

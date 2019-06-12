@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 #### Added
 - profile images for user list
 - bugfix for authenticated user to change its password
+- filtro detalhado em lista de projetos
+- filtro por ponto em lista de pontos
+- filtro por ponto em estudos e liberações de material
+- filtro por usuário enel em usuários
+- gráfico do quantitativo de avanço por status do progresso de projetos no tempo
+- grafico de quantidade de pendências por tipo
 
 ### 1.1 - 2019-06-03
 #### Added
@@ -17,7 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - electric point display name changed
 - project list filter by progress status
 - project detail left side bar item list updated to show the projected point and suggested point
-- prokect list filter by region and equipment type
+- project list filter by region and equipment type
 
 ### 1.0 - 2019-05-27
 #### Added
