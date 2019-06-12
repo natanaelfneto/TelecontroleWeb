@@ -346,7 +346,7 @@
             <div class="col-lg-6">
                 <div class="block block-rounded block-mode-loading-oneui">
                     <div class="block-header">
-                        <h3 class="block-title">Progresso de Projetos</h3>
+                        <h3 class="block-title">Quantativo de projetos por status</h3>
                         <div class="block-options"></div>
                     </div>
                     <div class="block-content p-0 bg-body-light text-center">
@@ -415,7 +415,7 @@
             <div class="col-lg-6">
                 <div class="block block-rounded block-mode-loading-oneui">
                     <div class="block-header">
-                        <h3 class="block-title">Projetos por Regional</h3>
+                        <h3 class="block-title">Status de projetos por regional</h3>
                         <div class="block-options"></div>
                     </div>
                     <div class="block-content p-0 bg-body-light text-center">
@@ -531,7 +531,7 @@
             <div class="col-lg-12">
                 <div class="block block-rounded block-mode-loading-oneui">
                     <div class="block-header">
-                        <h3 class="block-title">Progresso dos Projetos (Quantidade x Tempo)</h3>
+                        <h3 class="block-title">Projetos com avanço de status no tempo (Quantidade x Tempo)</h3>
                         <div class="block-options"></div>
                     </div>
                     <div class="block-content p-0 bg-body-light text-center">
@@ -694,7 +694,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="block block-rounded block-mode-loading-oneui">
                     <div class="block-header">
                         <h3 class="block-title">Pendências (Quantidade x Tipo)</h3>
@@ -702,7 +702,7 @@
                     </div>
                     <div class="block-content p-0 bg-body-light text-center">
                         <div class="pt-3">
-                            <canvas id="pendenciesByTypeChart" height="220"></canvas>
+                            <canvas id="pendenciesByTypeChart" height="120"></canvas>
                             <script>
                             var ctx = document.getElementById('pendenciesByTypeChart').getContext('2d');
                             var pendenciesByTypeChart = new Chart(ctx, {
@@ -722,17 +722,59 @@
                                     ],
                                     datasets:[
                                         {
+                                            label: 'Pendências cadastradas',
                                             data:[
-                                                {{ models.pendencies.year_2019.installation_0 }},
-                                                {{ models.pendencies.year_2019.energizing_0 }},
-                                                {{ models.pendencies.year_2019.commissioning_0 }},
-                                                {{ models.pendencies.year_2019.commissioning_1 }},
-                                                {{ models.pendencies.year_2019.commissioning_2 }},
-                                                {{ models.pendencies.year_2019.commissioning_3 }},
-                                                {{ models.pendencies.year_2019.commissioning_4 }},
-                                                {{ models.pendencies.year_2019.commissioning_5 }},
-                                                {{ models.pendencies.year_2019.commissioning_6 }},
-                                                {{ models.pendencies.year_2019.operation_0 }},
+                                                {{ models.pendencies.year_2019.all.installation_0 }},
+                                                {{ models.pendencies.year_2019.all.energizing_0 }},
+                                                {{ models.pendencies.year_2019.all.commissioning_0 }},
+                                                {{ models.pendencies.year_2019.all.commissioning_1 }},
+                                                {{ models.pendencies.year_2019.all.commissioning_2 }},
+                                                {{ models.pendencies.year_2019.all.commissioning_3 }},
+                                                {{ models.pendencies.year_2019.all.commissioning_4 }},
+                                                {{ models.pendencies.year_2019.all.commissioning_5 }},
+                                                {{ models.pendencies.year_2019.all.commissioning_6 }},
+                                                {{ models.pendencies.year_2019.all.operation_0 }},
+                                            ],
+                                            fill:false,
+                                            backgroundColor:[
+                                                '#5A6268',
+                                                '#F0A73C',
+                                                '#3E69C9',
+                                                '#3E69C9',
+                                                '#3E69C9',
+                                                '#3E69C9',
+                                                '#3E69C9',
+                                                '#3E69C9',
+                                                '#3E69C9',
+                                                '#23272B',
+                                            ],
+                                            borderColor:[
+                                                '#5A6268',
+                                                '#F0A73C',
+                                                '#3E69C9',
+                                                '#3E69C9',
+                                                '#3E69C9',
+                                                '#3E69C9',
+                                                '#3E69C9',
+                                                '#3E69C9',
+                                                '#3E69C9',
+                                                '#23272B',
+                                            ],
+                                            borderWidth:2,                                            
+                                        },
+                                        {
+                                            label: 'Pendências não solucionadas',
+                                            data:[
+                                                {{ models.pendencies.year_2019.unsolved.installation_0 }},
+                                                {{ models.pendencies.year_2019.unsolved.energizing_0 }},
+                                                {{ models.pendencies.year_2019.unsolved.commissioning_0 }},
+                                                {{ models.pendencies.year_2019.unsolved.commissioning_1 }},
+                                                {{ models.pendencies.year_2019.unsolved.commissioning_2 }},
+                                                {{ models.pendencies.year_2019.unsolved.commissioning_3 }},
+                                                {{ models.pendencies.year_2019.unsolved.commissioning_4 }},
+                                                {{ models.pendencies.year_2019.unsolved.commissioning_5 }},
+                                                {{ models.pendencies.year_2019.unsolved.commissioning_6 }},
+                                                {{ models.pendencies.year_2019.unsolved.operation_0 }},
                                             ],
                                             fill:false,
                                             backgroundColor:[
@@ -748,30 +790,6 @@
                                                 '#d26a5c',
                                             ],
                                             borderColor:[
-                                                '#5A6268',
-                                                '#F0A73C',
-                                                '#3E69C9',
-                                                '#3E69C9',
-                                                '#3E69C9',
-                                                '#3E69C9',
-                                                '#3E69C9',
-                                                '#3E69C9',
-                                                '#3E69C9',
-                                                '#23272B',
-                                            ],
-                                            hoverBackgroundColor:[
-                                                '#5A6268',
-                                                '#F0A73C',
-                                                '#3E69C9',
-                                                '#3E69C9',
-                                                '#3E69C9',
-                                                '#3E69C9',
-                                                '#3E69C9',
-                                                '#3E69C9',
-                                                '#3E69C9',
-                                                '#23272B',
-                                            ],
-                                            hoverBorderColor:[
                                                 '#d26a5c',
                                                 '#d26a5c',
                                                 '#d26a5c',
@@ -784,14 +802,52 @@
                                                 '#d26a5c',
                                             ],
                                             borderWidth:2,
-                                            hoverBorderWidth:2,
+                                        },
+                                        {
+                                            label: 'Pendências solucionadas',
+                                            data:[
+                                                {{ models.pendencies.year_2019.solved.installation_0 }},
+                                                {{ models.pendencies.year_2019.solved.energizing_0 }},
+                                                {{ models.pendencies.year_2019.solved.commissioning_0 }},
+                                                {{ models.pendencies.year_2019.solved.commissioning_1 }},
+                                                {{ models.pendencies.year_2019.solved.commissioning_2 }},
+                                                {{ models.pendencies.year_2019.solved.commissioning_3 }},
+                                                {{ models.pendencies.year_2019.solved.commissioning_4 }},
+                                                {{ models.pendencies.year_2019.solved.commissioning_5 }},
+                                                {{ models.pendencies.year_2019.solved.commissioning_6 }},
+                                                {{ models.pendencies.year_2019.solved.operation_0 }},
+                                            ],
+                                            fill:false,
+                                            backgroundColor:[
+                                                '#38AB69',
+                                                '#38AB69',
+                                                '#38AB69',
+                                                '#38AB69',
+                                                '#38AB69',
+                                                '#38AB69',
+                                                '#38AB69',
+                                                '#38AB69',
+                                                '#38AB69',
+                                                '#38AB69',
+                                            ],
+                                            borderColor:[
+                                                '#38AB69',
+                                                '#38AB69',
+                                                '#38AB69',
+                                                '#38AB69',
+                                                '#38AB69',
+                                                '#38AB69',
+                                                '#38AB69',
+                                                '#38AB69',
+                                                '#38AB69',
+                                                '#38AB69',
+                                            ],
+                                            borderWidth:2,
                                         }
                                     ]
                                 },
                                 options:{
-                                    legend: {
-                                        display: false
-                                    },
+                                    //legend: { display: false },
                                     scales:{
                                         yAxes:[
                                             {
