@@ -25,7 +25,7 @@ class ProjectsForm(forms.ModelForm):
         model = Projects 
         fields = [
             # model fields
-            'electric_point',            
+            # 'electric_point',            
             'sob',
             # custom fields
             'programmed_date',

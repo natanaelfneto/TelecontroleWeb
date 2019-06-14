@@ -176,7 +176,7 @@
                                 {% endif %}
                             </span>
                         </span>
-                        {% if request.user.is_admin or request.user.is_constructor %}
+                        {% if request.user.is_admin or request.user.is_designer %}
                             {% if object.sob is null %}
                             <a 
                                 class="col-3 m-auto p-0 text-muted"
