@@ -6,7 +6,7 @@
         <h3 class="block-title">Projeto</h3>
         <div class="block-options">
             {% if object.get_progress_status_display == 'A projetar' %}
-                {% if request.user.is_admin or request.user.is_designer %}
+                {% if request.user.is_admin or request.user.is_planner %}
                 <a
                     href="{% url 'projects:updateProject' object.id %}"
                     class="btn btn-sm btn-outline-info">
