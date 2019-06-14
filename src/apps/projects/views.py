@@ -316,7 +316,7 @@ class UpdateProjectView(LoginRequiredMixin, UpdateView):
         # check if user is active
         user = self.request.user
         if not ((user.is_active and user.is_admin) or
-            (user.is_active and user.is_designer)):
+            (user.is_active and user.is_planner)):
 
             return HttpResponseRedirect(reverse_lazy('index'))
         return super(UpdateProjectView, self).get(*args, **kwargs)
