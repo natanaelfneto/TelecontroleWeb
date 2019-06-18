@@ -133,7 +133,7 @@ class AddUserView(LoginRequiredMixin, CreateView, FormUserView):
 
     def get_context_data(self, **kwargs):
         context = super(AddUserView, self).get_context_data(**kwargs)
-        context['page_subtitle'] = f'{self.page_subtitle_action} {self.page_subtitle}'
+        context['page_subtitle'] = '{0} {1}'.format(self.page_subtitle_action, self.page_subtitle)
         return context
 
 
@@ -159,7 +159,7 @@ class DetailUserView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(DetailUserView, self).get_context_data(**kwargs)
         context['page_title'] = self.page_title
-        context['page_subtitle'] = f'{self.page_subtitle_action} {self.page_subtitle}'
+        context['page_subtitle'] = '{0} {1}'.format(self.page_subtitle_action, self.page_subtitle)
         context['page_group'] = self.page_group
         return context
 
@@ -201,7 +201,7 @@ class ListUsersView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(ListUsersView, self).get_context_data(**kwargs)
         context['page_title'] = self.page_title
-        context['page_subtitle'] = f'{self.page_subtitle_action} {self.page_subtitle}'
+        context['page_subtitle'] = '{0} {1}'.format(self.page_subtitle_action, self.page_subtitle)
         context['page_group'] = self.page_group
 
         return context
@@ -217,7 +217,7 @@ class UpdateUserView(LoginRequiredMixin, UpdateView, FormUserView):
 
     def get_context_data(self, **kwargs):
         context = super(UpdateUserView, self).get_context_data(**kwargs)
-        context['page_subtitle'] = f'{self.page_subtitle_action} {self.page_subtitle}'
+        context['page_subtitle'] = '{0} {1}'.format(self.page_subtitle_action, self.page_subtitle)
 
         return context
 
@@ -334,7 +334,7 @@ class UpdateUserPasswordView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(UpdateUserPasswordView, self).get_context_data(**kwargs)
         context['page_title'] = self.page_title
-        context['page_subtitle'] = f'{self.page_subtitle_action} {self.page_subtitle}'
+        context['page_subtitle'] = '{0} {1}'.format(self.page_subtitle_action, self.page_subtitle)
         context['page_group'] = self.page_group
 
         return context

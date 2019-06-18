@@ -186,7 +186,7 @@ class BasicUser(AbstractBaseUser, PermissionsMixin):
 
     @property
     def get_full_name(self):
-        return f'{self.first_name} {self.last_name}'
+        return '{0} {1}'.format(self.first_name, self.last_name)
 
 
 def user_directory_path(instance, filename):
@@ -226,4 +226,4 @@ class Avatars(models.Model):
         verbose_name_plural = 'Avatares'
 
     def __str__(self):
-        return f'{self.id}'
+        return '{0}'.format(self.id)

@@ -36,7 +36,7 @@ class AddProjectView(LoginRequiredMixin, CreateView):
     template_name = 'common/add.html'
     model = Projects
     page_title = model._meta.verbose_name.title()
-    page_subtitle = f'Adicionar {model._meta.verbose_name_plural.title()}' 
+    page_subtitle = 'Adicionar {0}'.format(model._meta.verbose_name_plural.title())
     page_group = "Administrativo"
     form_class = ProjectsForm
     success_url = reverse_lazy('projects:listProjects')
@@ -100,7 +100,7 @@ class DetailProjectView(LoginRequiredMixin, UpdateView):
     template_name = 'projects/detail_project.html'
     model = Projects
     page_title = model._meta.verbose_name.title()
-    page_subtitle = f'Movimentar {model._meta.verbose_name.title()}' 
+    page_subtitle = 'Movimentar {0}'.format(model._meta.verbose_name_plural.title())
     page_group = "Administrativo"
     fields = []
     form_classes = {
@@ -239,7 +239,7 @@ class ListProjectsView(LoginRequiredMixin, ListView):
     template_name = "projects/list_projects.html"
     model = Projects
     page_title = model._meta.verbose_name.title()
-    page_subtitle = f'Listar {model._meta.verbose_name_plural.title()}' 
+    page_subtitle = 'Listar {0}'.format(model._meta.verbose_name_plural.title())
     page_group = "Administrativo"
     queryset = Projects.objects.filter().order_by('id')
     form = []
@@ -307,7 +307,7 @@ class UpdateProjectView(LoginRequiredMixin, UpdateView):
     template_name = 'common/add.html'
     model = Projects
     page_title = model._meta.verbose_name.title()
-    page_subtitle = f'Atualizar {model._meta.verbose_name.title()}' 
+    page_subtitle = 'Atualizar {0}'.format(model._meta.verbose_name_plural.title())
     page_group = "Administrativo"
     form_class = ProjectsForm
     success_url = reverse_lazy('projects:listProjects')
@@ -833,7 +833,7 @@ class UnsolvedPendenciesView(LoginRequiredMixin, TemplateView):
     template_name = "projects/unsolved-pendencies.html"
     model = Projects
     page_title = model._meta.verbose_name.title()
-    page_subtitle = f'Erro de Movimentação de {model._meta.verbose_name.title()}' 
+    page_subtitle = 'Erro de Movimentação de {0}'.format(model._meta.verbose_name_plural.title())
     page_group = "Administrativo"
 
     def get_context_data(self, **kwargs):

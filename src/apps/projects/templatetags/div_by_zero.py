@@ -10,4 +10,4 @@ register = template.Library()
 #
 @register.filter(name='div_by_zero')
 def div_by_zero(numerator, denominator):
-    return f'{numerator / denominator if denominator else 0}'
+    return '{0}'.format(numerator / denominator if denominator else 0)

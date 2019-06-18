@@ -6,3 +6,4 @@ staticfiles
 staticfiles/*
 src/local_settings.py
 src/media/*
+telecontrole_34

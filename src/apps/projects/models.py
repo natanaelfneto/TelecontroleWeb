@@ -147,14 +147,14 @@ class Projects(models.Model):
         verbose_name_plural = 'Projetos'
 
     def __str__(self):
-        return f'{self.id}'
+        return '{0}'.format(self.id)
 
     def get_delay(self):
         if self.finished_at is not None:
             delta = self.finished_at - self.created_at
             if delta.days == 1:
-                return f'{delta.days} dia'
-            return f'{delta.days} dias'
+                return '{0} dia'.format(delta.days)
+            return '{0} dias'.format(delta.days)
 
         return None
 
@@ -210,14 +210,14 @@ class Steps(models.Model):
         verbose_name_plural = 'Etapas'
 
     def __str__(self):
-        return f'{self.id}'
+        return '{0}'.format(self.id)
 
     def get_step_delay(self):
         if self.real_date is not None:
             delta = self.real_date - self.programmed_date
             if delta.days == 1:
-                return f'{delta.days} dia'
-            return f'{delta.days} dias'
+                return '{0} dia'.format(delta.days)
+            return '{0} dias'.format(delta.days)
 
         return None
 
@@ -286,13 +286,13 @@ class Pendencies(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f'{self.id}'
+        return '{0}'.format(self.id)
 
     def get_step_delay(self):
         if self.solved_at is not None:
             delta = self.solved_at - self.created_at
             if delta.days == 1:
-                return f'{delta.days} dia'
-            return f'{delta.days} dias'
+                return '{0} dia'.format(delta.days)
+            return '{0} dias'.format(delta.days)
 
         return None

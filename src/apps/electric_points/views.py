@@ -35,7 +35,7 @@ class AddElectricPointView(LoginRequiredMixin, CreateView):
     template_name = 'common/add.html'
     model = ElectricPoints
     page_title = model._meta.verbose_name.title()
-    page_subtitle = f'Adicionar {model._meta.verbose_name_plural.title()}' 
+    page_subtitle = 'Adicionar {0}'.format(model._meta.verbose_name_plural.title())
     page_group = "Administrativo"
     form_class = ElectricPointsForm
     success_url = reverse_lazy('electric_points:listElectricPoints')
@@ -97,7 +97,7 @@ class DetailElectricPointView(LoginRequiredMixin, DetailView):
     template_name = 'electric_points/detail_electric_point.html'
     model = ElectricPoints
     page_title = model._meta.verbose_name.title()
-    page_subtitle = f'Detalhar {model._meta.verbose_name.title()}' 
+    page_subtitle = 'Detalhar {0}'.format(model._meta.verbose_name_plural.title()) 
     page_group = "Administrativo"
         
 
@@ -110,7 +110,7 @@ class ListElectricPointsView(LoginRequiredMixin, ListView):
     template_name = "electric_points/list_electric_points.html"
     model = ElectricPoints
     page_title = model._meta.verbose_name.title()
-    page_subtitle = f'Listar {model._meta.verbose_name_plural.title()}' 
+    page_subtitle = 'Listar {0}'.format(model._meta.verbose_name_plural.title())
     page_group = "Administrativo"
     queryset = ElectricPoints.objects.filter().order_by('id')
     form = []
@@ -146,7 +146,7 @@ class UpdateElectricPointView(LoginRequiredMixin, UpdateView):
     template_name = 'common/add.html'
     model = ElectricPoints
     page_title = model._meta.verbose_name.title()
-    page_subtitle = f'Atualizar {model._meta.verbose_name.title()}' 
+    page_subtitle = 'Atualizar {0}'.format(model._meta.verbose_name_plural.title())
     page_group = "Administrativo"
     form_class = ElectricPointsForm
     success_url = reverse_lazy('electric_points:listElectricPoints')
@@ -308,7 +308,7 @@ class AddFeederView(LoginRequiredMixin, CreateView):
     template_name = 'common/add.html'
     model = Feeders
     page_title = model._meta.verbose_name.title()
-    page_subtitle = f'Adicionar {model._meta.verbose_name_plural.title()}' 
+    page_subtitle = 'Adicionar {0}'.format(model._meta.verbose_name_plural.title())
     page_group = "Administrativo"
     form_class = FeedersForm
     success_url = reverse_lazy('electric_points:listFeeders')
@@ -337,7 +337,7 @@ class DetailFeederView(LoginRequiredMixin, DetailView):
     template_name = 'feeders/detail_feeders.html'
     model = Feeders
     page_title = model._meta.verbose_name.title()
-    page_subtitle = f'Detalhar {model._meta.verbose_name.title()}' 
+    page_subtitle = 'Detalhar {0}'.format(model._meta.verbose_name_plural.title())
     page_group = "Administrativo"
 
 
@@ -350,7 +350,7 @@ class ListFeedersView(LoginRequiredMixin, ListView):
     template_name = "feeders/list_feeders.html"
     model = Feeders
     page_title = model._meta.verbose_name.title()
-    page_subtitle = f'Listar {model._meta.verbose_name_plural.title()}' 
+    page_subtitle = 'Listar {0}'.format(model._meta.verbose_name_plural.title())
     page_group = "Administrativo"
     queryset = Feeders.objects.filter().order_by('id')
     form = []
@@ -374,7 +374,7 @@ class UpdateFeederView(LoginRequiredMixin, UpdateView):
     template_name = 'common/add.html'
     model = Feeders
     page_title = model._meta.verbose_name.title()
-    page_subtitle = f'Atualizar {model._meta.verbose_name.title()}' 
+    page_subtitle = 'Atualizar {0}'.format(model._meta.verbose_name_plural.title())
     page_group = "Administrativo"
     form_class = FeedersForm
     success_url = reverse_lazy('electric_points:listFeeders')
@@ -422,7 +422,7 @@ class AddCoverageStudyView(LoginRequiredMixin, CreateView):
     template_name = 'common/add.html'
     model = CoverageStudies
     page_title = model._meta.verbose_name.title()
-    page_subtitle = f'Adicionar {model._meta.verbose_name_plural.title()}' 
+    page_subtitle = 'Adicionar {0}'.format(model._meta.verbose_name_plural.title())
     page_group = "Administrativo"
     form_class = StartCoverageStudiesForm
     success_url = reverse_lazy('electric_points:listCoverageStudies')
@@ -501,7 +501,7 @@ class DetailCoverageStudyView(LoginRequiredMixin, DetailView):
     template_name = 'feeders/detail_feeders.html'
     model = CoverageStudies
     page_title = model._meta.verbose_name.title()
-    page_subtitle = f'Detalhar {model._meta.verbose_name.title()}' 
+    page_subtitle = 'Detalhar {0}'.format(model._meta.verbose_name_plural.title())
     page_group = "Administrativo"
 
 
@@ -514,7 +514,7 @@ class ListCoverageStudiesView(LoginRequiredMixin, ListView):
     template_name = "coverage_studies/list_coverage_studies.html"
     model = CoverageStudies
     page_title = model._meta.verbose_name.title()
-    page_subtitle = f'Listar {model._meta.verbose_name_plural.title()}' 
+    page_subtitle = 'listar {0}'.format(model._meta.verbose_name_plural.title())
     page_group = "Administrativo"
     queryset = CoverageStudies.objects.filter().order_by('id')
     form = []
@@ -555,9 +555,10 @@ class DeleteCoverageStudyView(LoginRequiredMixin, RedirectView):
             (user.is_active or not user.is_telecom)):
 
             coverage_study = get_object_or_404(CoverageStudies, pk=self.kwargs['pk'])
-            coverage_study.delete()
-
             project = get_object_or_404(Projects, electric_point=coverage_study.electric_point)
+
+            coverage_study.delete()
+            
             project_id = { 'pk':project.id }
 
             return HttpResponseRedirect(reverse_lazy('projects:detailProject', kwargs=project_id))
@@ -611,7 +612,7 @@ class ListSupplyDeliveriesView(LoginRequiredMixin, ListView):
     template_name = "supply_deliveries/list_supply_deliveries.html"
     model = SupplyDelivery
     page_title = model._meta.verbose_name.title()
-    page_subtitle = f'Listar {model._meta.verbose_name_plural.title()}' 
+    page_subtitle = 'Listar {0}'.format(model._meta.verbose_name_plural.title())
     page_group = "Administrativo"
     queryset = SupplyDelivery.objects.filter().order_by('id')
     form = []
@@ -736,7 +737,7 @@ class ListFeederStudiesView(LoginRequiredMixin, ListView):
     template_name = "feeders/list_feeder_studies.html"
     model = FeederStudies
     page_title = model._meta.verbose_name.title()
-    page_subtitle = f'Listar {model._meta.verbose_name_plural.title()}' 
+    page_subtitle = 'Listar {0}'.format(model._meta.verbose_name_plural.title()) 
     page_group = "Administrativo"
     queryset = FeederStudies.objects.filter().order_by('id')
     form = []
@@ -769,17 +770,18 @@ class DeleteCoverageStudyView(LoginRequiredMixin, RedirectView):
     Delete Feeder View
         class used to remove feeder objects from database
     '''
-    model = FeederStudies
+    model = CoverageStudies
 
     def get(self, *args, **kwargs):
         user = self.request.user
         if ((user.is_active or not user.is_admin) or
             (user.is_active or not user.is_protection)):
 
-            coverage_study = get_object_or_404(FeederStudies, pk=self.kwargs['pk'])
+            coverage_study = get_object_or_404(CoverageStudies, pk=self.kwargs['pk'])
+            project = get_object_or_404(Projects, electric_point=coverage_study.electric_point)            
+            
             coverage_study.delete()
 
-            project = get_object_or_404(Projects, electric_point=coverage_study.electric_point)
             project_id = { 'pk':project.id }
 
             return HttpResponseRedirect(reverse_lazy('projects:detailProject', kwargs=project_id))

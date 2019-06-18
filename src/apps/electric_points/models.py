@@ -123,10 +123,10 @@ class ElectricPoints(models.Model):
         ordering = ['created_at']
 
     def __str__(self):
-        return f'{self.name} ({self.get_equipment_type_display()})'
+        return '{0} ({1})'.format(self.name, self.get_equipment_type_display())
 
     def get_primary_key(self):
-        return f'{self.id}'
+        return '{0}'.format(self.id)
 
 
 # feeder class
@@ -171,7 +171,7 @@ class Feeders(models.Model):
         verbose_name_plural = 'Alimentadores'
 
     def __str__(self):
-        return f'{self.name}'
+        return '{0}'.format(self.name)
 
 
 # location class
@@ -230,7 +230,7 @@ class Locations(models.Model):
     # is this location obsolete in relation to the electric point
     obsolete = models.BooleanField(
         default=False, 
-        blank=False, null=True,
+        blank=False, null=False,
         verbose_name="Posição obsoleta",
     )
     # city related to inputed coordenates
@@ -247,7 +247,7 @@ class Locations(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f'{self.id}'
+        return '{0}'.format(self.id)
 
 
 # coverage studies class
@@ -303,7 +303,7 @@ class CoverageStudies(models.Model):
         verbose_name_plural = 'Estudos Teóricos de Cobertura'
 
     def __str__(self):
-        return f'{self.id}'
+        return '{0}'.format(self.id)
 
 
 # class
@@ -392,7 +392,7 @@ class SupplyDelivery(models.Model):
         verbose_name_plural = 'Liberações de Materiais de Telecom'
 
     def __str__(self):
-        return f'{self.id}'
+        return '{0}'.format(self.id)
 
 
 # class
@@ -449,7 +449,7 @@ class FeederStudies(models.Model):
     # 
     applied = models.BooleanField(
         default=False,
-        blank=False, null=True, 
+        blank=False, null=False, 
         verbose_name="Implementado",
     )
     # traceble user that created the coverage study
@@ -472,4 +472,4 @@ class FeederStudies(models.Model):
         verbose_name_plural = 'Estudos de Proteção'
 
     def __str__(self):
-        return f'{self.id}'
+        return '{0}'.format(self.id)

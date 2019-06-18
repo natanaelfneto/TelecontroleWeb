@@ -10,4 +10,4 @@ register = template.Library()
 #
 @register.filter(name='decimal_filter')
 def decimal_filter(value):
-    return f'{float(value):.1f}'
+    return '{0:.1f}'.format(float(value))

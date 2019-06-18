@@ -309,7 +309,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
                     if not str(PROGRESS_STATUS[int(progress_status[0]) + 1][1]) in self.models['projects']['year_2019']:
                         self.models['projects']['year_2019'][str(PROGRESS_STATUS[int(progress_status[0]) + 1][1])] = {}
                     
-                    self.models['projects']['year_2019'][str(PROGRESS_STATUS[int(progress_status[0]) + 1][1])][f'month_{str(month)}'] = project_count
+                    self.models['projects']['year_2019'][str(PROGRESS_STATUS[int(progress_status[0]) + 1][1])]['month_{0}'.format(str(month))] = project_count
             else:
                 for month in range(1,13):
 
@@ -322,7 +322,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
                     if not progress_status[1] in self.models['projects']['year_2019']:
                         self.models['projects']['year_2019'][progress_status[1]] = {}
 
-                    self.models['projects']['year_2019'][progress_status[1]][f'month_{str(month)}'] = project_count
+                    self.models['projects']['year_2019'][progress_status[1]]['month_{0}'.format(str(month))] = project_count
 
         for progress_status in PROGRESS_STATUS:
             self.models['feeders']['electric_regions']['count'][progress_status[1]] = {}
