@@ -113,6 +113,150 @@ class IndexView(LoginRequiredMixin, TemplateView):
                     'unsolved':{
                         'installation_0':Projects.objects.filter(
                             progress_status=get_choices_index(PROGRESS_STATUS, 'A projetar'),
+                            pendencies__solved=False,
+                            pendencies__pendency_type=str(get_choices_index(
+                                PENDENCIES_TYPES['installation'],
+                                'Materiais de Obras'
+                        ))).count(),
+                        'energizing_0':Projects.objects.filter(
+                            progress_status=get_choices_index(PROGRESS_STATUS, 'A instalar'),
+                            pendencies__solved=False,
+                            pendencies__pendency_type=str(get_choices_index(
+                                PENDENCIES_TYPES['energizing'],
+                                'Obra não concluída'
+                        ))).count(),
+                        'commissioning_0':Projects.objects.filter(
+                            progress_status=get_choices_index(PROGRESS_STATUS, 'A energizar'),
+                            pendencies__solved=False,
+                            pendencies__pendency_type=str(get_choices_index(
+                                PENDENCIES_TYPES['commissioning'],
+                                'Cobertura não condiz com estudo teórico'
+                        ))).count(),
+                        'commissioning_1':Projects.objects.filter(
+                            progress_status=get_choices_index(PROGRESS_STATUS, 'A energizar'),
+                            pendencies__solved=False,
+                            pendencies__pendency_type=str(get_choices_index(
+                                PENDENCIES_TYPES['commissioning'],
+                                'Equipamento de Telecom com defeito'
+                        ))).count(),
+                        'commissioning_2':Projects.objects.filter(
+                            progress_status=get_choices_index(PROGRESS_STATUS, 'A energizar'),
+                            pendencies__solved=False,
+                            pendencies__pendency_type=str(get_choices_index(
+                                PENDENCIES_TYPES['commissioning'],
+                                'Equipamento de Telecom com defeito'
+                        ))).count(),
+                        'commissioning_3':Projects.objects.filter(
+                            progress_status=get_choices_index(PROGRESS_STATUS, 'A energizar'),
+                            pendencies__solved=False,
+                            pendencies__pendency_type=str(get_choices_index(
+                                PENDENCIES_TYPES['commissioning'],
+                                'Falta conectar MT'
+                        ))).count(),
+                        'commissioning_4':Projects.objects.filter(
+                            progress_status=get_choices_index(PROGRESS_STATUS, 'A energizar'),
+                            pendencies__solved=False,
+                            pendencies__pendency_type=str(get_choices_index(
+                                PENDENCIES_TYPES['commissioning'],
+                                'IMS sem bateria'
+                        ))).count(),
+                        'commissioning_5':Projects.objects.filter(
+                            progress_status=get_choices_index(PROGRESS_STATUS, 'A energizar'),
+                            pendencies__solved=False,
+                            pendencies__pendency_type=str(get_choices_index(
+                                PENDENCIES_TYPES['commissioning'],
+                                'Sem cadastro no mapa'
+                        ))).count(),
+                        'commissioning_6':Projects.objects.filter(
+                            progress_status=get_choices_index(PROGRESS_STATUS, 'A energizar'),
+                            pendencies__solved=False,
+                            pendencies__pendency_type=str(get_choices_index(
+                                PENDENCIES_TYPES['commissioning'],
+                                'Tensão TP inadequada'
+                        ))).count(),
+                        'operation_0':Projects.objects.filter(
+                            progress_status=get_choices_index(PROGRESS_STATUS, 'A comissionar'),
+                            pendencies__solved=False,
+                            pendencies__pendency_type=str(get_choices_index(
+                                PENDENCIES_TYPES['operation'],
+                                'Padrão'
+                        ))).count(),
+                    },
+                    'solved': {
+                        'installation_0':Projects.objects.filter(
+                            progress_status=get_choices_index(PROGRESS_STATUS, 'A projetar'),
+                            pendencies__solved=True,
+                            pendencies__pendency_type=str(get_choices_index(
+                                PENDENCIES_TYPES['installation'],
+                                'Materiais de Obras'
+                        ))).count(),
+                        'energizing_0':Projects.objects.filter(
+                            progress_status=get_choices_index(PROGRESS_STATUS, 'A instalar'),
+                            pendencies__solved=True,
+                            pendencies__pendency_type=str(get_choices_index(
+                                PENDENCIES_TYPES['energizing'],
+                                'Obra não concluída'
+                        ))).count(),
+                        'commissioning_0':Projects.objects.filter(
+                            progress_status=get_choices_index(PROGRESS_STATUS, 'A energizar'),
+                            pendencies__solved=True,
+                            pendencies__pendency_type=str(get_choices_index(
+                                PENDENCIES_TYPES['commissioning'],
+                                'Cobertura não condiz com estudo teórico'
+                        ))).count(),
+                        'commissioning_1':Projects.objects.filter(
+                            progress_status=get_choices_index(PROGRESS_STATUS, 'A energizar'),
+                            pendencies__solved=True,
+                            pendencies__pendency_type=str(get_choices_index(
+                                PENDENCIES_TYPES['commissioning'],
+                                'Equipamento de Telecom com defeito'
+                        ))).count(),
+                        'commissioning_2':Projects.objects.filter(    
+                            progress_status=get_choices_index(PROGRESS_STATUS, 'A energizar'),                        
+                            pendencies__solved=True,
+                            pendencies__pendency_type=str(get_choices_index(
+                                PENDENCIES_TYPES['commissioning'],
+                                'Equipamento de Telecom com defeito'
+                        ))).count(),
+                        'commissioning_3':Projects.objects.filter(
+                            progress_status=get_choices_index(PROGRESS_STATUS, 'A energizar'),
+                            pendencies__solved=True,
+                            pendencies__pendency_type=str(get_choices_index(
+                                PENDENCIES_TYPES['commissioning'],
+                                'Falta conectar MT'
+                        ))).count(),
+                        'commissioning_4':Projects.objects.filter(
+                            progress_status=get_choices_index(PROGRESS_STATUS, 'A energizar'),
+                            pendencies__solved=True,
+                            pendencies__pendency_type=str(get_choices_index(
+                                PENDENCIES_TYPES['commissioning'],
+                                'IMS sem bateria'
+                        ))).count(),
+                        'commissioning_5':Projects.objects.filter(
+                            progress_status=get_choices_index(PROGRESS_STATUS, 'A energizar'),
+                            pendencies__solved=True,
+                            pendencies__pendency_type=str(get_choices_index(
+                                PENDENCIES_TYPES['commissioning'],
+                                'Sem cadastro no mapa'
+                        ))).count(),
+                        'commissioning_6':Projects.objects.filter(
+                            progress_status=get_choices_index(PROGRESS_STATUS, 'A energizar'),
+                            pendencies__solved=True,
+                            pendencies__pendency_type=str(get_choices_index(
+                                PENDENCIES_TYPES['commissioning'],
+                                'Tensão TP inadequada'
+                        ))).count(),
+                        'operation_0':Projects.objects.filter(
+                            progress_status=get_choices_index(PROGRESS_STATUS, 'A comissionar'),
+                            pendencies__solved=True,
+                            pendencies__pendency_type=str(get_choices_index(
+                                PENDENCIES_TYPES['operation'],
+                                'Padrão'
+                        ))).count(),
+                    },
+                    'all': {
+                        'installation_0':Projects.objects.filter(
+                            progress_status=get_choices_index(PROGRESS_STATUS, 'A projetar'),
                             pendencies__pendency_type=str(get_choices_index(
                                 PENDENCIES_TYPES['installation'],
                                 'Materiais de Obras'
@@ -167,120 +311,6 @@ class IndexView(LoginRequiredMixin, TemplateView):
                         ))).count(),
                         'operation_0':Projects.objects.filter(
                             progress_status=get_choices_index(PROGRESS_STATUS, 'A comissionar'),
-                            pendencies__pendency_type=str(get_choices_index(
-                                PENDENCIES_TYPES['operation'],
-                                'Padrão'
-                        ))).count(),
-                    },
-                    'solved': {
-                        'installation_0':Projects.objects.filter(
-                            pendencies__solved=True,
-                            pendencies__pendency_type=str(get_choices_index(
-                                PENDENCIES_TYPES['installation'],
-                                'Materiais de Obras'
-                        ))).count(),
-                        'energizing_0':Projects.objects.filter(
-                            pendencies__solved=True,
-                            pendencies__pendency_type=str(get_choices_index(
-                                PENDENCIES_TYPES['energizing'],
-                                'Obra não concluída'
-                        ))).count(),
-                        'commissioning_0':Projects.objects.filter(
-                            pendencies__solved=True,
-                            pendencies__pendency_type=str(get_choices_index(
-                                PENDENCIES_TYPES['commissioning'],
-                                'Cobertura não condiz com estudo teórico'
-                        ))).count(),
-                        'commissioning_1':Projects.objects.filter(
-                            pendencies__solved=True,
-                            pendencies__pendency_type=str(get_choices_index(
-                                PENDENCIES_TYPES['commissioning'],
-                                'Equipamento de Telecom com defeito'
-                        ))).count(),
-                        'commissioning_2':Projects.objects.filter(                            
-                            pendencies__solved=True,
-                            pendencies__pendency_type=str(get_choices_index(
-                                PENDENCIES_TYPES['commissioning'],
-                                'Equipamento de Telecom com defeito'
-                        ))).count(),
-                        'commissioning_3':Projects.objects.filter(
-                            pendencies__solved=True,
-                            pendencies__pendency_type=str(get_choices_index(
-                                PENDENCIES_TYPES['commissioning'],
-                                'Falta conectar MT'
-                        ))).count(),
-                        'commissioning_4':Projects.objects.filter(
-                            pendencies__solved=True,
-                            pendencies__pendency_type=str(get_choices_index(
-                                PENDENCIES_TYPES['commissioning'],
-                                'IMS sem bateria'
-                        ))).count(),
-                        'commissioning_5':Projects.objects.filter(
-                            pendencies__solved=True,
-                            pendencies__pendency_type=str(get_choices_index(
-                                PENDENCIES_TYPES['commissioning'],
-                                'Sem cadastro no mapa'
-                        ))).count(),
-                        'commissioning_6':Projects.objects.filter(
-                            pendencies__solved=True,
-                            pendencies__pendency_type=str(get_choices_index(
-                                PENDENCIES_TYPES['commissioning'],
-                                'Tensão TP inadequada'
-                        ))).count(),
-                        'operation_0':Projects.objects.filter(
-                            pendencies__solved=True,
-                            pendencies__pendency_type=str(get_choices_index(
-                                PENDENCIES_TYPES['operation'],
-                                'Padrão'
-                        ))).count(),
-                    },
-                    'all': {
-                        'installation_0':Projects.objects.filter(
-                            pendencies__pendency_type=str(get_choices_index(
-                                PENDENCIES_TYPES['installation'],
-                                'Materiais de Obras'
-                        ))).count(),
-                        'energizing_0':Projects.objects.filter(
-                            pendencies__pendency_type=str(get_choices_index(
-                                PENDENCIES_TYPES['energizing'],
-                                'Obra não concluída'
-                        ))).count(),
-                        'commissioning_0':Projects.objects.filter(
-                            pendencies__pendency_type=str(get_choices_index(
-                                PENDENCIES_TYPES['commissioning'],
-                                'Cobertura não condiz com estudo teórico'
-                        ))).count(),
-                        'commissioning_1':Projects.objects.filter(
-                            pendencies__pendency_type=str(get_choices_index(
-                                PENDENCIES_TYPES['commissioning'],
-                                'Equipamento de Telecom com defeito'
-                        ))).count(),
-                        'commissioning_2':Projects.objects.filter(                            
-                            pendencies__pendency_type=str(get_choices_index(
-                                PENDENCIES_TYPES['commissioning'],
-                                'Equipamento de Telecom com defeito'
-                        ))).count(),
-                        'commissioning_3':Projects.objects.filter(                            
-                            pendencies__pendency_type=str(get_choices_index(
-                                PENDENCIES_TYPES['commissioning'],
-                                'Falta conectar MT'
-                        ))).count(),
-                        'commissioning_4':Projects.objects.filter(
-                            pendencies__pendency_type=str(get_choices_index(
-                                PENDENCIES_TYPES['commissioning'],
-                                'IMS sem bateria'
-                        ))).count(),
-                        'commissioning_5':Projects.objects.filter(
-                            pendencies__pendency_type=str(get_choices_index(
-                                PENDENCIES_TYPES['commissioning'],
-                                'Sem cadastro no mapa'
-                        ))).count(),
-                        'commissioning_6':Projects.objects.filter(                            
-                            pendencies__pendency_type=str(get_choices_index(
-                                PENDENCIES_TYPES['commissioning'],
-                                'Tensão TP inadequada'
-                        ))).count(),
-                        'operation_0':Projects.objects.filter(
                             pendencies__pendency_type=str(get_choices_index(
                                 PENDENCIES_TYPES['operation'],
                                 'Padrão'
