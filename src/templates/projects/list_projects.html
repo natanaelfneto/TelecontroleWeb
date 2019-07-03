@@ -113,9 +113,10 @@
             <input id="progress_status" type="text" class="d-none" name="progress_status" value=""/>
             <input id="pendencies" type="text" class="d-none" name="pendencies" value=""/>
         </form>
-            <!-- <th class="font-w700">ID</th> -->
+            <th class="font-w700">ID</th>
             <th class="d-none d-sm-table-cell font-w700 align-middle">Ponto Indicado</th>
             <th class="font-w700 align-middle">Nº Projeto</th>
+            <th class="font-w700 align-middle">Numeração Operativa</th>
             <th class="font-w700 align-middle text-center">
                 <div class="dropdown">
                     <button 
@@ -255,7 +256,7 @@
 <tbody>
     {% for project in object_list %}
     <tr>
-        <!-- <td><span class="font-w600">{{ project.id }}</span></td> -->
+        <td><span class="font-w600">{{ project.id }}</span></td>
         <td class="d-none d-sm-table-cell">
             <span class="font-size-sm text-muted">
                 {{ project.electric_point.name }}
@@ -267,6 +268,15 @@
                 Não cadastrado
                 {% else %}
                 {{ project.sob }}
+                {% endif %}
+            </span>
+        </td>
+        <td class="d-none d-sm-table-cell">
+            <span class="font-size-sm text-muted">
+                {% if project.operative_number is null %}
+                Não cadastrado
+                {% else %}
+                {{ project.operative_number }}
                 {% endif %}
             </span>
         </td>

@@ -66,6 +66,12 @@ class Projects(models.Model):
         blank=False, null=True,
         verbose_name="Número do Projeto",
     )
+    # project execution request identifier
+    operative_number = models.CharField(
+        max_length=255, unique=True,
+        blank=True, null=True,
+        verbose_name="Numeração operativa",
+    )
     # traceble datetime of project creation
     created_at = models.DateTimeField(
         auto_now_add=True,

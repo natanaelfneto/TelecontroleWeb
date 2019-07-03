@@ -40,6 +40,8 @@
                                     data-toggle="modal"
                                     {% if object|has_pendencies %}
                                         data-target="#modal-move-status-popout-error-has-pendencies"
+                                    {% elif object.operative_number is null %}
+                                        data-target="#modal-move-status-popout-error-no-operative-number"
                                     {% elif object|is_programmed %}
                                         data-target="#modal-move-status-popout"
                                     {% else %}
@@ -67,6 +69,8 @@
 {% include 'projects/modals/feeder_modal.html' %}
 
 {% include 'projects/modals/sob_modal.html' %}
+
+{% include 'projects/modals/operative_number_modal.html' %}
 
 {% include 'projects/modals/pendencies_modal.html' %}
 

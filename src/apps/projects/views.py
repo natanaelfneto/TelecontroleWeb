@@ -112,7 +112,8 @@ class DetailProjectView(LoginRequiredMixin, UpdateView):
         'coverage_studies_finishes': FinishesCoverageStudiesForm,
         'telecom_supply_delivery': SupplyDeliveryForm,
         'feeder_study': FeederStudiesForm,
-        'sob': ProjectSobForm
+        'sob': ProjectSobForm,
+        'operative_number': ProjectOperativeNumberForm
     }
     ask_for_programmed_date = None
     success_url = reverse_lazy('projects:listProjects')
@@ -943,6 +944,39 @@ class AddProjectSOBView(LoginRequiredMixin, UpdateView):
             if user.is_admin or user.is_constructor:
                 # 
                 project.sob = self.request.POST['sob']
+                project.save()
+
+                return HttpResponseRedirect(success_url)
+            
+            return HttpResponseRedirect(no_success_url)
+
+        return HttpResponseRedirect(reverse_lazy('index'))
+
+
+class AddProjectOperativeNumberView(LoginRequiredMixin, UpdateView):
+    template_name = 'index.html'
+    model = Projects
+    fields = []
+
+    def post(self, request, *args, **kwargs):
+
+        # check user permissions
+        user = self.request.user
+        if user.is_active:
+
+            # get project
+            project_id = { 'pk':self.kwargs['pk'] }
+            project = get_object_or_404(Projects, pk=project_id['pk'])
+
+            # url for successfull progress
+            success_url = reverse_lazy('projects:detailProject', kwargs=project_id)
+            # url for successfull progress
+            no_success_url = reverse_lazy('projects:detailProject', kwargs=project_id)
+
+            # check user permissions # do it for 'energizing' status
+            if user.is_admin or user.is_constructor:
+                # 
+                project.operative_number = self.request.POST['operative_number']
                 project.save()
 
                 return HttpResponseRedirect(success_url)

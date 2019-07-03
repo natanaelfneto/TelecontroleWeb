@@ -243,3 +243,23 @@ class ProjectSobForm(forms.ModelForm):
             thisObject.save()
             self.save_m2m()
         return thisObject
+
+
+class ProjectOperativeNumberForm(forms.ModelForm):
+    '''
+    '''
+ 
+    class Meta:
+        model = Projects
+        fields = ['operative_number',]
+        
+    def __init__(self, *args, **kwargs):
+        super(ProjectOperativeNumberForm, self).__init__(*args, **kwargs)
+        self.helper = ProjectOperativeNumberHelper()
+
+    def save(self, commit=True):
+        thisObject = super(ProjectOperativeNumberForm, self).save(commit=False)
+        if commit:
+            thisObject.save()
+            self.save_m2m()
+        return thisObject

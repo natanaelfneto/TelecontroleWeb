@@ -75,3 +75,15 @@ class ProjectSobHelper(FormHelper):
                 css_class="form-group"
             ),
         )
+
+
+class ProjectOperativeNumberHelper(FormHelper):
+    def __init__(self, *args, **kwargs):
+        super(ProjectOperativeNumberHelper, self).__init__(*args, **kwargs)
+
+        self.layout = Layout(
+            Div(
+                Field('operative_number', css_class="form-control"),
+                css_class="form-group"
+            ),
+        )

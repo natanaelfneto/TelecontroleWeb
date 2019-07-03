@@ -32,6 +32,8 @@ urlpatterns = [
     # 
     url(r'(?P<pk>\d+)/add-sob/$', AddProjectSOBView.as_view(), name='addProjectSOB'),
     # 
+    url(r'(?P<pk>\d+)/add-operative-number/$', AddProjectOperativeNumberView.as_view(), name='addProjectOperativeNumber'),
+    # 
     url(r'$', ListProjectsView.as_view(), name='listProjects'),
 
 ]

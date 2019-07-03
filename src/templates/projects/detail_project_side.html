@@ -205,6 +205,52 @@
                 </div>
             </li>
             <li class="my-0">
+                <div class="btn btn-block btn-outline-light btn-square borderless">
+                    <div class="row m-auto">
+                        <span class="col-2 m-auto pl-0 text-muted">
+                            <i class="fa fa-fw fa-file mr-1"></i>
+                        </span>
+                        <span class="col-7 px-0">
+                            <span class="row mx-1 pt-1 font-w300">
+                                <small class="text-muted">Numeração operativa</small>
+                            </span>
+                            <span class="row mx-1 pb-1 text-left text-muted font-w400">
+                                {% if object.operative_number is null %}
+                                <small>Não cadastrado</small>
+                                {% else %}
+                                <small>{{ object.operative_number }}</small>
+                                {% endif %}
+                            </span>
+                        </span>
+                        {% if request.user.is_admin or request.user.is_constructor %}
+                            {% if object.operative_number is null %}
+                            <a 
+                                class="col-3 m-auto p-0 text-muted"
+                                data-toggle="modal" 
+                                data-target="#modal-operative-number-popout"
+                                href="">
+                                <span class="btn btn-outline-info">
+                                    <i class="fa fa-fw fa-pen mr-1"></i>
+                                </span>
+                            </a>
+                            {% else %}
+                            <a 
+                                class="col-3 m-auto p-0 text-muted"
+                                data-toggle="modal" 
+                                data-target="#modal-operative-number-popout"
+                                href="">
+                                <span class="btn btn-outline-info">
+                                    <i class="fa fa-fw fa-pen mr-1"></i>
+                                </span>
+                            </a>
+                            {% endif %}
+                        {% else %}
+                        <a class="col-3 m-auto p-0" href=""></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </li>
+            <li class="my-0">
                 <a class="btn btn-block btn-outline-light btn-square borderless" href="">
                     <div class="row m-auto">
                         <span class="col-2 m-auto pl-0 text-muted">

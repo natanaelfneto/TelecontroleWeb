@@ -1,0 +1,55 @@
+{% load crispy_forms_tags %}
+<div 
+    class="modal fade show" 
+    id="modal-operative-number-popout" 
+    tabindex="-1" 
+    role="dialog" 
+    aria-labelledby="modal-block-popout" 
+    style="display: none; padding-right: 17px;" 
+    aria-modal="true">
+    <div class="modal-dialog modal-dialog-popout" role="document">
+        <div class="modal-content">
+            <form 
+                id="operative_number_form"
+                method="POST" 
+                action="{% url 'projects:addProjectOperativeNumber' object.id %}">
+                {% csrf_token %}
+                <div class="block block-themed block-transparent mb-0">
+                    <div class="block-header bg-primary-dark">
+                        <h3 class="block-title">Inserir numeração operativa do ponto</h3>
+                        <div class="block-options">
+                            <button 
+                                type="button" 
+                                class="btn-block-option" 
+                                data-dismiss="modal" 
+                                aria-label="Close">
+                                <i class="fa fa-fw fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="block-content font-size-sm">
+                        <div id="modal_content_for_update_electric_point">
+                            {% crispy forms.operative_number %}
+                        </div>
+                    </div>
+                    <div class="block-content block-content-full text-right border-top">
+                        <button 
+                            id="operative_number_button"
+                            name="operative_numberbutton"
+                            type="submit"
+                            class="btn btn-sm btn-info">
+                            <i class="fa fa-file mr-1"></i>
+                            Registrar numeração operativa
+                        </button>
+                        <button 
+                            type="button" 
+                            class="btn btn-sm btn-outline-secondary" 
+                            data-dismiss="modal">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
